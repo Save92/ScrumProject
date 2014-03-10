@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'UserController@index');
+
+Route::resource('users', 'UserController');
 
 Route::get('db', function()
 {
