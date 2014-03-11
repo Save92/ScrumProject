@@ -29,6 +29,8 @@ Route::resource('users', 'UserController');
 
 Route::resource('formations', 'FormationController');
 
+Route::resource('promotions', 'PromotionController');
+
 // GET Login
 Route::get('login', array('as' => 'login', function() {
 	return View::make('login');
@@ -47,6 +49,9 @@ Route::get('logout', array('as' => 'logout', function()
 	return Redirect::to('/');
 }))->before('auth');
 
+// -----------------------
+// init / mise à jour BDD
+// -----------------------
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
@@ -64,6 +69,7 @@ Route::get('db', function()
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
 
+	Schema::dropIfExists('promotions');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
 
