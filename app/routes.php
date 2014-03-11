@@ -55,6 +55,8 @@ Route::resource('formations', 'FormationController');
 
 Route::resource('classes', 'ClasseController');
 
+Route::resource('matieres', 'MatiereController');
+
 /*
 * Init / mise à jour BDD
 */

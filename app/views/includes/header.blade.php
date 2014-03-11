@@ -9,6 +9,7 @@
 			{{ HTML::clever_link("users", 'Utilisateurs' ) }}
 			{{ HTML::clever_link("formations", 'Formations' ) }}
 			{{ HTML::clever_link("classes", 'Classes' ) }}
+			{{ HTML::clever_link("matieres", 'Matieres' ) }}
 		</ul>
 		@endif
 
