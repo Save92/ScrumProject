@@ -16,44 +16,31 @@ Route::get('/', function()
 	return View::make('index');
 });
 
+/*
+GET			/resource					index	resource.index
+GET			/resource/create			create	resource.create
+POST		/resource					store	resource.store
+GET			/resource/{resource}		show	resource.show
+GET			/resource/{resource}/edit	edit	resource.edit
+PUT/PATCH	/resource/{resource}		update	resource.update
+DELETE		/resource/{resource}		destroy	resource.destroy
+*/
 Route::resource('users', 'UserController');
+
+Route::post('login', array('uses' => 'UserController@login'));
 
 Route::get('login', array('as' => 'login', function()
 {
 	return View::make('login');
 }))->before('guest');
 
-Route::post('login', function()
-{
-	$rules = array(
-		'email' => 'required|email',
-		'password' => 'required'
-	);
-	$validator = Validator::make(Input::all(), $rules);
-
-	if ($validator->fails()) {
-		return Redirect::to('login')->withErrors($validator);
-	} else {
-		$user = array(
-			'email' => Input::get('email'),
-			'password' => Input::get('password')
-		);
-
-		if (Auth::attempt($user)) {
-			Session::flash('message', 'Successfully logged in');
-			return Redirect::to('/');
-		}
-
-		Session::flash('message', 'Incorrect username/password combination');
-		return Redirect::to('login');
-	}
-});
 
 Route::get('logout', array('as' => 'logout', function()
 {
 	Auth::logout();
 
 	Session::flash('message', 'Successfully logged out');
+	Session::flash('alert', 'success');
 	return Redirect::to('/');
 }))->before('auth');
 
@@ -87,5 +74,6 @@ Route::get('db', function()
 	// app/database/seeds/DatabaseSeeder.php
 	Artisan::call('db:seed');
 
-	return 'Base de donnée mise à jour';
+	Session::flash('message', 'Base de donnée mise à jour');
+	return Redirect::to('/');
 });

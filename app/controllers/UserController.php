@@ -4,7 +4,7 @@ class UserController extends BaseController {
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth');
+		//$this->beforeFilter('auth', array('except' => 'login'));
 	}
 
 	protected $layout = 'layouts.master';
@@ -60,6 +60,7 @@ class UserController extends BaseController {
 			$user->save();
 
 			Session::flash('message', 'Successfully created');
+			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
 	}
@@ -120,6 +121,7 @@ class UserController extends BaseController {
 			$user->save();
 
 			Session::flash('message', 'Successfully updated');
+			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
 	}
@@ -137,7 +139,36 @@ class UserController extends BaseController {
 		$user->delete();
 
 		Session::flash('message', 'Successfully deleted');
+			Session::flash('alert', 'success');
 		return Redirect::to('users');
+	}
+
+	public function login()
+	{
+		$rules = array(
+			'email' => 'required|email',
+			'password' => 'required'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::to('login')->withErrors($validator);
+		} else {
+			$user = array(
+				'email' => Input::get('email'),
+				'password' => Input::get('password')
+			);
+
+			if (Auth::attempt($user)) {
+				Session::flash('message', 'Successfully logged in');
+				Session::flash('alert', 'success');
+				return Redirect::to('/');
+			}
+
+			Session::flash('message', 'Incorrect username/password combination');
+			Session::flash('alert', 'error');
+			return Redirect::to('login');
+		}
 	}
 
 }

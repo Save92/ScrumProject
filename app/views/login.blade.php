@@ -3,15 +3,27 @@
 
 	{{ HTML::ul($errors->all()) }}
 
-	{{ Form::open(array('url' => 'login')) }}
+	{{ Form::open(array('url' => 'login', 'class' => 'form-horizontal')) }}
 
-		{{ Form::label('email', 'Adresse email') }}
-		{{ Form::text('email') }}
+	<div class="control-group">
+		{{ Form::label('email', 'Adresse email', array('class' => 'control-label')) }}
+		<div class="controls">
+			{{ Form::text('email') }}
+		</div>
+	</div>
 
-		{{ Form::label('password', 'Mot de passe') }}
-		{{ Form::password('password') }}
+	<div class="control-group">
+		{{ Form::label('password', 'Mot de passe', array('class' => 'control-label')) }}
+		<div class="controls">
+			{{ Form::password('password') }}
+		</div>
+	</div>
 
-		{{ Form::submit('Login'); }}
+	<div class="control-group">
+		<div class="controls">
+			{{ Form::submit('Connexion', array('class' => 'btn')); }}
+		</div>
+	</div>
 
 	{{ Form::close() }}
 

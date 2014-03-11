@@ -11,5 +11,7 @@
 </nav>
 
 @if (Session::has('message'))
-	<div class="alert alert-info">{{ Session::get('message') }}</div>
+	<div class="alert alert-{{ Session::has('alert') ? Session::get('alert') : 'info' }}">
+		{{ Session::get('message') }}
+	</div>
 @endif

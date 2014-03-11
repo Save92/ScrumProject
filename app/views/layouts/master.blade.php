@@ -12,7 +12,7 @@
 			@include('includes.header')
 		</header>
 
-		<div id="content">
+		<div>
 			@yield('content')
 		</div>
 
