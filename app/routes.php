@@ -27,14 +27,15 @@ DELETE		/resource/{resource}		destroy	resource.destroy
 */
 Route::resource('users', 'UserController');
 
-Route::post('login', array('uses' => 'UserController@login'));
-
-Route::get('login', array('as' => 'login', function()
-{
+// GET Login
+Route::get('login', array('as' => 'login', function() {
 	return View::make('login');
 }))->before('guest');
 
+// POST Login
+Route::post('login', array('uses' => 'UserController@login'));
 
+// Logout
 Route::get('logout', array('as' => 'logout', function()
 {
 	Auth::logout();
@@ -48,6 +49,15 @@ Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
 
+	// Classes
+	Schema::dropIfExists('classes');
+	Schema::create('classes', function($table)
+	{
+		$table->increments('id');
+		$table->string('label', 50);
+		$table->timestamps();
+	});
+
 	// Utilisateurs
 	Schema::dropIfExists('users');
 	Schema::create('users', function($table)
@@ -56,7 +66,22 @@ Route::get('db', function()
 		$table->string('first_name', 32);
 		$table->string('last_name', 32);
 		$table->string('email', 320);
+		$table->string('phone', 20);
+		$table->string('type', 40);
 		$table->string('password', 60);
+		$table->integer('class_id')->unsigned();
+		$table->foreign('class_id')->references('id')->on('classes');
+		$table->timestamps();
+	});
+
+	// Diplomes
+	Schema::dropIfExists('degrees');
+	Schema::create('degrees', function($table)
+	{
+		$table->increments('id');
+		$table->string('name', 32);
+		$table->integer('year');
+		$table->text('conditions');
 		$table->timestamps();
 	});
 
@@ -70,9 +95,19 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
+	// Matière
+	Schema::dropIfExists('courses');
+	Schema::create('courses', function($table)
+	{
+		$table->increments('id');
+		$table->datetime('start');
+		$table->datetime('end');
+		$table->timestamps();
+	});
+
 	// Population des tables (http://docs.laravel.fr/4.1/migrations)
 	// app/database/seeds/DatabaseSeeder.php
-	Artisan::call('db:seed');
+	//Artisan::call('db:seed');
 
 	Session::flash('message', 'Base de donnée mise à jour');
 	return Redirect::to('/');
