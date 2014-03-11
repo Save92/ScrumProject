@@ -16,8 +16,18 @@ class DatabaseSeeder extends Seeder {
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
 
-		//$this->call('FormationTableSeeder');
-		//$this->call('PromotionTableSeeder');
+		$this->call('FormationTableSeeder');
+		$this->call('PromotionTableSeeder');
+		$this->call('ClasseTableSeeder');
+		$this->call('ThematiqueTableSeeder');
+		$this->call('SalleTableSeeder');
+		$this->call('MatiereTableSeeder');
+		$this->call('MaterielTableSeeder');
+		$this->call('PromotionTableSeeder');
+		$this->call('CourTableSeeder');
+		$this->call('NoteTableSeeder');
+		$this->call('ReservationTableSeeder');
+		$this->call('UtilisationTableSeeder');
 	}
 
 }
@@ -80,7 +90,7 @@ class UserTableSeeder extends Seeder {
 
 }
 
-class FormationTableSeeder extends Seeder {
+/*class FormationTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -95,15 +105,153 @@ class FormationTableSeeder extends Seeder {
 
 }
 
-class PromotionTableSeeder extends Seeder {
+class ClasseTableSeeder extends Seeder {
 
 	public function run()
 	{
 		DB::table('promotions')->delete();
 		Promotion::create(array(
 			'libelle' => 'promo 1',
-			'id_diplome' => 1
+			'id_formation' => 1,
+			'id_user' => 1
 		));
 	}
 
 }
+
+class ThematiqueTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('promotions')->delete();
+		Promotion::create(array(
+			'libelle' => 'thème',
+		));
+	}
+
+}
+
+class SalleTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('promotions')->delete();
+		Promotion::create(array(
+			'libelle' => '',
+		));
+	}
+
+}
+
+class MatiereTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('promotions')->delete();
+		Promotion::create(array(
+			'libelle' => 'matière 1',
+			'id_thematique' => 1
+		));
+	}
+
+}
+
+class PromotionTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('promotions')->delete();
+		Promotion::create(array(
+			'libelle' => 'matière 1',
+			'id_thematique' => 1
+		));
+	}
+
+}
+
+class CourTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('cours')->delete();
+		Promotion::create(array(
+			'start' => '',
+			'end' =>'',
+			'id_user' => 1,
+			'id_salle'=>'',
+			'id_matiere'=>'',
+		));
+	}
+
+}
+
+class MaterielTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('materiels')->delete();
+		Promotion::create(array(
+			'description' => ''
+
+		));
+	}
+
+}
+
+class ReservationTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('reservations')->delete();
+		Promotion::create(array(
+			'start' => '',
+			'end' =>'',
+			'id_user' => 1,
+			'id_materiel' =>''
+		));
+	}
+
+}
+
+class UtilisationTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('utilisations')->delete();
+		Promotion::create(array(
+			'id_salle' => '',
+			'id_matiere' =>'',
+		));
+	}
+
+}
+
+class CompositionTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('compositions')->delete();
+		Promotion::create(array(
+			'coef' => 1 ,
+			'id_matiere' => '',
+			'id_formation' =>''
+		));
+	}
+
+}
+
+class NoteTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('notes')->delete();
+		Promotion::create(array(
+			'valeur' => '',
+			'id_user' => '',
+			'id_formation' =>'',
+			'id_matiere' => '',
+		));
+	}
+
+}
+*/
