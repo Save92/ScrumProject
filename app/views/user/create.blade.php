@@ -6,23 +6,37 @@
 	{{ Form::open(array('url' => 'users', 'class' => 'form-horizontal')) }}
 
 	<div class="control-group">
-		{{ Form::label('first_name', 'Prénom', array('class' => 'control-label')) }}
+		{{ Form::label('prenom', 'Prénom', array('class' => 'control-label')) }}
 		<div class="controls">
-			{{ Form::text('first_name') }}
+			{{ Form::text('prenom') }}
 		</div>
 	</div>
 
 	<div class="control-group">
-		{{ Form::label('last_name', 'Nom', array('class' => 'control-label')) }}
+		{{ Form::label('nom', 'Nom', array('class' => 'control-label')) }}
 		<div class="controls">
-			{{ Form::text('last_name') }}
+			{{ Form::text('nom') }}
 		</div>
 	</div>
 
 	<div class="control-group">
-		{{ Form::label('email', 'Adresse email', array('class' => 'control-label')) }}
+		{{ Form::label('mail', 'Adresse email', array('class' => 'control-label')) }}
 		<div class="controls">
-			{{ Form::text('email') }}
+			{{ Form::text('mail') }}
+		</div>
+	</div>
+
+	<div class="control-group">
+		{{ Form::label('telephone', 'Telephone', array('class' => 'control-label')) }}
+		<div class="controls">
+			{{ Form::text('telephone') }}
+		</div>
+	</div>
+
+	<div class="control-group">
+		{{ Form::label('type', 'Type', array('class' => 'control-label')) }}
+		<div class="controls">
+			{{ Form::text('type') }}
 		</div>
 	</div>
 

@@ -9,8 +9,8 @@
 <ul>
 	@foreach($users as $key => $value)
 		<li>
-			<h4>{{ $value->first_name }} {{ $value->last_name }}</h4>
-			<p>{{ $value->email }}</p>
+			<h4>{{ $value->id_role }} {{ $value->prenom }} {{ $value->nom }}</h4>
+			<p>{{ $value->mail }}</p>
 
 			<p>
 

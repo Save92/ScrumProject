@@ -13,9 +13,36 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
+		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
-		$this->call('FormationTableSeeder');
-		$this->call('PromotionTableSeeder');
+
+		//$this->call('FormationTableSeeder');
+		//$this->call('PromotionTableSeeder');
+	}
+
+}
+
+class RoleTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('roles')->delete();
+		Role::create(array(
+			'id' => 1,
+			'libelle' => 'Admin'
+		));
+		Role::create(array(
+			'id' => 2,
+			'libelle' => 'Secretaire'
+		));
+		Role::create(array(
+			'id' => 3,
+			'libelle' => 'Professeur'
+		));
+		Role::create(array(
+			'id' => 4,
+			'libelle' => 'Etudiant'
+		));
 	}
 
 }
@@ -26,22 +53,28 @@ class UserTableSeeder extends Seeder {
 	{
 		DB::table('users')->delete();
 		User::create(array(
-			'first_name' => 'foo',
-			'last_name' => 'bar',
-			'email' => 'foo@bar.com',
-			'password' => Hash::make('com')
+			'prenom' => 'foo',
+			'nom' => 'bar',
+			'mail' => 'foo@bar.com',
+			'password' => Hash::make('com'),
+			'id_role' => 1,
+			'telephone' => '0123456789'
 		));
 		User::create(array(
-			'first_name' => 'faa',
-			'last_name' => 'bor',
-			'email' => 'faa@bor.com',
-			'password' => Hash::make('moc')
+			'prenom' => 'faa',
+			'nom' => 'bor',
+			'mail' => 'faa@bor.com',
+			'password' => Hash::make('moc'),
+			'id_role' => 1,
+			'telephone' => '0123456789'
 		));
 		User::create(array(
-			'first_name' => 'Ad',
-			'last_name' => 'Min',
-			'email' => 'a@a.a',
-			'password' => Hash::make('a')
+			'prenom' => 'Ad',
+			'nom' => 'Min',
+			'mail' => 'a@a.a',
+			'password' => Hash::make('a'),
+			'id_role' => 1,
+			'telephone' => '0123456789'
 		));
 	}
 
@@ -74,32 +107,3 @@ class PromotionTableSeeder extends Seeder {
 	}
 
 }
-
-/*class RoomTableSeeder extends Seeder {
-
-	public function run()
-	{
-		DB::table('rooms')->delete();
-		Room::create(array(
-			'name' => 'Salle infos',
-			'seats' => 20
-		));
-		Room::create(array(
-			'name' => 'Salle labo bio',
-			'seats' => 20
-		));
-		Room::create(array(
-			'name' => 'Atelier',
-			'seats' => 20
-		));
-		Room::create(array(
-			'name' => 'Salle classique',
-			'seats' => 20
-		));
-		Room::create(array(
-			'name' => 'Cantine',
-			'seats' => 60
-		));
-	}
-
-}*/

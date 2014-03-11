@@ -42,9 +42,11 @@ class UserController extends BaseController {
 	public function store()
 	{
 		$rules = array(
-			'first_name'=> 'required',
-			'last_name'	=> 'required',
-			'email'	=> 'required|email'
+			'prenom'=> 'required',
+			'nom'	=> 'required',
+			'mail'	=> 'required|email',
+			'telephone'	=> 'required',
+			'type'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -54,9 +56,11 @@ class UserController extends BaseController {
 				->withInput(Input::except('password'));
 		} else {
 			$user = new User;
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->email = Input::get('email');
+			$user->prenom = Input::get('prenom');
+			$user->nom = Input::get('nom');
+			$user->mail = Input::get('mail');
+			$user->telephone = Input::get('telephone');
+			$user->type = Input::get('type');
 			$user->save();
 
 			Session::flash('message', 'Successfully created');
@@ -103,9 +107,11 @@ class UserController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'first_name'=> 'required',
-			'last_name'	=> 'required',
-			'email'	=> 'required|email'
+			'prenom'=> 'required',
+			'nom'	=> 'required',
+			'mail'	=> 'required|email',
+			'telephone'	=> 'required',
+			'type'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -115,9 +121,11 @@ class UserController extends BaseController {
 				->withInput(Input::except('password'));
 		} else {
 			$user = User::find($id);
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->email = Input::get('email');
+			$user->prenom = Input::get('prenom');
+			$user->nom = Input::get('nom');
+			$user->mail = Input::get('mail');
+			$user->telephone = Input::get('telephone');
+			$user->type = Input::get('type');
 			$user->save();
 
 			Session::flash('message', 'Successfully updated');
@@ -155,7 +163,7 @@ class UserController extends BaseController {
 			return Redirect::to('login')->withErrors($validator);
 		} else {
 			$user = array(
-				'email' => Input::get('email'),
+				'mail' => Input::get('mail'),
 				'password' => Input::get('password')
 			);
 

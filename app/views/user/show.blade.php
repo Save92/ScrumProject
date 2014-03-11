@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('content')
 	<p>
-		{{ $user->first_name }} {{ $user->last_name }}<br/>
-		{{ $user->email }}
+		{{ $user->id_role }} {{ $user->prenom }} {{ $user->nom }}<br/>
+		{{ $user->telephone }}<br/>
+		{{ $user->mail }}
 	</p>
 @stop

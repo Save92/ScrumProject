@@ -57,21 +57,28 @@ Route::get('db', function()
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
 	Schema::dropIfExists('cantines');
 	Schema::dropIfExists('classes');
-
 	Schema::dropIfExists('utilisations');
 	Schema::dropIfExists('reservations');
 	Schema::dropIfExists('compositions');
-
 	Schema::dropIfExists('notes');
 	Schema::dropIfExists('cours');
 	Schema::dropIfExists('matieres');
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
-
 	Schema::dropIfExists('promotions');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
+	Schema::dropIfExists('roles');
+
+	// Roles
+	Schema::create('roles', function($table)
+	{
+		$table->integer('id')->unsigned();
+		$table->primary('id');
+		$table->string('libelle', 32);
+		$table->timestamps();
+	});
 
 	// Utilisateurs
 	Schema::create('users', function($table)
@@ -81,7 +88,8 @@ Route::get('db', function()
 		$table->string('nom', 32);
 		$table->string('mail', 320);
 		$table->string('telephone', 20);
-		$table->string('type', 40);
+		$table->integer('id_role')->unsigned();
+		$table->foreign('id_role')->references('id')->on('roles');
 		$table->string('password', 60);
 		$table->timestamps();
 	});
@@ -211,7 +219,7 @@ Route::get('db', function()
 
 	// Population des tables (http://docs.laravel.fr/4.1/migrations)
 	// app/database/seeds/DatabaseSeeder.php
-	//Artisan::call('db:seed');
+	Artisan::call('db:seed');
 
 	Session::flash('message', 'Base de donnée mise à jour');
 	return Redirect::to('/');
