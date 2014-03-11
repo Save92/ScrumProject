@@ -12,10 +12,11 @@ CREATE TABLE classe(
 
 
 CREATE TABLE diplome(
-        id         int (11) Auto_increment  NOT NULL ,
-        libelle    Varchar (50) NOT NULL ,
-        annee      Year NOT NULL ,
-        conditions Text NOT NULL ,
+        id          int (11) Auto_increment  NOT NULL ,
+        libelle     Varchar (50) NOT NULL ,
+        annee       Year NOT NULL ,
+        conditions  Text NOT NULL ,
+        id_personne Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -119,6 +120,7 @@ CREATE TABLE note(
 )ENGINE=InnoDB;
 
 ALTER TABLE classe ADD CONSTRAINT FK_classe_id_diplome FOREIGN KEY (id_diplome) REFERENCES diplome(id);
+ALTER TABLE diplome ADD CONSTRAINT FK_diplome_id_personne FOREIGN KEY (id_personne) REFERENCES personne(id);
 ALTER TABLE matiere ADD CONSTRAINT FK_matiere_id_thematique FOREIGN KEY (id_thematique) REFERENCES thematique(id);
 ALTER TABLE cours ADD CONSTRAINT FK_cours_id_personne FOREIGN KEY (id_personne) REFERENCES personne(id);
 ALTER TABLE cours ADD CONSTRAINT FK_cours_id_salle FOREIGN KEY (id_salle) REFERENCES salle(id);
