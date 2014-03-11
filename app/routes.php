@@ -29,6 +29,8 @@ Route::resource('users', 'UserController');
 
 Route::resource('formations', 'FormationController');
 
+Route::resource('promotions', 'PromotionController');
+
 // GET Login
 Route::get('login', array('as' => 'login', function() {
 	return View::make('login');
@@ -47,6 +49,9 @@ Route::get('logout', array('as' => 'logout', function()
 	return Redirect::to('/');
 }))->before('auth');
 
+// -----------------------
+// init / mise à jour BDD
+// -----------------------
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
@@ -60,6 +65,7 @@ Route::get('db', function()
 		$table->timestamps();
 	});*/
 
+	Schema::dropIfExists('promotions');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
 
@@ -87,6 +93,16 @@ Route::get('db', function()
 		$table->text('conditions');
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
+		$table->timestamps();
+	});
+
+	// Promotions
+	Schema::create('promotions', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->integer('id_diplome')->unsigned();
+		$table->foreign('id_diplome')->references('id')->on('formations');
 		$table->timestamps();
 	});
 

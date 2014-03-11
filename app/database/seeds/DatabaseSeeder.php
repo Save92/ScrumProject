@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('UserTableSeeder');
 		$this->call('FormationTableSeeder');
+		$this->call('PromotionTableSeeder');
 	}
 
 }
@@ -56,6 +57,19 @@ class FormationTableSeeder extends Seeder {
 			'annee' => 2012,
 			'conditions' => 'aa',
 			'id_user' => 1
+		));
+	}
+
+}
+
+class PromotionTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('promotions')->delete();
+		Promotion::create(array(
+			'libelle' => 'promo 1',
+			'id_diplome' => 1
 		));
 	}
 
