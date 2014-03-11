@@ -46,7 +46,7 @@ class UserController extends BaseController {
 			'nom'	=> 'required',
 			'mail'	=> 'required|email',
 			'telephone'	=> 'required',
-			'type'	=> 'required'
+			'id_role'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -60,7 +60,7 @@ class UserController extends BaseController {
 			$user->nom = Input::get('nom');
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
-			$user->type = Input::get('type');
+			$user->id_role = Input::get('id_role');
 			$user->save();
 
 			Session::flash('message', 'Successfully created');
@@ -111,7 +111,7 @@ class UserController extends BaseController {
 			'nom'	=> 'required',
 			'mail'	=> 'required|email',
 			'telephone'	=> 'required',
-			'type'	=> 'required'
+			'id_role'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -125,7 +125,7 @@ class UserController extends BaseController {
 			$user->nom = Input::get('nom');
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
-			$user->type = Input::get('type');
+			$user->id_role = Input::get('id_role');
 			$user->save();
 
 			Session::flash('message', 'Successfully updated');

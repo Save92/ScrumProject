@@ -11,12 +11,35 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/', array('as' => 'home', function()
 {
 	return View::make('index');
+}));
+
+Route::group(array('before' => 'auth'), function()
+{
+	Route::get('logout', array('as' => 'logout', function()
+	{
+		Auth::logout();
+
+		Session::flash('message', 'Successfully logged out');
+		Session::flash('alert', 'success');
+		return Redirect::to('/');
+	}));
+});
+
+Route::group(array('before' => 'gest'), function()
+{
+	Route::post('login', array('uses' => 'UserController@login'));
+
+	Route::get('login', array('as' => 'login', function() {
+		return View::make('login');
+	}));
 });
 
 /*
+Route::resource('resources', 'ResourceController');
+
 GET			/resource					index	resource.index
 GET			/resource/create			create	resource.create
 POST		/resource					store	resource.store
@@ -25,33 +48,16 @@ GET			/resource/{resource}/edit	edit	resource.edit
 PUT/PATCH	/resource/{resource}		update	resource.update
 DELETE		/resource/{resource}		destroy	resource.destroy
 */
+
 Route::resource('users', 'UserController');
 
 Route::resource('formations', 'FormationController');
 
 Route::resource('classes', 'ClasseController');
 
-// GET Login
-Route::get('login', array('as' => 'login', function() {
-	return View::make('login');
-}))->before('guest');
-
-// POST Login
-Route::post('login', array('uses' => 'UserController@login'));
-
-// Logout
-Route::get('logout', array('as' => 'logout', function()
-{
-	Auth::logout();
-
-	Session::flash('message', 'Successfully logged out');
-	Session::flash('alert', 'success');
-	return Redirect::to('/');
-}))->before('auth');
-
-// -----------------------
-// init / mise à jour BDD
-// -----------------------
+/*
+* Init / mise à jour BDD
+*/
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
@@ -223,4 +229,14 @@ Route::get('db', function()
 
 	Session::flash('message', 'Base de donnée mise à jour');
 	return Redirect::to('/');
+});
+
+HTML::macro('clever_link', function($route, $text) {
+	if( Request::path() == $route ) {
+		$active = "class = 'active'";
+	} else {
+		$active = '';
+	}
+
+	return '<li ' . $active . '>' . link_to($route, $text) . '</li>';
 });

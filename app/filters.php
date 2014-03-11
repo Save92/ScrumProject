@@ -38,6 +38,8 @@ Route::filter('auth', function()
 	if (Auth::guest()) {
 		Session::flash('message', 'You must be logged in to view this page');
 		return Redirect::guest('login');
+	} else {
+		//var_dump(Auth::user()->id_role);
 	}
 });
 

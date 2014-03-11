@@ -34,9 +34,9 @@
 	</div>
 
 	<div class="control-group">
-		{{ Form::label('type', 'Type', array('class' => 'control-label')) }}
+		{{ Form::label('id_role', 'Role', array('class' => 'control-label')) }}
 		<div class="controls">
-			{{ Form::text('type') }}
+			{{ Form::text('id_role') }}
 		</div>
 	</div>
 
