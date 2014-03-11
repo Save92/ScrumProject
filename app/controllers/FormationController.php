@@ -57,7 +57,8 @@ class FormationController extends BaseController {
 			$formation->libelle = Input::get('libelle');
 			$formation->annee = Input::get('annee');
 			$formation->conditions = Input::get('conditions');
-			$formation->id_user = Input::get('id_user');
+			//$formation->id_user = Input::get('id_user');
+			$formation->id_user=1;
 			$formation->save();
 
 			Session::flash('message', 'Successfully created');
