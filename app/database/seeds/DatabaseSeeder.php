@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 
 		$this->call('UserTableSeeder');
-		$this->call('RoomTableSeeder');
+		$this->call('FormationTableSeeder');
 	}
 
 }
@@ -46,7 +46,22 @@ class UserTableSeeder extends Seeder {
 
 }
 
-class RoomTableSeeder extends Seeder {
+class FormationTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('formations')->delete();
+		Formation::create(array(
+			'libelle' => 'A',
+			'annee' => 2012,
+			'conditions' => 'aa',
+			'id_user' => 1
+		));
+	}
+
+}
+
+/*class RoomTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -73,4 +88,4 @@ class RoomTableSeeder extends Seeder {
 		));
 	}
 
-}
+}*/

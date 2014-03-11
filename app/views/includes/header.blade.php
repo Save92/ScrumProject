@@ -3,6 +3,7 @@
 		<li><a class="btn btn-small" href="{{ URL::to('/') }}"><h1>Intranet</h1></a></li>
 		@if(Auth::check())
 			<li><a class="btn btn-small" href="{{ URL::to('users') }}">Utilisateurs</a></li>
+			<li><a class="btn btn-small" href="{{ URL::to('formations') }}">Formations</a></li>
 			<li><a class="btn btn-small" href="{{ URL::to('logout') }}">Déconnexion</a></li>
 		@else
 			<li><a class="btn btn-small" href="{{ URL::to('login') }}">Connexion</a></li>
