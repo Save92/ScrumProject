@@ -60,18 +60,10 @@ class UserTableSeeder extends Seeder {
 	{
 		DB::table('users')->delete();
 		User::create(array(
-			'prenom' => 'foo',
-			'nom' => 'bar',
+			'prenom' => 'Foo',
+			'nom' => 'Bar',
 			'mail' => 'foo@bar.com',
 			'password' => Hash::make('com'),
-			'id_role' => 1,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'faa',
-			'nom' => 'bor',
-			'mail' => 'faa@bor.com',
-			'password' => Hash::make('moc'),
 			'id_role' => 1,
 			'telephone' => '0123456789'
 		));
