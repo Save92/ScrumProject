@@ -231,7 +231,7 @@ Route::get('db', function()
 	return Redirect::to('/');
 });
 
-HTML::macro('clever_link', function($route, $text) {
+HTML::macro('menu_li', function($route, $text) {
 	if( Request::path() == $route ) {
 		$active = "class = 'active'";
 	} else {

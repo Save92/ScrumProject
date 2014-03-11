@@ -23,6 +23,20 @@ class UserController extends BaseController {
 	}
 
 	/**
+	 * Display the specified resource.
+	 * GET /resource/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$user = User::find($id);
+
+		$this->layout->content = View::make('user.show')->with('user', $user);
+	}
+
+	/**
 	 * Show the form for creating a new resource.
 	 * GET /resource/create
 	 *
@@ -30,7 +44,15 @@ class UserController extends BaseController {
 	 */
 	public function create()
 	{
-		$this->layout->content = View::make('user.create');
+		$this->layout->content = View::make('layouts.create')->with('items', array(
+			'users' => array(
+				'prenom'	=> 'Prénom',
+				'nom'		=> 'Nom',
+				'mail'		=> 'Adresse mail',
+				'telephone'	=> 'Téléphone',
+				'id_role'	=> 'Role'
+			)
+		));
 	}
 
 	/**
@@ -70,20 +92,6 @@ class UserController extends BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
-	 * GET /resource/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$user = User::find($id);
-
-		$this->layout->content = View::make('user.show')->with('user', $user);
-	}
-
-	/**
 	 * Show the form for editing the specified resource.
 	 * GET /resource/{id}/edit
 	 *
@@ -94,7 +102,20 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 
-		$this->layout->content = View::make('user.edit')->with('user', $user);
+		$this->layout->content = View::make('layouts.edit')->with(
+			array(
+				'item' => $user,
+				'items' => array(
+					'users' => array(
+						'prenom'	=> 'Prénom',
+						'nom'		=> 'Nom',
+						'mail'		=> 'Adresse mail',
+						'telephone'	=> 'Téléphone',
+						'id_role'	=> 'Role'
+					)
+				)
+			)
+		);
 	}
 
 	/**
