@@ -29,7 +29,7 @@ Route::resource('users', 'UserController');
 
 Route::resource('formations', 'FormationController');
 
-Route::resource('promotions', 'PromotionController');
+Route::resource('classes', 'ClasseController');
 
 // GET Login
 Route::get('login', array('as' => 'login', function() {
@@ -65,7 +65,7 @@ Route::get('db', function()
 		$table->timestamps();
 	});*/
 
-	Schema::dropIfExists('promotions');
+	Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
 
@@ -96,8 +96,8 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
-	// Promotions
-	Schema::create('promotions', function($table)
+	// Classes
+	Schema::create('classes', function($table)
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
