@@ -147,7 +147,7 @@ class UserController extends BaseController {
 		$user->delete();
 
 		Session::flash('message', 'Successfully deleted');
-			Session::flash('alert', 'success');
+		Session::flash('alert', 'success');
 		return Redirect::to('users');
 	}
 
