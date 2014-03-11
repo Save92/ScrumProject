@@ -2,13 +2,16 @@
 
 class UserController extends BaseController {
 
-	/**
-	 * The layout that should be used for responses.
-	 */
+	public function __construct()
+	{
+		$this->beforeFilter('auth');
+	}
+
 	protected $layout = 'layouts.master';
 
 	/**
 	 * Display a listing of the resource.
+	 * GET /
 	 *
 	 * @return Response
 	 */
@@ -21,6 +24,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Show the form for creating a new resource.
+	 * GET /resource/create
 	 *
 	 * @return Response
 	 */
@@ -31,6 +35,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
+	 * POST /resource
 	 *
 	 * @return Response
 	 */
@@ -61,6 +66,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Display the specified resource.
+	 * GET /resource/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -74,6 +80,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
+	 * GET /resource/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -87,6 +94,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Update the specified resource in storage.
+	 * PUT /resource/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -118,6 +126,7 @@ class UserController extends BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
+	 * DELETE /resource/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

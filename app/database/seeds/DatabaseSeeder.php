@@ -36,6 +36,12 @@ class UserTableSeeder extends Seeder {
 			'email' => 'faa@bor.com',
 			'password' => Hash::make('moc')
 		));
+		User::create(array(
+			'first_name' => 'Ad',
+			'last_name' => 'Min',
+			'email' => 'admin',
+			'password' => Hash::make('admin')
+		));
 	}
 
 }

@@ -1,10 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-@if (Session::has('message'))
-	<div class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
-
 <a href="{{ URL::to('users') }}"><h2>Utilisateurs</h2></a>
 <a href="{{ URL::to('users/create') }}">Nouveau</a>
 

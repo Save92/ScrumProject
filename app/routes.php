@@ -11,9 +11,51 @@
 |
 */
 
-Route::get('/', 'UserController@index');
+Route::get('/', function()
+{
+	return View::make('index');
+});
 
 Route::resource('users', 'UserController');
+
+Route::get('login', array('as' => 'login', function()
+{
+	return View::make('login');
+}))->before('guest');
+
+Route::post('login', function()
+{
+	$rules = array(
+		'email' => 'required|email',
+		'password' => 'required'
+	);
+	$validator = Validator::make(Input::all(), $rules);
+
+	if ($validator->fails()) {
+		return Redirect::to('login')->withErrors($validator);
+	} else {
+		$user = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+		);
+
+		if (Auth::attempt($user)) {
+			Session::flash('message', 'Successfully logged in');
+			return Redirect::to('/');
+		}
+
+		Session::flash('message', 'Incorrect username/password combination');
+		return Redirect::to('login');
+	}
+});
+
+Route::get('logout', array('as' => 'logout', function()
+{
+	Auth::logout();
+
+	Session::flash('message', 'Successfully logged out');
+	return Redirect::to('/');
+}))->before('auth');
 
 Route::get('db', function()
 {
