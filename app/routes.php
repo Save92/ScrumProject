@@ -50,15 +50,19 @@ Route::get('logout', array('as' => 'logout', function()
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
+	Schema::dropIfExists('cantines');
+	Schema::dropIfExists('classes');
 
-	// Classes
-	/*Schema::dropIfExists('classes');
-	Schema::create('classes', function($table)
-	{
-		$table->increments('id');
-		$table->string('label', 50);
-		$table->timestamps();
-	});*/
+	Schema::dropIfExists('utilisations');
+	Schema::dropIfExists('reservations');
+	Schema::dropIfExists('compositions');
+
+	Schema::dropIfExists('notes');
+	Schema::dropIfExists('cours');
+	Schema::dropIfExists('matieres');
+	Schema::dropIfExists('thematiques');
+	Schema::dropIfExists('salles');
+	Schema::dropIfExists('materiels');
 
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
@@ -67,14 +71,12 @@ Route::get('db', function()
 	Schema::create('users', function($table)
 	{
 		$table->increments('id');
-		$table->string('first_name', 32);
-		$table->string('last_name', 32);
-		$table->string('email', 320);
-		$table->string('phone', 20);
+		$table->string('prenom', 32);
+		$table->string('nom', 32);
+		$table->string('mail', 320);
+		$table->string('telephone', 20);
 		$table->string('type', 40);
 		$table->string('password', 60);
-/*		$table->integer('class_id')->unsigned();
-		$table->foreign('class_id')->references('id')->on('classes');*/
 		$table->timestamps();
 	});
 
@@ -90,29 +92,120 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
-	// Salles
-	/*Schema::dropIfExists('rooms');
-	Schema::create('rooms', function($table)
+	// Classes
+	Schema::create('classes', function($table)
 	{
 		$table->increments('id');
-		$table->string('name', 32);
-		$table->integer('seats');
+		$table->string('libelle', 32);
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_formation')->unsigned();
+		$table->foreign('id_formation')->references('id')->on('formations');
 		$table->timestamps();
 	});
 
-	// Matière
-	Schema::dropIfExists('courses');
-	Schema::create('courses', function($table)
+	// Thématiques
+	Schema::create('thematiques', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->timestamps();
+	});
+
+	// Salles
+	Schema::create('salles', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->timestamps();
+	});
+
+	// Matières
+	Schema::create('matieres', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->integer('id_thematique')->unsigned();
+		$table->foreign('id_thematique')->references('id')->on('thematiques');
+		$table->timestamps();
+	});
+
+	// Cours
+	Schema::create('cours', function($table)
 	{
 		$table->increments('id');
 		$table->datetime('start');
 		$table->datetime('end');
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_salle')->unsigned();
+		$table->foreign('id_salle')->references('id')->on('salles');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
 		$table->timestamps();
-	});*/
+	});
+
+	// Matériel
+	Schema::create('materiels', function($table)
+	{
+		$table->increments('id');
+		$table->string('description', 150);
+		$table->timestamps();
+	});
+
+	// Reservations
+	Schema::create('reservations', function($table)
+	{
+		$table->primary(array('id_user', 'id_materiel'));
+		$table->datetime('start');
+		$table->datetime('end');
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_materiel')->unsigned();
+		$table->foreign('id_materiel')->references('id')->on('materiels');
+		$table->timestamps();
+	});
+
+	// Utilisations
+	Schema::create('utilisations', function($table)
+	{
+		$table->primary(array('id_salle', 'id_matiere'));
+		$table->integer('id_salle')->unsigned();
+		$table->foreign('id_salle')->references('id')->on('salles');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->timestamps();
+	});
+
+	// Compositions
+	Schema::create('compositions', function($table)
+	{
+		$table->primary(array('id_matiere', 'id_formation'));
+		$table->integer('coef');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->integer('id_formation')->unsigned();
+		$table->foreign('id_formation')->references('id')->on('formations');
+		$table->timestamps();
+	});
+
+	// Notes
+	Schema::create('notes', function($table)
+	{
+		$table->primary(array('id_user', 'id_formation', 'id_matiere'));
+		$table->float('valeur');
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_formation')->unsigned();
+		$table->foreign('id_formation')->references('id')->on('formations');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->timestamps();
+	});
 
 	// Population des tables (http://docs.laravel.fr/4.1/migrations)
 	// app/database/seeds/DatabaseSeeder.php
-	Artisan::call('db:seed');
+	//Artisan::call('db:seed');
 
 	Session::flash('message', 'Base de donnée mise à jour');
 	return Redirect::to('/');
