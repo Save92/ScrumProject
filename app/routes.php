@@ -29,7 +29,7 @@ Route::resource('users', 'UserController');
 
 Route::resource('formations', 'FormationController');
 
-Route::resource('promotions', 'PromotionController');
+Route::resource('classes', 'ClasseController');
 
 // GET Login
 Route::get('login', array('as' => 'login', function() {
@@ -66,7 +66,7 @@ Route::get('db', function()
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
-	Schema::dropIfExists('promotions');
+	Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('users');
 	Schema::dropIfExists('roles');

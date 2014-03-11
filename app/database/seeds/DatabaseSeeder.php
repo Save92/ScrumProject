@@ -15,15 +15,12 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
-
 		$this->call('FormationTableSeeder');
-		$this->call('PromotionTableSeeder');
 		$this->call('ClasseTableSeeder');
 		$this->call('ThematiqueTableSeeder');
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
 		$this->call('MaterielTableSeeder');
-		$this->call('PromotionTableSeeder');
 		$this->call('CourTableSeeder');
 		$this->call('NoteTableSeeder');
 		$this->call('ReservationTableSeeder');
@@ -90,7 +87,7 @@ class UserTableSeeder extends Seeder {
 
 }
 
-/*class FormationTableSeeder extends Seeder {
+class FormationTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -101,6 +98,12 @@ class UserTableSeeder extends Seeder {
 			'conditions' => 'aa',
 			'id_user' => 1
 		));
+		Formation::create(array(
+			'libelle' => 'B',
+			'annee' => 2012,
+			'conditions' => 'bb',
+			'id_user' => 2
+		));
 	}
 
 }
@@ -109,11 +112,10 @@ class ClasseTableSeeder extends Seeder {
 
 	public function run()
 	{
-		DB::table('promotions')->delete();
-		Promotion::create(array(
-			'libelle' => 'promo 1',
-			'id_formation' => 1,
-			'id_user' => 1
+		DB::table('classes')->delete();
+		Classe::create(array(
+			'libelle' => 'classe 1',
+			'id_diplome' => 1
 		));
 	}
 
@@ -124,7 +126,7 @@ class ThematiqueTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('promotions')->delete();
-		Promotion::create(array(
+		Thematique::create(array(
 			'libelle' => 'thème',
 		));
 	}
@@ -136,7 +138,7 @@ class SalleTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('promotions')->delete();
-		Promotion::create(array(
+		Salle::create(array(
 			'libelle' => '',
 		));
 	}
@@ -148,20 +150,7 @@ class MatiereTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('promotions')->delete();
-		Promotion::create(array(
-			'libelle' => 'matière 1',
-			'id_thematique' => 1
-		));
-	}
-
-}
-
-class PromotionTableSeeder extends Seeder {
-
-	public function run()
-	{
-		DB::table('promotions')->delete();
-		Promotion::create(array(
+		Matiere::create(array(
 			'libelle' => 'matière 1',
 			'id_thematique' => 1
 		));
@@ -174,7 +163,7 @@ class CourTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('cours')->delete();
-		Promotion::create(array(
+		Cour::create(array(
 			'start' => '',
 			'end' =>'',
 			'id_user' => 1,
@@ -190,9 +179,8 @@ class MaterielTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('materiels')->delete();
-		Promotion::create(array(
+		Materiel::create(array(
 			'description' => ''
-
 		));
 	}
 
@@ -203,7 +191,7 @@ class ReservationTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('reservations')->delete();
-		Promotion::create(array(
+		Reservation::create(array(
 			'start' => '',
 			'end' =>'',
 			'id_user' => 1,
@@ -218,7 +206,7 @@ class UtilisationTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('utilisations')->delete();
-		Promotion::create(array(
+		Utilisation::create(array(
 			'id_salle' => '',
 			'id_matiere' =>'',
 		));
@@ -231,7 +219,7 @@ class CompositionTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('compositions')->delete();
-		Promotion::create(array(
+		Composition::create(array(
 			'coef' => 1 ,
 			'id_matiere' => '',
 			'id_formation' =>''
@@ -245,7 +233,7 @@ class NoteTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('notes')->delete();
-		Promotion::create(array(
+		Note::create(array(
 			'valeur' => '',
 			'id_user' => '',
 			'id_formation' =>'',
@@ -254,4 +242,3 @@ class NoteTableSeeder extends Seeder {
 	}
 
 }
-*/

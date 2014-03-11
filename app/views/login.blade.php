@@ -6,9 +6,9 @@
 	{{ Form::open(array('url' => 'login', 'class' => 'form-horizontal')) }}
 
 	<div class="control-group">
-		{{ Form::label('email', 'Adresse email', array('class' => 'control-label')) }}
+		{{ Form::label('mail', 'Adresse email', array('class' => 'control-label')) }}
 		<div class="controls">
-			{{ Form::text('email') }}
+			{{ Form::text('mail') }}
 		</div>
 	</div>
 

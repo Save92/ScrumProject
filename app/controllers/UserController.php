@@ -154,7 +154,7 @@ class UserController extends BaseController {
 	public function login()
 	{
 		$rules = array(
-			'email' => 'required|email',
+			'mail' => 'required|email',
 			'password' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
