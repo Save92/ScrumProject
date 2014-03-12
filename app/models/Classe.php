@@ -2,7 +2,7 @@
 
 class Classe extends Eloquent {
 	
-	protected $fillable = array('libelle', 'id_diplome');
+	protected $fillable = array('libelle', 'id_formation');
 
 	protected $guarded = array('id');
 

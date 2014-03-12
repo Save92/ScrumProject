@@ -17,14 +17,15 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 		$this->call('FormationTableSeeder');
 		$this->call('ClasseTableSeeder');
-		$this->call('ThematiqueTableSeeder');
+
+		/*$this->call('ThematiqueTableSeeder');
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
 		$this->call('MaterielTableSeeder');
 		$this->call('CoursTableSeeder');
 		$this->call('NoteTableSeeder');
 		$this->call('ReservationTableSeeder');
-		$this->call('UtilisationTableSeeder');
+		$this->call('UtilisationTableSeeder');*/
 	}
 
 }
@@ -94,7 +95,7 @@ class FormationTableSeeder extends Seeder {
 			'libelle' => 'B',
 			'annee' => 2012,
 			'conditions' => 'bb',
-			'id_user' => 2
+			'id_user' => 1
 		));
 	}
 
@@ -107,7 +108,7 @@ class ClasseTableSeeder extends Seeder {
 		DB::table('classes')->delete();
 		Classe::create(array(
 			'libelle' => 'classe 1',
-			'id_diplome' => 1
+			'id_formation' => 1
 		));
 	}
 
@@ -119,7 +120,7 @@ class ThematiqueTableSeeder extends Seeder {
 	{
 		DB::table('promotions')->delete();
 		Thematique::create(array(
-			'libelle' => 'thème',
+			'libelle' => 'thème 1'
 		));
 	}
 
@@ -131,7 +132,7 @@ class SalleTableSeeder extends Seeder {
 	{
 		DB::table('promotions')->delete();
 		Salle::create(array(
-			'libelle' => '',
+			'libelle' => 'promotion 1'
 		));
 	}
 
@@ -156,11 +157,11 @@ class CoursTableSeeder extends Seeder {
 	{
 		DB::table('cours')->delete();
 		Cours::create(array(
-			'start' => '2014-03-01 10-00',
-			'end' => '',
+			'start' => '2014-03-16 10-00',
+			'end' => '2014-03-16 12-00',
 			'id_user' => 1,
 			'id_salle' => 1,
-			'id_matiere' => 1,
+			'id_matiere' => 1
 		));
 	}
 
@@ -172,7 +173,7 @@ class MaterielTableSeeder extends Seeder {
 	{
 		DB::table('materiels')->delete();
 		Materiel::create(array(
-			'description' => ''
+			'description' => 'materiel 1'
 		));
 	}
 
@@ -184,8 +185,8 @@ class ReservationTableSeeder extends Seeder {
 	{
 		DB::table('reservations')->delete();
 		Reservation::create(array(
-			'start' => '',
-			'end' =>'',
+			'start' => '2014-03-16 10-00',
+			'end' =>'2014-03-16 12-00',
 			'id_user' => 1,
 			'id_materiel' => 1
 		));
@@ -199,8 +200,8 @@ class UtilisationTableSeeder extends Seeder {
 	{
 		DB::table('utilisations')->delete();
 		Utilisation::create(array(
-			'id_salle' => '',
-			'id_matiere' =>'',
+			'id_salle' => 1,
+			'id_matiere' => 1
 		));
 	}
 
@@ -213,8 +214,8 @@ class CompositionTableSeeder extends Seeder {
 		DB::table('compositions')->delete();
 		Composition::create(array(
 			'coef' => 1 ,
-			'id_matiere' => '',
-			'id_formation' =>''
+			'id_matiere' => 1 ,
+			'id_formation' => 1
 		));
 	}
 
@@ -226,10 +227,10 @@ class NoteTableSeeder extends Seeder {
 	{
 		DB::table('notes')->delete();
 		Note::create(array(
-			'valeur' => '',
-			'id_user' => '',
-			'id_formation' =>'',
-			'id_matiere' => '',
+			'valeur' => 12 ,
+			'id_user' => 1 ,
+			'id_formation' => 1,
+			'id_matiere' => 1 
 		));
 	}
 
