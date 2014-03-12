@@ -75,4 +75,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	/**
+	 * Retourne les utilisateurs par roles
+	 *
+	 * @return array
+	 */
+	public function getByRole($id_role)
+	{
+		$users = User::where('id_role', '=', $id_role)->get();
+		return $users;
+	}
+
 }

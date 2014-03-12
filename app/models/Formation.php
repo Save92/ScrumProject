@@ -19,4 +19,8 @@ class Formation extends Eloquent {
 		return $user->getName();
 	}
 
+
+
+
+
 }

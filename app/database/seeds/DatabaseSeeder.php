@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
-		$this->call('FormationTableSeeder');
-		$this->call('ClasseTableSeeder');
-		/*$this->call('ThematiqueTableSeeder');
-		$this->call('SalleTableSeeder');
+		$this->call('FormationTableSeeder');		
+		$this->call('ThematiqueTableSeeder');
 		$this->call('MatiereTableSeeder');
+		/*$this->call('SalleTableSeeder');
+		$this->call('ClasseTableSeeder');
 		$this->call('MaterielTableSeeder');
 		$this->call('CoursTableSeeder');
 		$this->call('NoteTableSeeder');
@@ -128,9 +128,9 @@ class ThematiqueTableSeeder extends Seeder {
 
 	public function run()
 	{
-		DB::table('promotions')->delete();
+		DB::table('thematiques')->delete();
 		Thematique::create(array(
-			'libelle' => 'thème 1'
+			'libelle' => 'Math'
 		));
 	}
 
@@ -140,7 +140,7 @@ class SalleTableSeeder extends Seeder {
 
 	public function run()
 	{
-		DB::table('promotions')->delete();
+		DB::table('salles')->delete();
 		Salle::create(array(
 			'libelle' => 'promotion 1'
 		));
@@ -152,7 +152,7 @@ class MatiereTableSeeder extends Seeder {
 
 	public function run()
 	{
-		DB::table('promotions')->delete();
+		DB::table('matieres')->delete();
 		Matiere::create(array(
 			'libelle' => 'matière 1',
 			'id_thematique' => 1
