@@ -19,6 +19,17 @@ class MatiereController extends BaseController {
 		$matieres = Matiere::all();
 
 		$this->layout->content = View::make('matiere.index')->with('matieres', $matieres);
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $matieres,
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'fields' => array(
+					'Libellé' => 'getName',
+					'Thématique' => 'getThematique'
+				)
+			)
+		);
 	}
 
 	/**
@@ -44,7 +55,7 @@ class MatiereController extends BaseController {
 	public function create()
 	{
 
-		
+
 		$thematiques = Thematique::all();
 		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(

@@ -33,7 +33,6 @@ class UserController extends BaseController {
 				)
 			)
 		);
-
 	}
 
 	/**
