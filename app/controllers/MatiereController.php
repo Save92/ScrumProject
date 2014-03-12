@@ -18,7 +18,6 @@ class MatiereController extends BaseController {
 	{
 		$matieres = Matiere::all();
 
-		$this->layout->content = View::make('matiere.index')->with('matieres', $matieres);
 		$this->layout->content = View::make('layouts.table')->with(
 			array(
 				'items' => $matieres,
