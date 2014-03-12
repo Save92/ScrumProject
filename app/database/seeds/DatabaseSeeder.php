@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
 		$this->call('MaterielTableSeeder');
-		$this->call('CourTableSeeder');
+		$this->call('CoursTableSeeder');
 		$this->call('NoteTableSeeder');
 		$this->call('ReservationTableSeeder');
 		$this->call('UtilisationTableSeeder');*/
@@ -60,18 +60,10 @@ class UserTableSeeder extends Seeder {
 	{
 		DB::table('users')->delete();
 		User::create(array(
-			'prenom' => 'foo',
-			'nom' => 'bar',
+			'prenom' => 'Foo',
+			'nom' => 'Bar',
 			'mail' => 'foo@bar.com',
 			'password' => Hash::make('com'),
-			'id_role' => 1,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'faa',
-			'nom' => 'bor',
-			'mail' => 'faa@bor.com',
-			'password' => Hash::make('moc'),
 			'id_role' => 1,
 			'telephone' => '0123456789'
 		));
@@ -158,12 +150,12 @@ class MatiereTableSeeder extends Seeder {
 
 }
 
-class CourTableSeeder extends Seeder {
+class CoursTableSeeder extends Seeder {
 
 	public function run()
 	{
 		DB::table('cours')->delete();
-		Cour::create(array(
+		Cours::create(array(
 			'start' => '',
 			'end' =>'',
 			'id_user' => 1,

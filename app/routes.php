@@ -233,7 +233,7 @@ Route::get('db', function()
 	return Redirect::to('/');
 });
 
-HTML::macro('clever_link', function($route, $text) {
+HTML::macro('menu_li', function($route, $text) {
 	if( Request::path() == $route ) {
 		$active = "class = 'active'";
 	} else {
@@ -241,4 +241,18 @@ HTML::macro('clever_link', function($route, $text) {
 	}
 
 	return '<li ' . $active . '>' . link_to($route, $text) . '</li>';
+});
+
+HTML::macro('show_user', function($user, $options) {
+	$el = '<a href="' . URL::to('users/' . $user->id) . '"><h3>' . $user->getName() . '</h3></a><p>' . $user->getRole() . '<br/>' . $user->mail . '<br/>' . $user->telephone . '</p>';
+	if (true === $options) {
+		$el.= '<a class="btn btn-small btn-success" href="' . URL::to('users/' . $user->id) . '">Afficher</a>' . ' ' .
+		'<a class="btn btn-small btn-info" href="' . URL::to('users/' . $user->id . '/edit') . '">Modifier</a>' . ' ' .
+		Form::open(array('url' => 'users/' . $user->id, 'class' => 'delete')) .
+		Form::hidden('_method', 'DELETE') .
+		Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
+		Form::close();
+	}
+
+	return $el;
 });

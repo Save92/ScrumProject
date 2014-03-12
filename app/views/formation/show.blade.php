@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('content')
+	<h1>{{ $formation->libelle }} {{ $formation->annee }}</h1>
 	<p>
-		{{ $formation->libelle }} {{ $formation->annee }}<br/>
-		{{ $formation->conditions }} {{ $formation->id_user }} 
+		{{ $formation->conditions }}<br/>
+		{{ $formation->getUser() }}
 	</p>
 @stop

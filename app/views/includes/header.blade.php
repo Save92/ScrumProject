@@ -6,10 +6,10 @@
 
 		@if(Auth::check())
 		<ul class="nav navbar-nav">
-			{{ HTML::clever_link("users", 'Utilisateurs' ) }}
-			{{ HTML::clever_link("formations", 'Formations' ) }}
-			{{ HTML::clever_link("classes", 'Classes' ) }}
-			{{ HTML::clever_link("matieres", 'Matieres' ) }}
+			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
+			{{ HTML::menu_li("formations", 'Formations' ) }}
+			{{ HTML::menu_li("classes", 'Classes' ) }}
+			{{ HTML::menu_li("matieres", 'Matieres' ) }}
 		</ul>
 		@endif
 
@@ -17,7 +17,7 @@
 		@if(Auth::check())
 			<li>
 				<a href="{{ URL::to('users/'.Auth::user()->id) }}">
-					( {{ Auth::user()->prenom }} {{ Auth::user()->nom }} )
+					{{ Auth::user()->prenom }} {{ Auth::user()->nom }} ( {{ Auth::user()->getRole() }} )
 				</a>
 			</li>
 			<li>
