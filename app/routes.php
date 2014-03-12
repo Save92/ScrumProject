@@ -73,6 +73,7 @@ Route::get('db', function()
 	Schema::dropIfExists('compositions');
 	Schema::dropIfExists('notes');
 	Schema::dropIfExists('cours');
+	Schema::dropIfExists('prof_matieres');
 	Schema::dropIfExists('matieres');
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
