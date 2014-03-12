@@ -28,9 +28,8 @@
 	@foreach($users as $key => $value)
 		<tr>
 			<td>
-				<a href="{{ URL::to('users/' . $value->id) }}">
-					{{ $value->getName() }}
-				</a>
+				<!--a href="{{ URL::to('users/' . $value->id) }}"></a-->
+				{{ $value->getName() }}
 			</td>
 			<td>
 				{{ $value->getRole() }}
@@ -42,7 +41,13 @@
 				{{ $value->telephone }}
 			</td>
 			<td>
-				{{ HTML::crud('users/'.$value->id) }}
+				@if(Session::get('role') == 5)
+					{{ HTML::crud('users/'.$value->id, array(1,1,1)) }}
+				@elseif(Session::get('role') == 4)
+					{{ HTML::crud('users/'.$value->id, array(1,1,0)) }}
+				@elseif(Session::get('role') < 4)
+					{{ HTML::crud('users/'.$value->id, array(1,0,0)) }}
+				@endif
 			</td>
 		</tr>
 	@endforeach

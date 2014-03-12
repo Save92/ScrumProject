@@ -7,7 +7,7 @@
 		{{ HTML::style('css/main.css') }}
 	</head>
 	<body>
-		{{ $role = Session::has('role') ? Session::get('role') : 0 }}
+		{{ Session::get('role') }}
 		<header>
 			@include('includes.header')
 		</header>

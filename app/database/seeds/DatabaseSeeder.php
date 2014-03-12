@@ -76,7 +76,7 @@ class UserTableSeeder extends Seeder {
 			'nom' => 'Min',
 			'mail' => 'a@a.a',
 			'password' => Hash::make('a'),
-			'id_role' => 1,
+			'id_role' => 5,
 			'telephone' => '0123456789'
 		));
 	}
