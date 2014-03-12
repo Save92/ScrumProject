@@ -33,4 +33,15 @@ class BaseController extends Controller {
 		Session::flash('alert', 'danger');
 	}
 
+	/**
+	* Permissions insuffisantes
+	*
+	* @return void
+	*/
+	protected function deny() {
+		Session::flash('message', 'Permissions insuffisantes');
+		Session::flash('alert', 'warning');
+		return Redirect::to('/');
+	}
+
 }

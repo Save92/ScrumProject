@@ -12,19 +12,20 @@ class FormationController extends BaseController {
 	 */
 	public function index()
 	{
-		// Récupération des données en fonction du role
+		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
+				$actions = array(1,1,1,1);
 				$formations = Formation::all();
 				break;
 			case 4:
+				$actions = array(1,1,1,0);
 				$formations = Formation::where('id_user',Auth::user()->id)->get();
 				break;
 			default:
-				// Fallback si la route n'est pas bloquée
-				Session::flash('message', 'Permissions insuffisantes');
-				Session::flash('alert', 'warning');
-				return Redirect::to('/');
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
 				break;
 		}
 
@@ -33,6 +34,7 @@ class FormationController extends BaseController {
 				'items' => $formations,
 				'name' => 'Formations',
 				'route' => 'formations',
+				'actions' => $actions,
 				'fields' => array(
 					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
 					'Nom' => 'getName',

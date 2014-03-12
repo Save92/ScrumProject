@@ -19,11 +19,27 @@ class UserController extends BaseController {
 	{
 		$users = User::all();
 
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				break;
+			default:
+				//$actions = array(0,1,0,0);
+				// Fallback si la route n'est pas bloquée
+				$this->deny();
+				break;
+		}
+
 		$this->layout->content = View::make('layouts.table')->with(
 			array(
 				'items' => $users,
 				'name' => 'Utilisateurs',
 				'route' => 'users',
+				'actions' => $actions, // (créer, afficher, modifier, supprimer)
 				'fields' => array(
 					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
 					'Nom' => 'getName',
