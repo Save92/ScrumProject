@@ -13,7 +13,11 @@
 
 App::before(function($request)
 {
-	//
+	if (Auth::guest()) {
+		Session::flash('role', 0);
+	} else {
+		Session::flash('role', Auth::user()->id_role);
+	}
 });
 
 
@@ -21,6 +25,7 @@ App::after(function($request, $response)
 {
 	//
 });
+
 
 /*
 |--------------------------------------------------------------------------
