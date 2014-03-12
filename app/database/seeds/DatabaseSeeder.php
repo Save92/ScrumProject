@@ -107,15 +107,12 @@ class ClasseTableSeeder extends Seeder {
 		DB::table('classes')->delete();
 		Classe::create(array(
 			'libelle' => 'classe 1',
-<<<<<<< HEAD
-=======
 			'id_user' => 1,
 			'id_formation' => 1
 		));
 		Classe::create(array(
 			'libelle' => 'classe 2',
 			'id_user' => 2,
->>>>>>> FETCH_HEAD
 			'id_formation' => 1
 		));
 	}
