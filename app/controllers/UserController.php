@@ -23,49 +23,6 @@ class UserController extends BaseController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 * GET /resource/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		$this->layout->content = View::make('user.create');
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /resource
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$rules = array(
-			'first_name'=> 'required',
-			'last_name'	=> 'required',
-			'email'	=> 'required|email'
-		);
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			return Redirect::to('users/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
-		} else {
-			$user = new User;
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->email = Input::get('email');
-			$user->save();
-
-			Session::flash('message', 'Successfully created');
-			Session::flash('alert', 'success');
-			return Redirect::to('users');
-		}
-	}
-
-	/**
 	 * Display the specified resource.
 	 * GET /resource/{id}
 	 *
@@ -80,6 +37,61 @@ class UserController extends BaseController {
 	}
 
 	/**
+	 * Show the form for creating a new resource.
+	 * GET /resource/create
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		$this->layout->content = View::make('layouts.create')->with('items', array(
+			'users' => array(
+				'prenom'	=> 'Prénom',
+				'nom'		=> 'Nom',
+				'mail'		=> 'Adresse mail',
+				'telephone'	=> 'Téléphone',
+				'id_role'	=> 'Role'
+			)
+		));
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 * POST /resource
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		$rules = array(
+			'prenom'=> 'required',
+			'nom'	=> 'required',
+			'mail'	=> 'required|email',
+			'telephone'	=> 'required',
+			'id_role'	=> 'required'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::to('users/create')
+				->withErrors($validator)
+				->withInput(Input::except('password'));
+		} else {
+			$user = new User;
+			$user->prenom = Input::get('prenom');
+			$user->nom = Input::get('nom');
+			$user->mail = Input::get('mail');
+			$user->telephone = Input::get('telephone');
+			$user->id_role = Input::get('id_role');
+			$user->save();
+
+			Session::flash('message', 'Successfully created');
+			Session::flash('alert', 'success');
+			return Redirect::to('users');
+		}
+	}
+
+	/**
 	 * Show the form for editing the specified resource.
 	 * GET /resource/{id}/edit
 	 *
@@ -90,7 +102,20 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 
-		$this->layout->content = View::make('user.edit')->with('user', $user);
+		$this->layout->content = View::make('layouts.edit')->with(
+			array(
+				'item' => $user,
+				'items' => array(
+					'users' => array(
+						'prenom'	=> 'Prénom',
+						'nom'		=> 'Nom',
+						'mail'		=> 'Adresse mail',
+						'telephone'	=> 'Téléphone',
+						'id_role'	=> 'Role'
+					)
+				)
+			)
+		);
 	}
 
 	/**
@@ -103,9 +128,11 @@ class UserController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'first_name'=> 'required',
-			'last_name'	=> 'required',
-			'email'	=> 'required|email'
+			'prenom'=> 'required',
+			'nom'	=> 'required',
+			'mail'	=> 'required|email',
+			'telephone'	=> 'required',
+			'id_role'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -115,9 +142,11 @@ class UserController extends BaseController {
 				->withInput(Input::except('password'));
 		} else {
 			$user = User::find($id);
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->email = Input::get('email');
+			$user->prenom = Input::get('prenom');
+			$user->nom = Input::get('nom');
+			$user->mail = Input::get('mail');
+			$user->telephone = Input::get('telephone');
+			$user->id_role = Input::get('id_role');
 			$user->save();
 
 			Session::flash('message', 'Successfully updated');
@@ -139,14 +168,14 @@ class UserController extends BaseController {
 		$user->delete();
 
 		Session::flash('message', 'Successfully deleted');
-			Session::flash('alert', 'success');
+		Session::flash('alert', 'success');
 		return Redirect::to('users');
 	}
 
 	public function login()
 	{
 		$rules = array(
-			'email' => 'required|email',
+			'mail' => 'required|email',
 			'password' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -155,7 +184,7 @@ class UserController extends BaseController {
 			return Redirect::to('login')->withErrors($validator);
 		} else {
 			$user = array(
-				'email' => Input::get('email'),
+				'mail' => Input::get('mail'),
 				'password' => Input::get('password')
 			);
 

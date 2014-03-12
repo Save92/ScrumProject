@@ -13,7 +13,11 @@
 
 App::before(function($request)
 {
-	//
+	if (Auth::guest()) {
+		Session::flash('role', 0);
+	} else {
+		Session::flash('role', Auth::user()->id_role);
+	}
 });
 
 
@@ -21,6 +25,7 @@ App::after(function($request, $response)
 {
 	//
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +43,8 @@ Route::filter('auth', function()
 	if (Auth::guest()) {
 		Session::flash('message', 'You must be logged in to view this page');
 		return Redirect::guest('login');
+	} else {
+		//var_dump(Auth::user()->id_role);
 	}
 });
 

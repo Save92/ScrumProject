@@ -22,6 +22,20 @@ class FormationController extends BaseController {
 	}
 
 	/**
+	 * Display the specified resource.
+	 * GET /resource/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$formation = Formation::find($id);
+
+		$this->layout->content = View::make('formation.show')->with('formation', $formation);
+	}
+
+	/**
 	 * Show the form for creating a new resource.
 	 * GET /resource/create
 	 *
@@ -29,7 +43,14 @@ class FormationController extends BaseController {
 	 */
 	public function create()
 	{
-		$this->layout->content = View::make('formation.create');
+		$this->layout->content = View::make('layouts.create')->with('items', array(
+			'formations' => array(
+				'libelle'	=> 'Libellé',
+				'annee'		=> 'Année',
+				'conditions'=> 'Conditions',
+				'id_user'	=> 'Secrétaire pédagogique'
+			)
+		));
 	}
 
 	/**
@@ -57,28 +78,13 @@ class FormationController extends BaseController {
 			$formation->libelle = Input::get('libelle');
 			$formation->annee = Input::get('annee');
 			$formation->conditions = Input::get('conditions');
-			//$formation->id_user = Input::get('id_user');
-			$formation->id_user=1;
+			$formation->id_user = Input::get('id_user');
 			$formation->save();
 
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
 			return Redirect::to('formations');
 		}
-	}
-
-	/**
-	 * Display the specified resource.
-	 * GET /resource/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$formation = Formation::find($id);
-
-		$this->layout->content = View::make('formation.show')->with('formation', $formation);
 	}
 
 	/**
@@ -92,7 +98,19 @@ class FormationController extends BaseController {
 	{
 		$formation = Formation::find($id);
 
-		$this->layout->content = View::make('formation.edit')->with('formation', $formation);
+		$this->layout->content = View::make('layouts.edit')->with(
+			array(
+				'item' => $formation,
+				'items' => array(
+					'formations' => array(
+						'libelle'	=> 'Libellé',
+						'annee'		=> 'Année',
+						'conditions'=> 'Conditions',
+						'id_user'	=> 'Secrétaire pédagogique'
+					)
+				)
+			)
+		);
 	}
 
 	/**

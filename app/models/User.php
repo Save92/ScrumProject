@@ -10,11 +10,33 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	//protected $table = 'users';
+	protected $table = 'users';
 
-	protected $fillable = array('first_name', 'last_name', 'email', 'phone', 'class_id');
+	protected $fillable = array('prenom', 'nom', 'mail', 'telephone');
 
-	protected $guarded = array('id', 'type');
+	protected $guarded = array('id', 'id_role');
+
+	/**
+	 * Retourne le nom de l'utilisateur
+	 *
+	 */
+	public function getName()
+	{
+		$name = $this->prenom . ' ' . $this->nom;
+
+		return $name;
+	}
+
+	/**
+	 * Retourn le nom du rôle de l'utilisateur
+	 *
+	 */
+	public function getRole()
+	{
+		$role = Role::find($this->id_role)->libelle;
+
+		return $role;
+	}
 
 	/**
 	 * The attributes excluded from the model's JSON form.
