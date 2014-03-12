@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
 		$this->call('FormationTableSeeder');
-		/*$this->call('ClasseTableSeeder');
+		$this->call('ClasseTableSeeder');
 		$this->call('ThematiqueTableSeeder');
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('CoursTableSeeder');
 		$this->call('NoteTableSeeder');
 		$this->call('ReservationTableSeeder');
-		$this->call('UtilisationTableSeeder');*/
+		$this->call('UtilisationTableSeeder');
 	}
 
 }
@@ -156,11 +156,11 @@ class CoursTableSeeder extends Seeder {
 	{
 		DB::table('cours')->delete();
 		Cours::create(array(
-			'start' => '',
-			'end' =>'',
+			'start' => '2014-03-01 10-00',
+			'end' => '',
 			'id_user' => 1,
-			'id_salle'=>'',
-			'id_matiere'=>'',
+			'id_salle' => 1,
+			'id_matiere' => 1,
 		));
 	}
 
@@ -187,7 +187,7 @@ class ReservationTableSeeder extends Seeder {
 			'start' => '',
 			'end' =>'',
 			'id_user' => 1,
-			'id_materiel' =>''
+			'id_materiel' => 1
 		));
 	}
 
