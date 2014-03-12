@@ -1,3 +1,16 @@
+<!--
+array(
+	'items' => $exemples,
+	'name' => 'Exemples',
+	'route' => 'exemples',
+	'fields' => array(
+		// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
+		'Exemple' => 'getExemple',
+		'Exemple' => 'getExemple'
+	)
+)
+-->
+
 @extends('layouts.master')
 @section('content')
 

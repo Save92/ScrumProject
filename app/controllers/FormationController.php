@@ -37,6 +37,7 @@ class FormationController extends BaseController {
 					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
 					'Nom' => 'getName',
 					'Responsable' => 'getUser',
+					'Diplome' => 'getDiplome',
 					'Conditions' => 'getTerms'
 				)
 			)

@@ -99,6 +99,10 @@ body {
 	margin: 1% auto;
 }
 
+a, a:hover {
+	text-decoration: none;
+}
+
 section {
 	padding-top: 1%;
 }

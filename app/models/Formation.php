@@ -30,6 +30,17 @@ class Formation extends Eloquent {
 	}
 
 	/**
+	 * Retourne le nom du diplome
+	 *
+	 */
+	public function getDiplome()
+	{
+		$diplome = Diplome::find($this->id_diplome)->libelle;
+
+		return $diplome;
+	}
+
+	/**
 	 * Retourne les conditions
 	 *
 	 */
