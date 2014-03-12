@@ -46,13 +46,15 @@ class FormationController extends BaseController {
 		//$users = User::all()->where('id_role', '=',3);
 
 		$user = new User;
-		$users = $user->getByRole(2);
+		$users = $user->getByRole(4);
+		$diplomes = Diplome::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(
 				'formations' => array(
 					array('libelle', 'Libellé', 'text'),
 					array('conditions', 'Conditions', 'text'),
+					array('id_diplome', 'Diplome', 'select', $diplomes),
 					array('id_user', 'Secrétaire pédagogique', 'select', $users)
 				)
 			)
@@ -82,6 +84,7 @@ class FormationController extends BaseController {
 			$formation = new Formation;
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->id_user = Input::get('id_user');
 			$formation->save();
 
@@ -102,7 +105,7 @@ class FormationController extends BaseController {
 	{
 		$formation = Formation::find($id);
 		$user = new User;
-		$users = $user->getByRole(2);
+		$users = $user->getByRole(4);
 
 
 		$this->layout->content = View::make('layouts.edit')->with(
@@ -111,7 +114,8 @@ class FormationController extends BaseController {
 				'items' => array(
 					'formations' => array(
 						array('libelle', 'Libellé', 'text'),
-						array('conditions', 'Conditions', 'text'),
+						array('libelle', 'Libellé', 'text'),
+						array('id_diplome', 'Diplome', 'text'),
 						array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user)
 					)
 				)
@@ -142,6 +146,7 @@ class FormationController extends BaseController {
 			$formation = Formation::find($id);
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->id_user = Input::get('id_user');
 			$formation->save();
 
