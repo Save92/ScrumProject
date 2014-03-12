@@ -32,7 +32,7 @@ class ClasseController extends BaseController {
 		//$formations = Formation::all();
 		$this->layout->content = View::make('layouts.create')->with('items', array(
 			'classes' => array(
-				'libelle'	=> 'Libellé'
+				array('libelle', 'Libellé', 'text')
 			)
 		));
 	}
