@@ -260,6 +260,10 @@ Route::get('db', function()
 	return Redirect::to('/');
 });
 
+
+
+
+
 HTML::macro('menu_li', function($route, $text) {
 	if( Request::path() == $route ) {
 		$active = "class = 'active'";
@@ -270,8 +274,6 @@ HTML::macro('menu_li', function($route, $text) {
 	return '<li ' . $active . '>' . link_to($route, $text) . '</li>';
 });
 
-// includes?
-// séparation boutons/bt data/bt, view table auto ??
 HTML::macro('show_user', function($user, $options) {
 	$el = '<a href="' . URL::to('users/' . $user->id) . '"><h3>' . $user->getName() . '</h3></a><p>' . $user->getRole() . '<br/>' . $user->mail . '<br/>' . $user->telephone . '</p>';
 	if (true === $options) {
@@ -281,24 +283,6 @@ HTML::macro('show_user', function($user, $options) {
 		Form::hidden('_method', 'DELETE') .
 		Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
 		Form::close();
-	}
-
-	return $el;
-});
-
-HTML::macro('crud', function($url, $rights) {
-	$el = '';
-	if ($rights[0] == true) {
-		$el.= '<a class="btn btn-small btn-success" href="' . URL::to($url) . '">Afficher</a>' . ' ';
-	}
-	if ($rights[1] == true) {
-		$el.= '<a class="btn btn-small btn-info" href="' . URL::to($url . '/edit') . '">Modifier</a>' . ' ';
-	}
-	if ($rights[2] == true) {
-		$el.= Form::open(array('url' => $url, 'class' => 'delete')) .
-			Form::hidden('_method', 'DELETE') .
-			Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
-			Form::close();
 	}
 
 	return $el;

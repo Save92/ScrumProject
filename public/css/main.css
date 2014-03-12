@@ -107,22 +107,14 @@ h2 {
 	margin: 0;
 }
 
-/*ul {
+ul {
 	list-style-type: none;
 	padding: 0;
 }
 
-.blocks li {
-	float: left;
-	padding: 20px;
-	margin-top: 10px;
-	margin-right: 10px;
-	border: 1px solid #ddd;
+thead {
+	font-size: 1.2em;
 }
-
-.blocks h3 {
-	margin: 0;
-}*/
 
 .delete {
 	display: inline-block;

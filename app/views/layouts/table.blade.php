@@ -18,7 +18,10 @@
 				<td>
 					<!--strong>Actions</strong-->
 					@if(Session::get('role') >= 4)
-						<a href="{{ URL::to($route.'/create') }}" class="btn btn-small btn-primary">Nouveau</a>
+						<a href="{{ URL::to($route.'/create') }}" class="btn btn-small btn-primary">
+							<!-- Nouveau -->
+							<span class="glyphicon glyphicon-plus"></span>
+						</a>
 					@endif
 				</td>
 			</tr>
@@ -35,13 +38,13 @@
 				<td>
 					@if(Session::get('role') >= 5)
 						<!-- Administrateur -->
-						{{ HTML::crud($route.'/'.$value->id, array(1,1,1)) }}
+						@include('includes.actions', array('url' => $route.'/'.$value->id, 'readEditDelete' => array(1,1,1)))
 					@elseif(Session::get('role') >= 4)
 						<!-- Secrétaire pédagogique -->
-						{{ HTML::crud($route.'/'.$value->id, array(1,1,0)) }}
+						@include('includes.actions', array('url' => $route.'/'.$value->id, 'readEditDelete' => array(1,1,0)))
 					@elseif(Session::get('role') < 4)
 						<!-- Autre -->
-						{{ HTML::crud($route.'/'.$value->id, array(1,0,0)) }}
+						@include('includes.actions', array('url' => $route.'/'.$value->id, 'readEditDelete' => array(1,0,0)))
 					@endif
 				</td>
 			</tr>
