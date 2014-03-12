@@ -20,11 +20,11 @@
 									$selected = '';
 								}
 							?>
-							<option value="{{ $i->id }}" {{ $selected }}>{{ $i->libelle }}</option>
+							<option value="{{ $i->id }}" {{ $selected }}>{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
 						@endforeach
 						</select>
 					@else
-						<input type="{{ $input[2] }}" name="{{ $input[0] }}" id="{{ $input[0] }}" class="form-control">
+						<input type="{{ $input[2] }}" name="{{ $input[0] }}" id="{{ $input[0] }}" class="form-control" value="{{ $input[0] == 'password' ? '' : $item->$input[0] }}">
 					@endif
 				</div>
 			</div>
