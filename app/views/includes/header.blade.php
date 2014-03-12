@@ -14,6 +14,9 @@
 		@endif
 
 		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<a href="{{ URL::to('db') }}">[seed DB]</a>
+			</li>
 		@if(Auth::check())
 			<li>
 				<a href="{{ URL::to('users/'.Auth::user()->id) }}">

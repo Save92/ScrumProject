@@ -57,7 +57,7 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = new Classe;
 			$classe->libelle = Input::get('libelle');
-			$classe->id_diplome = Input::get('id_diplome');
+			$classe->id_formation = Input::get('id_diplome');
 			$classe->save();
 
 			Session::flash('message', 'Successfully created');
@@ -90,8 +90,19 @@ class ClasseController extends BaseController {
 	public function edit($id)
 	{
 		$classe = Classe::find($id);
+		var_dump($classe);
 
-		$this->layout->content = View::make('classe.edit')->with('classe', $classe);
+		$this->layout->content = View::make('layouts.edit')->with(
+			array(
+				'item' => $classe,
+				'items' => array(
+					'classes' => array(
+						'libelle'	=> 'Libellé',
+						'id_user'	=> 'Utilisateur'
+					)
+				)
+			)
+		);
 	}
 
 	/**

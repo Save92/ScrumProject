@@ -94,7 +94,7 @@ class FormationTableSeeder extends Seeder {
 			'libelle' => 'B',
 			'annee' => 2012,
 			'conditions' => 'bb',
-			'id_user' => 1
+			'id_user' => 2
 		));
 	}
 
@@ -113,7 +113,12 @@ class ClasseTableSeeder extends Seeder {
 		Classe::create(array(
 			'libelle' => 'classe 2',
 			'id_user' => 2,
-			'id_formation' => 1
+			'id_formation' => 2
+		));
+		Classe::create(array(
+			'libelle' => 'classe 3',
+			'id_user' => 2,
+			'id_formation' => 2
 		));
 	}
 
