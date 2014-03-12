@@ -90,15 +90,14 @@ class ClasseController extends BaseController {
 	public function edit($id)
 	{
 		$classe = Classe::find($id);
-		var_dump($classe);
+		//var_dump($classe);
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
 				'item' => $classe,
 				'items' => array(
 					'classes' => array(
-						'libelle'	=> 'Libellé',
-						'id_user'	=> 'Utilisateur'
+						array('libelle', 'Libellé', 'text')
 					)
 				)
 			)

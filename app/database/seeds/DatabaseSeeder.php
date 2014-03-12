@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('FormationTableSeeder');		
 		$this->call('ThematiqueTableSeeder');
 		$this->call('MatiereTableSeeder');
-		/*$this->call('SalleTableSeeder');
+		//$this->call('SalleTableSeeder');
 		$this->call('ClasseTableSeeder');
-		$this->call('MaterielTableSeeder');
+		/*$this->call('MaterielTableSeeder');
 		$this->call('CoursTableSeeder');
 		$this->call('NoteTableSeeder');
 		$this->call('ReservationTableSeeder');
