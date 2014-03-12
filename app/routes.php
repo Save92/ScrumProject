@@ -63,10 +63,10 @@ Route::resource('matieres', 'MatiereController');
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
-	
+
 
 	Schema::dropIfExists('cantines');
-	
+
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('utilisations');
 	Schema::dropIfExists('reservations');

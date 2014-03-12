@@ -14,9 +14,17 @@
 App::before(function($request)
 {
 	if (Auth::guest()) {
-		Session::flash('role', 0);
+		$role = 0;
+		Session::flash('role', $role);
 	} else {
-		Session::flash('role', Auth::user()->id_role);
+		$role = Auth::user()->id_role;
+		Session::flash('role', $role);
+
+		if (Request::is('users/*') && $role < 4) {
+			Session::flash('message', 'Permissions insuffisantes');
+			Session::flash('alert', 'warning');
+			return Redirect::to('/');
+		}
 	}
 });
 
@@ -25,7 +33,6 @@ App::after(function($request, $response)
 {
 	//
 });
-
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +48,8 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (Auth::guest()) {
-		Session::flash('message', 'You must be logged in to view this page');
+		Session::flash('message', 'Vous devez être connecté pour voir cette page');
+		Session::flash('alert', 'warning');
 		return Redirect::guest('login');
 	} else {
 		//var_dump(Auth::user()->id_role);
@@ -68,7 +76,8 @@ Route::filter('auth.basic', function()
 Route::filter('guest', function()
 {
 	if (Auth::check()) {
-		Session::flash('message', 'Already logged in');
+		Session::flash('message', 'Vous êtes déjà connecté');
+		Session::flash('alert', 'warning');
 		return Redirect::to('/');
 	}
 });
