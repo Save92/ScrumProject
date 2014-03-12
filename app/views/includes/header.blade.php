@@ -9,6 +9,7 @@
 			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
 			{{ HTML::menu_li("formations", 'Formations' ) }}
 			{{ HTML::menu_li("classes", 'Classes' ) }}
+			{{ HTML::menu_li("matieres", 'Matieres' ) }}
 		</ul>
 		@endif
 
