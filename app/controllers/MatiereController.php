@@ -43,11 +43,14 @@ class MatiereController extends BaseController {
 	 */
 	public function create()
 	{
+
+		
+		$thematiques = Thematique::all();
 		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(
 				'matieres' => array(
 					array('libelle', 'Libellé', 'text'),
-					array('id_thematique', 'Thématique', 'text')
+					array('id_thematique', 'Thématique', 'select', $thematiques)
 				)
 			)
 		);
@@ -96,17 +99,15 @@ class MatiereController extends BaseController {
 	public function edit($id)
 	{
 		$matiere = Matiere::find($id);
-
-		// Il faudra récuperer les thématiques et les passer
-		// Dans le with avec matiere
+		$thematiques = Thematique::all();
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
 				'item' => $matiere,
 				'items' => array(
 					'matieres' => array(
-						'libelle'	=> 'Libellé',
-						'id_thematique'		=> 'id_thematique'
+						array('libelle', 'Libellé', 'text'),
+						array('id_thematique', 'Thématique', 'select', $thematiques, $matiere->id_thematique)
 					)
 				)
 			)
