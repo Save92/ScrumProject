@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 		$this->call('FormationTableSeeder');
 		$this->call('ClasseTableSeeder');
-
 		/*$this->call('ThematiqueTableSeeder');
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
@@ -108,6 +107,15 @@ class ClasseTableSeeder extends Seeder {
 		DB::table('classes')->delete();
 		Classe::create(array(
 			'libelle' => 'classe 1',
+<<<<<<< HEAD
+=======
+			'id_user' => 1,
+			'id_formation' => 1
+		));
+		Classe::create(array(
+			'libelle' => 'classe 2',
+			'id_user' => 2,
+>>>>>>> FETCH_HEAD
 			'id_formation' => 1
 		));
 	}
