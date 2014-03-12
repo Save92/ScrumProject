@@ -29,14 +29,12 @@ class ClasseController extends BaseController {
 	 */
 	public function create()
 	{
-		$formations = Formation::all();
-		$formations_frmt = array();
-		foreach ($formations as $key => $value) {
-			var_dump($value);
-			$formations_frmt[$key] = $value->libelle;
-		}
-
-		$this->layout->content = View::make('classe.create')->with('formations', $formations_frmt);
+		//$formations = Formation::all();
+		$this->layout->content = View::make('layouts.create')->with('items', array(
+			'classes' => array(
+				'libelle'	=> 'Libellé'
+			)
+		));
 	}
 
 	/**

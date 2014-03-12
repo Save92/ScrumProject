@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
 		$this->call('FormationTableSeeder');
-		/*$this->call('ClasseTableSeeder');
-		$this->call('ThematiqueTableSeeder');
+		$this->call('ClasseTableSeeder');
+		/*$this->call('ThematiqueTableSeeder');
 		$this->call('SalleTableSeeder');
 		$this->call('MatiereTableSeeder');
 		$this->call('MaterielTableSeeder');
@@ -107,7 +107,13 @@ class ClasseTableSeeder extends Seeder {
 		DB::table('classes')->delete();
 		Classe::create(array(
 			'libelle' => 'classe 1',
-			'id_diplome' => 1
+			'id_user' => 1,
+			'id_formation' => 1
+		));
+		Classe::create(array(
+			'libelle' => 'classe 2',
+			'id_user' => 2,
+			'id_formation' => 1
 		));
 	}
 
