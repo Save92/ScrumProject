@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
+		$this->call('DiplomeTableSeeder');
 		$this->call('FormationTableSeeder');
 		$this->call('ThematiqueTableSeeder');
 		$this->call('MatiereTableSeeder');
@@ -161,6 +162,21 @@ class UserTableSeeder extends Seeder {
 
 }
 
+class DiplomeTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('diplomes')->delete();
+		Diplome::create(array(
+			'libelle' => 'Licence math infos'
+		));
+		Diplome::create(array(
+			'libelle' => 'Licence Biologie'
+		));
+	}
+
+}
+
 class FormationTableSeeder extends Seeder {
 
 	public function run()
@@ -168,15 +184,15 @@ class FormationTableSeeder extends Seeder {
 		DB::table('formations')->delete();
 		Formation::create(array(
 			'libelle' => 'A',
-			'annee' => 2012,
 			'conditions' => 'aa',
-			'id_user' => 1
+			'id_user' => 1,
+			'id_diplome' => 1
 		));
 		Formation::create(array(
 			'libelle' => 'B',
-			'annee' => 2012,
 			'conditions' => 'bb',
-			'id_user' => 2
+			'id_user' => 1,
+			'id_diplome' => 2
 		));
 	}
 
@@ -190,17 +206,32 @@ class ClasseTableSeeder extends Seeder {
 		// Classes
 		Classe::create(array(
 			'libelle' => 'classe 1',
+<<<<<<< HEAD
 			'id_user' => 3,
+=======
+			'id_user' => 1,
+			'annee' => '2013/2014',
+>>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 1
 		));
 		Classe::create(array(
 			'libelle' => 'classe 2',
+<<<<<<< HEAD
 			'id_user' => 3,
+=======
+			'id_user' => 2,
+			'annee' => '2013/2014',
+>>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 2
 		));
 		Classe::create(array(
 			'libelle' => 'classe 3',
+<<<<<<< HEAD
 			'id_user' => 4,
+=======
+			'id_user' => 2,
+			'annee' => '2013/2014',
+>>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 2
 		));
 	}
@@ -213,8 +244,87 @@ class ThematiqueTableSeeder extends Seeder {
 	{
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
-			'libelle' => 'Math'
+			'libelle' => 'Culture générale'
+		));		
+		Thematique::create(array(
+			'libelle' => 'Technologie appliqué'
 		));
+		Thematique::create(array(
+			'libelle' => 'Science exacte'
+		));
+		Thematique::create(array(
+			'libelle' => 'Science de la vie'
+		));
+	}
+
+}
+
+class MatiereTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('matieres')->delete();
+		Matiere::create(array(
+			'libelle' => 'Anglais',
+			'id_thematique' => 1
+		));
+		Matiere::create(array(
+			'libelle' => 'Vie en entreprise',
+			'id_thematique' => 1
+		));
+		Matiere::create(array(
+			'libelle' => 'Français',
+			'id_thematique' => 1
+		));
+		Matiere::create(array(
+			'libelle' => 'Informatique',
+			'id_thematique' => 2
+		));
+		Matiere::create(array(
+			'libelle' => 'Electronique',
+			'id_thematique' => 2
+		));
+		Matiere::create(array(
+			'libelle' => 'Mathématiques',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Physique',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Astronomie',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Géologie',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Biologie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Physiologie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Génétique',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Bio-Informatique',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Chimie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'BioChimie',
+			'id_thematique' => 2
+		));
+
 	}
 
 }
@@ -231,18 +341,7 @@ class SalleTableSeeder extends Seeder {
 
 }
 
-class MatiereTableSeeder extends Seeder {
 
-	public function run()
-	{
-		DB::table('matieres')->delete();
-		Matiere::create(array(
-			'libelle' => 'matière 1',
-			'id_thematique' => 1
-		));
-	}
-
-}
 
 class CoursTableSeeder extends Seeder {
 

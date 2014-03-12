@@ -29,6 +29,7 @@ class ClasseController extends BaseController {
 	 */
 	public function create()
 	{
+
 		$user = new User;
 		$users = $user->getByRole(4);
 
@@ -38,6 +39,7 @@ class ClasseController extends BaseController {
 				'classes' => array(
 					array('libelle', 'Libellé', 'text'),
 					array('id_formation', 'Formation', 'select', $formations),
+					// array( annee ),
 					array('id_user', 'Secrétaire pédagogique', 'select', $users)
 				)
 			)
@@ -66,6 +68,7 @@ class ClasseController extends BaseController {
 			$classe->libelle = Input::get('libelle');
 			$classe->id_user = Input::get('id_user');
 			$classe->id_formation = Input::get('id_formation');
+			$classe->annee = Input::get('annee');
 			$classe->save();
 
 			Session::flash('message', 'Successfully created');
@@ -123,7 +126,8 @@ class ClasseController extends BaseController {
 				'item' => $classe,
 				'items' => array(
 					'classes' => array(
-						array('libelle', 'Libellé', 'text')
+						array('libelle', 'Libellé', 'text'),
+						array('annee', 'Année', 'text')
 					)
 				)
 			)
@@ -150,6 +154,7 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = Classe::find($id);
 			$classe->libelle = Input::get('libelle');
+			$classe->annee = Input::get('annee');
 			$classe->save();
 
 			Session::flash('message', 'Successfully updated');

@@ -1,10 +1,8 @@
 <?php
 
-class ThematiqueController extends BaseController {
+class DiplomeController extends BaseController {
 
-	public function __construct()
-	{
-	}
+	
 
 	protected $layout = 'layouts.master';
 
@@ -16,9 +14,9 @@ class ThematiqueController extends BaseController {
 	 */
 	public function index()
 	{
-		$thematiques = Thematique::all();
+		$diplomes = Diplome::all();
 
-		$this->layout->content = View::make('thematique.index')->with('thematiques', $thematiques);
+		$this->layout->content = View::make('diplome.index')->with('diplomes', $diplomes);
 	}
 
 	/**
@@ -30,9 +28,9 @@ class ThematiqueController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$thematique = Thematique::find($id);
+		$diplome = Diplome::find($id);
 
-		$this->layout->content = View::make('thematique.show')->with('thematique', $thematique);
+		$this->layout->content = View::make('diplome.show')->with('diplome', $diplome);
 	}
 
 	/**
@@ -44,7 +42,7 @@ class ThematiqueController extends BaseController {
 	public function create()
 	{
 		$this->layout->content = View::make('layouts.create')->with('items', array(
-			'thematiques' => array(
+			'diplomes' => array(
 				'libelle'	=> 'Libellé'
 			)
 		));
@@ -64,16 +62,16 @@ class ThematiqueController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('thematiques/create')
+			return Redirect::to('diplomes/create')
 				->withErrors($validator);
 		} else {
-			$thematique = new Thematique;
-			$thematique->libelle = Input::get('libelle');
-			$thematique->save();
+			$diplome = new Diplome;
+			$diplome->libelle = Input::get('libelle');
+			$diplome->save();
 
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
-			return Redirect::to('thematiques');
+			return Redirect::to('diplomes');
 		}
 	}
 
@@ -88,16 +86,16 @@ class ThematiqueController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$thematique = Thematique::find($id);
+		$diplome = Diplome::find($id);
 		
 		// Il faudra récuperer les thématiques et les passer
 		// Dans le with avec matiere
 
 		$this->layout->content = View::make('layouts.edit')->with(
 					array(
-						'item' => $thematique,
+						'item' => $diplome,
 						'items' => array(
-							'thematiques' => array(
+							'diplomes' => array(
 								'libelle'	=> 'Libellé'
 							)
 						)
@@ -115,22 +113,21 @@ class ThematiqueController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'libelle'=> 'required',
-			'id_thematique'	=> 'required'
+			'libelle'=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('thematiques/' . $id . '/edit')
+			return Redirect::to('diplomes/' . $id . '/edit')
 				->withErrors($validator);
 		} else {
-			$thematique = Thematique::find($id);
-			$thematique->libelle = Input::get('libelle');
-			$thematique->save();
+			$diplome = Diplome::find($id);
+			$diplome->libelle = Input::get('libelle');
+			$diplome->save();
 
 			Session::flash('message', 'Successfully updated');
 			Session::flash('alert', 'success');
-			return Redirect::to('thematiques');
+			return Redirect::to('diplomes');
 		}
 	}
 
@@ -143,12 +140,12 @@ class ThematiqueController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$thematique = Thematique::find($id);
-		$thematique->delete();
+		$diplome = diplome::find($id);
+		$diplome->delete();
 
 		Session::flash('message', 'Successfully deleted');
 		Session::flash('alert', 'success');
-		return Redirect::to('matieres');
+		return Redirect::to('diplomes');
 	}
 
 }

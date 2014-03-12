@@ -20,5 +20,6 @@
 		</div>
 	</p>
 
-	<a class="btn btn-small btn-success" href="{{ URL::to('classes/'.$classe->id.'/add') }}" style="clear: both;">Ajouter un élève</a>
+	<!--<a class="btn btn-small btn-success" href="{{ URL::to('classes/'.$classe->id.'/add') }}" style="clear: both;">Ajouter un élève</a>-->
+	<a class="btn btn-small btn-success" href="#" style="clear: both;">Ajouter un élève</a>
 @stop

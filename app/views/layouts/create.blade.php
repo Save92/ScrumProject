@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
 	{{ HTML::ul($errors->all()) }}
 	@foreach($items as $key => $value)
 		<form method="POST" action="{{ URL::to($key) }}" role="form" class="form-horizontal">

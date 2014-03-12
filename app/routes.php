@@ -63,19 +63,24 @@ Route::resource('matieres', 'MatiereController');
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
+	
+
 	Schema::dropIfExists('cantines');
+	
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('utilisations');
 	Schema::dropIfExists('reservations');
 	Schema::dropIfExists('compositions');
 	Schema::dropIfExists('notes');
 	Schema::dropIfExists('cours');
+	Schema::dropIfExists('prof_matieres');
 	Schema::dropIfExists('matieres');
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
+	Schema::dropIfExists('diplomes');
 	Schema::dropIfExists('users');
 	Schema::dropIfExists('roles');
 
@@ -102,15 +107,24 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
+	// Diplomes
+	Schema::create('diplomes', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->timestamps();
+	});
+
 	// Formations
 	Schema::create('formations', function($table)
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
-		$table->integer('annee');
 		$table->text('conditions');
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_diplome')->unsigned();
+		$table->foreign('id_diplome')->references('id')->on('diplomes');
 		$table->timestamps();
 	});
 
@@ -119,6 +133,7 @@ Route::get('db', function()
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
+		$table->string('annee', 32);
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
 		$table->integer('id_formation')->unsigned();
@@ -151,6 +166,18 @@ Route::get('db', function()
 		$table->foreign('id_thematique')->references('id')->on('thematiques');
 		$table->timestamps();
 	});
+
+	// Profs et leur matières
+	Schema::create('prof_matieres', function($table)
+	{
+		$table->primary(array('id_user', 'id_matiere'));
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->timestamps();
+	});
+
 
 	// Cours
 	Schema::create('cours', function($table)
@@ -259,13 +286,20 @@ HTML::macro('show_user', function($user, $options) {
 	return $el;
 });
 
-HTML::macro('crud', function($url) {
-	$el = '<a class="btn btn-small btn-success" href="' . URL::to($url) . '">Afficher</a>' . ' ' .
-	'<a class="btn btn-small btn-info" href="' . URL::to($url . '/edit') . '">Modifier</a>' . ' ' .
-	Form::open(array('url' => $url, 'class' => 'delete')) .
-	Form::hidden('_method', 'DELETE') .
-	Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
-	Form::close();
+HTML::macro('crud', function($url, $rights) {
+	$el = '';
+	if ($rights[0] == true) {
+		$el.= '<a class="btn btn-small btn-success" href="' . URL::to($url) . '">Afficher</a>' . ' ';
+	}
+	if ($rights[1] == true) {
+		$el.= '<a class="btn btn-small btn-info" href="' . URL::to($url . '/edit') . '">Modifier</a>' . ' ';
+	}
+	if ($rights[2] == true) {
+		$el.= Form::open(array('url' => $url, 'class' => 'delete')) .
+			Form::hidden('_method', 'DELETE') .
+			Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
+			Form::close();
+	}
 
 	return $el;
 });
