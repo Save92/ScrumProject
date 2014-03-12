@@ -48,16 +48,7 @@ class FormationController extends BaseController {
 		$user = new User;
 		$users = $user->getByRole(2);
 
-		$this->layout->content = View::make('layouts.create')->with('items', array(
-			'formations' => array(
-				'libelle'	=> 'Libellé',
-				'annee'		=> 'Année',
-				'conditions'=> 'Conditions',
-				'id_user'	=> 'Secrétaire pédagogique'
-			)
-		));
-
-				$this->layout->content = View::make('layouts.create')->with(
+		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(
 				'formations' => array(
 					array('libelle', 'Libellé', 'text'),
@@ -113,16 +104,19 @@ class FormationController extends BaseController {
 	public function edit($id)
 	{
 		$formation = Formation::find($id);
+		$user = new User;
+		$users = $user->getByRole(2);
+
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
 				'item' => $formation,
 				'items' => array(
 					'formations' => array(
-						'libelle'	=> 'Libellé',
-						'annee'		=> 'Année',
-						'conditions'=> 'Conditions',
-						'id_user'	=> 'Secrétaire pédagogique'
+						array('libelle', 'Libellé', 'text'),
+						array('annee', 'Année', 'text'),
+						array('conditions', 'Conditions', 'text'),
+						array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user)
 					)
 				)
 			)
