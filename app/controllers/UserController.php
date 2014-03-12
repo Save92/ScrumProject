@@ -65,9 +65,9 @@ class UserController extends BaseController {
 				'users' => array(
 					array('prenom', 'Prénom', 'text'),
 					array('nom', 'Nom', 'text'),
-					array('mail', 'Adresse mail', 'text'),
-					array('telephone', 'Téléphone', 'text'),
 					array('id_role', 'Role', 'select', $roles),
+					array('telephone', 'Téléphone', 'text'),
+					array('mail', 'Adresse mail', 'text'),
 					array('password', 'Mot de passe', 'password')
 				)
 			)
@@ -85,9 +85,9 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'mail'	=> 'required|email',
-			'telephone'	=> 'required',
+			'telephone'	=> '',
 			'id_role'	=> 'required',
+			'mail'	=> 'required|email',
 			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -131,9 +131,9 @@ class UserController extends BaseController {
 					'users' => array(
 						array('prenom', 'Prénom', 'text'),
 						array('nom', 'Nom', 'text'),
-						array('mail', 'Adresse mail', 'text'),
-						array('telephone', 'Téléphone', 'text'),
 						array('id_role', 'Role', 'select', $roles, $user->id_role),
+						array('telephone', 'Téléphone', 'text'),
+						array('mail', 'Adresse mail', 'text'),
 						array('password', 'Mot de passe', 'password')
 					)
 				)
@@ -153,9 +153,9 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'mail'	=> 'required|email',
-			'telephone'	=> 'required',
 			'id_role'	=> 'required',
+			'telephone'	=> '',
+			'mail'	=> 'required|email',
 			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);

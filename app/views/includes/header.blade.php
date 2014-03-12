@@ -7,11 +7,11 @@
 		@if(Auth::check())
 		<ul class="nav navbar-nav">
 
-			@if(Session::get('role') > 2)
+		@if(Session::get('role') > 2)
 			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
 			{{ HTML::menu_li("formations", 'Formations' ) }}
 			{{ HTML::menu_li("matieres", 'Matieres' ) }}
-			@endif
+		@endif
 			{{ HTML::menu_li("classes", 'Classes' ) }}
 
 		</ul>
@@ -19,7 +19,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a href="{{ URL::to('db') }}">[seed DB]</a>
+				<a href="{{ URL::to('db') }}"><strong>DB</strong></a>
 			</li>
 		@if(Auth::check())
 			<li>

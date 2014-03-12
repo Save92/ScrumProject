@@ -13,18 +13,39 @@
 
 App::before(function($request)
 {
+	// Gestion des accès aux routes
+	$access = true;
+
+	// Récupération du role
 	if (Auth::guest()) {
 		$role = 0;
-		Session::flash('role', $role);
 	} else {
 		$role = Auth::user()->id_role;
-		Session::flash('role', $role);
+	}
 
-		if (Request::is('users/*') && $role < 4) {
-			Session::flash('message', 'Permissions insuffisantes');
-			Session::flash('alert', 'warning');
-			return Redirect::to('/');
+	$method = Request::method();
+
+	// Tout sauf administrateurs
+	if ($role == 5) {
+		switch (true) {
+			// Utilisateurs
+			case Request::isMethod('post'): $access = false; break; // Enregistrer
+			case Request::isMethod('put'): $access = false; break; // Modifier
+			case Request::isMethod('delete'): $access = false; break; // Supprimer
+			case Request::is('users/create'): $access = false; break; // Formulaire de création
+			case Request::is('users/*/edit'): $access = false; break; // Formulaire d'édition
+			default: break;
 		}
+	}
+
+	// Emission du role de l'utilisateur
+	Session::flash('role', $role);
+
+	// Redirection si role insuffisant
+	if (!$access) {
+		Session::flash('message', 'Permissions insuffisantes');
+		Session::flash('alert', 'warning');
+		return Redirect::to('/');
 	}
 });
 
