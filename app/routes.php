@@ -166,6 +166,18 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
+	// Profs et leur matières
+	Schema::create('prof_matieres', function($table)
+	{
+		$table->primary(array('id_user', 'id_matiere'));
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->timestamps();
+	});
+
+
 	// Cours
 	Schema::create('cours', function($table)
 	{
