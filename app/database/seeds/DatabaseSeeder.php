@@ -80,6 +80,49 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 5,
 			'telephone' => '0123456789'
 		));
+		User::create(array(
+			'prenom' => 'Ad',
+			'nom' => 'Min',
+			'mail' => 'a@a.a',
+			'password' => Hash::make('a'),
+			'id_role' => 5,
+			'telephone' => '0123456789'
+		));
+		//eleves
+		User::create(array(
+			'prenom' => 'Charlotte',
+			'nom' => 'Alarmée',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Manon',
+			'nom' => 'Anthouard',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Yann',
+			'nom' => 'Bescond',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		//Professeurs
+		User::create(array(
+			'prenom' => 'Claire',
+			'nom' => 'Pedurand',
+			'mail' => 'p@p.p',
+			'password' => Hash::make('p'),
+			'id_role' => 3,
+			'telephone' => '0123456789'
+		));		
+
 	}
 
 }
@@ -133,12 +176,6 @@ class ClasseTableSeeder extends Seeder {
 		));
 		Classe::create(array(
 			'libelle' => 'classe 2',
-			'id_user' => 2,
-			'annee' => '2013/2014',
-			'id_formation' => 2
-		));
-		Classe::create(array(
-			'libelle' => 'classe 3',
 			'id_user' => 2,
 			'annee' => '2013/2014',
 			'id_formation' => 2
