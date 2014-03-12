@@ -154,28 +154,12 @@ class ThematiqueTableSeeder extends Seeder {
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
 			'libelle' => 'Math'
-		));
-
-		DB::table('thematiques')->delete();
+		));		
 		Thematique::create(array(
 			'libelle' => 'Anglais'
 		));
-
-		DB::table('thematiques')->delete();
 		Thematique::create(array(
 			'libelle' => 'Info'
-		));
-	}
-
-}
-
-class SalleTableSeeder extends Seeder {
-
-	public function run()
-	{
-		DB::table('salles')->delete();
-		Salle::create(array(
-			'libelle' => 'promotion 1'
 		));
 	}
 
@@ -193,6 +177,20 @@ class MatiereTableSeeder extends Seeder {
 	}
 
 }
+
+class SalleTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('salles')->delete();
+		Salle::create(array(
+			'libelle' => 'promotion 1'
+		));
+	}
+
+}
+
+
 
 class CoursTableSeeder extends Seeder {
 

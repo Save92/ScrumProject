@@ -32,7 +32,8 @@ class ClasseController extends BaseController {
 		//$formations = Formation::all();
 		$this->layout->content = View::make('layouts.create')->with('items', array(
 			'classes' => array(
-				array('libelle', 'Libellé', 'text')
+				array('libelle', 'Libellé', 'text'),
+				array('annee', 'Année', 'text')
 			)
 		));
 	}
@@ -57,6 +58,7 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = new Classe;
 			$classe->libelle = Input::get('libelle');
+			$classe->annee = Input::get('annee');
 			$classe->id_formation = Input::get('id_diplome');
 			$classe->save();
 
@@ -97,7 +99,8 @@ class ClasseController extends BaseController {
 				'item' => $classe,
 				'items' => array(
 					'classes' => array(
-						array('libelle', 'Libellé', 'text')
+						array('libelle', 'Libellé', 'text'),
+						array('annee', 'Année', 'text')
 					)
 				)
 			)
@@ -124,6 +127,7 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = Classe::find($id);
 			$classe->libelle = Input::get('libelle');
+			$classe->annee = Input::get('annee');
 			$classe->save();
 
 			Session::flash('message', 'Successfully updated');

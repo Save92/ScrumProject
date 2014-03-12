@@ -4,7 +4,7 @@ class Formation extends Eloquent {
 
 	protected $table = 'formations';
 
-	protected $fillable = array('libelle', 'annee', 'conditions', 'id_user');
+	protected $fillable = array('libelle', 'conditions', 'id_user');
 
 	protected $guarded = array('id');
 
