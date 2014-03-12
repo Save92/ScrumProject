@@ -6,10 +6,14 @@
 
 		@if(Auth::check())
 		<ul class="nav navbar-nav">
+
+			@if(Session::get('role') > 2)
 			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
 			{{ HTML::menu_li("formations", 'Formations' ) }}
-			{{ HTML::menu_li("classes", 'Classes' ) }}
 			{{ HTML::menu_li("matieres", 'Matieres' ) }}
+			@endif
+			{{ HTML::menu_li("classes", 'Classes' ) }}
+
 		</ul>
 		@endif
 
