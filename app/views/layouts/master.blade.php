@@ -11,7 +11,7 @@
 		<header>
 			@include('includes.header')
 		</header>
-		<div id="container">
+		<div>
 			@yield('content')
 		</div>
 		<footer>

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
-		$this->call('FormationTableSeeder');		
+		$this->call('FormationTableSeeder');
 		$this->call('ThematiqueTableSeeder');
 		$this->call('MatiereTableSeeder');
 		/*$this->call('SalleTableSeeder');
@@ -35,11 +35,11 @@ class RoleTableSeeder extends Seeder {
 	{
 		DB::table('roles')->delete();
 		Role::create(array(
-			'id' => 1,
+			'id' => 5,
 			'libelle' => 'Admin'
 		));
 		Role::create(array(
-			'id' => 2,
+			'id' => 4,
 			'libelle' => 'Secretaire'
 		));
 		Role::create(array(
@@ -47,8 +47,12 @@ class RoleTableSeeder extends Seeder {
 			'libelle' => 'Professeur'
 		));
 		Role::create(array(
-			'id' => 4,
+			'id' => 2,
 			'libelle' => 'Etudiant'
+		));
+		Role::create(array(
+			'id' => 1,
+			'libelle' => 'Candidat'
 		));
 	}
 
@@ -235,7 +239,7 @@ class NoteTableSeeder extends Seeder {
 			'valeur' => 12 ,
 			'id_user' => 1 ,
 			'id_formation' => 1,
-			'id_matiere' => 1 
+			'id_matiere' => 1
 		));
 	}
 

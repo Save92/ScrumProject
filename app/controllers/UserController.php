@@ -20,6 +20,20 @@ class UserController extends BaseController {
 		$users = User::all();
 
 		$this->layout->content = View::make('user.index')->with('users', $users);
+
+		/*$this->layout->content = View::make('layouts.index')->with(
+			'items', array(
+				$users,
+				array(
+					array('prenom', 'Prénom'),
+					array('nom', 'Nom'),
+					array('mail', 'Adresse mail'),
+					array('telephone', 'Téléphone'),
+					array('id_role', 'Role')
+				)
+			)
+		);*/
+
 	}
 
 	/**

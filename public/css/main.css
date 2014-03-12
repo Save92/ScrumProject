@@ -104,7 +104,7 @@ ul {
 	padding: 0;
 }
 
-#container li {
+.blocks li {
 	float: left;
 	padding: 20px;
 	margin-top: 10px;
@@ -112,7 +112,7 @@ ul {
 	border: 1px solid #ddd;
 }
 
-#container h3 {
+.blocks h3 {
 	margin: 0;
 }
 

@@ -258,3 +258,14 @@ HTML::macro('show_user', function($user, $options) {
 
 	return $el;
 });
+
+HTML::macro('crud', function($url) {
+	$el = '<a class="btn btn-small btn-success" href="' . URL::to($url) . '">Afficher</a>' . ' ' .
+	'<a class="btn btn-small btn-info" href="' . URL::to($url . '/edit') . '">Modifier</a>' . ' ' .
+	Form::open(array('url' => $url, 'class' => 'delete')) .
+	Form::hidden('_method', 'DELETE') .
+	Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
+	Form::close();
+
+	return $el;
+});
