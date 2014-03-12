@@ -2,7 +2,10 @@
 @section('content')
 
 <a href="{{ URL::to('users') }}"><h2>Utilisateurs</h2></a>
-<a href="{{ URL::to('users/create') }}" class="btn btn-small btn-primary">Nouveau</a>
+
+@if(Session::get('role') >= 4)
+	<a href="{{ URL::to('users/create') }}" class="btn btn-small btn-primary">Nouveau</a>
+@endif
 
 <table class="table table-striped">
 	<thead>
@@ -41,9 +44,9 @@
 				{{ $value->telephone }}
 			</td>
 			<td>
-				@if(Session::get('role') == 5)
+				@if(Session::get('role') >= 5)
 					{{ HTML::crud('users/'.$value->id, array(1,1,1)) }}
-				@elseif(Session::get('role') == 4)
+				@elseif(Session::get('role') >= 4)
 					{{ HTML::crud('users/'.$value->id, array(1,1,0)) }}
 				@elseif(Session::get('role') < 4)
 					{{ HTML::crud('users/'.$value->id, array(1,0,0)) }}
