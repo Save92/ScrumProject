@@ -46,7 +46,7 @@ class FormationController extends BaseController {
 		//$users = User::all()->where('id_role', '=',3);
 
 		$user = new User;
-		$users = $user->getByRole(2);
+		$users = $user->getByRole(4);
 
 		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(
@@ -102,7 +102,7 @@ class FormationController extends BaseController {
 	{
 		$formation = Formation::find($id);
 		$user = new User;
-		$users = $user->getByRole(2);
+		$users = $user->getByRole(4);
 
 
 		$this->layout->content = View::make('layouts.edit')->with(
