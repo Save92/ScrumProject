@@ -63,7 +63,10 @@ Route::resource('matieres', 'MatiereController');
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
+	
+
 	Schema::dropIfExists('cantines');
+	
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('utilisations');
 	Schema::dropIfExists('reservations');
@@ -76,6 +79,7 @@ Route::get('db', function()
 	Schema::dropIfExists('materiels');
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
+	Schema::dropIfExists('diplomes');
 	Schema::dropIfExists('users');
 	Schema::dropIfExists('roles');
 
@@ -128,7 +132,7 @@ Route::get('db', function()
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
-		$table->string('annee'; 32);
+		$table->string('annee', 32);
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
 		$table->integer('id_formation')->unsigned();

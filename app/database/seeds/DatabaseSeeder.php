@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('RoleTableSeeder');
 		$this->call('UserTableSeeder');
+		$this->call('DiplomeTableSeeder');
 		$this->call('FormationTableSeeder');
 		$this->call('ThematiqueTableSeeder');
 		$this->call('MatiereTableSeeder');
@@ -83,6 +84,21 @@ class UserTableSeeder extends Seeder {
 
 }
 
+class DiplomeTableSeeder extends Seeder {
+
+	public function run()
+	{
+		DB::table('diplomes')->delete();
+		Diplome::create(array(
+			'libelle' => 'A'
+		));
+		Diplome::create(array(
+			'libelle' => 'B'
+		));
+	}
+
+}
+
 class FormationTableSeeder extends Seeder {
 
 	public function run()
@@ -90,15 +106,15 @@ class FormationTableSeeder extends Seeder {
 		DB::table('formations')->delete();
 		Formation::create(array(
 			'libelle' => 'A',
-			'annee' => 2012,
 			'conditions' => 'aa',
-			'id_user' => 1
+			'id_user' => 1,
+			'id_diplome' => 1
 		));
 		Formation::create(array(
 			'libelle' => 'B',
-			'annee' => 2012,
 			'conditions' => 'bb',
-			'id_user' => 2
+			'id_user' => 1,
+			'id_diplome' => 2
 		));
 	}
 
@@ -112,16 +128,19 @@ class ClasseTableSeeder extends Seeder {
 		Classe::create(array(
 			'libelle' => 'classe 1',
 			'id_user' => 1,
+			'annee' => '2013/2014',
 			'id_formation' => 1
 		));
 		Classe::create(array(
 			'libelle' => 'classe 2',
 			'id_user' => 2,
+			'annee' => '2013/2014',
 			'id_formation' => 2
 		));
 		Classe::create(array(
 			'libelle' => 'classe 3',
 			'id_user' => 2,
+			'annee' => '2013/2014',
 			'id_formation' => 2
 		));
 	}
@@ -135,6 +154,16 @@ class ThematiqueTableSeeder extends Seeder {
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
 			'libelle' => 'Math'
+		));
+
+		DB::table('thematiques')->delete();
+		Thematique::create(array(
+			'libelle' => 'Anglais'
+		));
+
+		DB::table('thematiques')->delete();
+		Thematique::create(array(
+			'libelle' => 'Info'
 		));
 	}
 
