@@ -45,10 +45,13 @@
 			</td>
 			<td>
 				@if(Session::get('role') >= 5)
+					<!-- Administrateur -->
 					{{ HTML::crud('users/'.$value->id, array(1,1,1)) }}
 				@elseif(Session::get('role') >= 4)
+					<!-- Secrétaire pédagogique -->
 					{{ HTML::crud('users/'.$value->id, array(1,1,0)) }}
 				@elseif(Session::get('role') < 4)
+					<!-- Autre -->
 					{{ HTML::crud('users/'.$value->id, array(1,0,0)) }}
 				@endif
 			</td>

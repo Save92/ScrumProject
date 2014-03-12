@@ -1,1 +1,1 @@
-<p>Created by <a href="http://www.larateam-dev.com/">LaraTeam</a></p>
+<!--p>Created by <a href="http://www.larateam-dev.com/">LaraTeam</a></p-->
