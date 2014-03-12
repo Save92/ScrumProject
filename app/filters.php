@@ -26,14 +26,13 @@ App::before(function($request)
 	$method = Request::method();
 
 	// Tout sauf administrateurs
-	if ($role == 5) {
+	if ($role < 5) {
 		switch (true) {
-			// Utilisateurs
-			case Request::isMethod('post'): $access = false; break; // Enregistrer
 			case Request::isMethod('put'): $access = false; break; // Modifier
+			case Request::isMethod('post') && Request::is('users'): $access = false; break; // Enregistrer sauf login
 			case Request::isMethod('delete'): $access = false; break; // Supprimer
-			case Request::is('users/create'): $access = false; break; // Formulaire de création
-			case Request::is('users/*/edit'): $access = false; break; // Formulaire d'édition
+			case Request::is('*/create'): $access = false; break; // Formulaire d'ajout
+			case Request::is('*/edit'): $access = false; break; // Formulaire de modification
 			default: break;
 		}
 	}
@@ -45,7 +44,11 @@ App::before(function($request)
 	if (!$access) {
 		Session::flash('message', 'Permissions insuffisantes');
 		Session::flash('alert', 'warning');
-		return Redirect::to('/');
+		if (Auth::guest()) {
+			return Redirect::to('login');
+		} else {
+			return Redirect::to('/');
+		}
 	}
 });
 

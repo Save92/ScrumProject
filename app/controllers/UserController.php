@@ -87,7 +87,7 @@ class UserController extends BaseController {
 			'nom'	=> 'required',
 			'telephone'	=> '',
 			'id_role'	=> 'required',
-			'mail'	=> 'required|email',
+			'mail'	=> 'required|email|unique:users',
 			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -199,14 +199,21 @@ class UserController extends BaseController {
 
 	public function login()
 	{
+		$message = '';
+
 		$rules = array(
 			'mail' => 'required|email',
-			'password' => 'required'
+			'password' => 'required|min:1'
 		);
+
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('login')->withErrors($validator);
+			$errors = $validator->errors()->all();
+			foreach ($errors as $k => $e) {
+				if($k > 0) $message.='<br/>';
+				$message.= $e;
+			}
 		} else {
 			$user = array(
 				'mail' => Input::get('mail'),
@@ -214,15 +221,19 @@ class UserController extends BaseController {
 			);
 
 			if (Auth::attempt($user)) {
+				// Utilisateur identifié
 				Session::flash('message', 'Successfully logged in');
 				Session::flash('alert', 'success');
 				return Redirect::to('/');
 			}
 
-			Session::flash('message', 'Incorrect username/password combination');
-			Session::flash('alert', 'error');
-			return Redirect::to('login');
+			// Les champs sont valides mais l'identification échoue
+			$message.= 'Incorrect username/password combination';
 		}
+
+		Session::flash('message', $message);
+		Session::flash('alert', 'danger');
+		return Redirect::to('login')->withInput();
 	}
 
 }
