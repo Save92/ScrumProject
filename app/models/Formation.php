@@ -33,7 +33,6 @@ class Formation extends Eloquent {
 	 * Retourne les conditions
 	 *
 	 */
-
 	public function getTerms()
 	{
 		return $this->conditions;

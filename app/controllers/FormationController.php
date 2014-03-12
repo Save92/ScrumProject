@@ -16,7 +16,28 @@ class FormationController extends BaseController {
 	 */
 	public function index()
 	{
-		$formations = Formation::all();
+		if (Session::get('role') == 5) {
+
+		} else if (Session::get('role')) {
+
+		}
+
+		// Récupération des données en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$formations = Formation::all();
+				break;
+			case 4:
+				$formations = Formation::where('id_user',Auth::user()->id)->get();
+				break;
+			default:
+				// Fallback si la route n'est pas déjà sécurisée
+				Session::flash('message', 'Permissions insuffisantes');
+				Session::flash('alert', 'warning');
+				return Redirect::to('/');
+				break;
+		}
+
 
 		$this->layout->content = View::make('layouts.table')->with(
 			array(
@@ -26,7 +47,7 @@ class FormationController extends BaseController {
 				'fields' => array(
 					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
 					'Nom' => 'getName',
-					'Responsable' => 'getName',
+					'Responsable' => 'getUser',
 					'Conditions' => 'getTerms'
 				)
 			)
@@ -55,10 +76,7 @@ class FormationController extends BaseController {
 	 */
 	public function create()
 	{
-		//$users = User::all()->where('id_role', '=',3);
-
-		$user = new User;
-		$users = $user->getByRole(4);
+		$users = User::where('id_role', 4)->get();
 
 		$this->layout->content = View::make('layouts.create')->with(
 			'items', array(
@@ -113,9 +131,8 @@ class FormationController extends BaseController {
 	public function edit($id)
 	{
 		$formation = Formation::find($id);
-		$user = new User;
-		$users = $user->getByRole(4);
 
+		$users = User::where('id_role', 4)->get();
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
@@ -143,7 +160,7 @@ class FormationController extends BaseController {
 		$rules = array(
 			'libelle'=> 'required',
 			'conditions' => 'required',
-			'id_user' => 'required'
+			'id_user' => 'required|integer'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 

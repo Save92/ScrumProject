@@ -1,8 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-@include('includes.title', array('name' => $name, 'route' => $route))
-
 {{ HTML::ul($errors->all()) }}
 
 	@foreach($items as $key => $value)

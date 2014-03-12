@@ -172,7 +172,10 @@ class UserController extends BaseController {
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
 			$user->id_role = Input::get('id_role');
-			$user->password = Hash::make(Input::get('password'));
+			$pw = Input::get('password');
+			if (!empty($pw)) {
+				$user->password = Hash::make(Input::get('password'));
+			}
 			$user->save();
 
 			Session::flash('message', 'Mise à jour réussie');
