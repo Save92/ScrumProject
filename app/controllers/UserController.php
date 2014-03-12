@@ -2,10 +2,10 @@
 
 class UserController extends BaseController {
 
-	public function __construct()
+	/*public function __construct()
 	{
-		//$this->beforeFilter('auth', array('except' => 'login'));
-	}
+		$this->beforeFilter('auth', array('except' => 'login'));
+	}*/
 
 	protected $layout = 'layouts.master';
 
@@ -18,7 +18,6 @@ class UserController extends BaseController {
 	public function index()
 	{
 		$users = User::all();
-		//$this->layout->content = View::make('user.index')->with('users', $users);
 
 		$this->layout->content = View::make('layouts.table')->with(
 			array(
@@ -62,8 +61,10 @@ class UserController extends BaseController {
 		$roles = Role::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'users' => array(
+			array(
+				'name' => 'Utilisateurs',
+				'route' => 'users',
+				'items' => array(
 					array('prenom', 'Prénom', 'text'),
 					array('nom', 'Nom', 'text'),
 					array('id_role', 'Role', 'select', $roles),
@@ -94,9 +95,8 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('users/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('users/create')->withInput(Input::except('password'));
 		} else {
 			$user = new User;
 			$user->prenom = Input::get('prenom');
@@ -127,16 +127,16 @@ class UserController extends BaseController {
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+				'name' => 'Utilisateurs',
+				'route' => 'users',
 				'item' => $user,
 				'items' => array(
-					'users' => array(
-						array('prenom', 'Prénom', 'text'),
-						array('nom', 'Nom', 'text'),
-						array('id_role', 'Role', 'select', $roles, $user->id_role),
-						array('telephone', 'Téléphone', 'text'),
-						array('mail', 'Adresse mail', 'text'),
-						array('password', 'Mot de passe', 'password')
-					)
+					array('prenom', 'Prénom', 'text'),
+					array('nom', 'Nom', 'text'),
+					array('id_role', 'Role', 'select', $roles, $user->id_role),
+					array('telephone', 'Téléphone', 'text'),
+					array('mail', 'Adresse mail', 'text'),
+					array('password', 'Mot de passe', 'password')
 				)
 			)
 		);
@@ -162,9 +162,8 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('users/' . $id . '/edit')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('users/' . $id . '/edit')->withInput(Input::except('password'));
 		} else {
 			$user = User::find($id);
 			$user->prenom = Input::get('prenom');

@@ -99,7 +99,15 @@ body {
 	margin: 1% auto;
 }
 
-ul {
+section {
+	padding-top: 1%;
+}
+
+h2 {
+	margin: 0;
+}
+
+/*ul {
 	list-style-type: none;
 	padding: 0;
 }
@@ -114,7 +122,7 @@ ul {
 
 .blocks h3 {
 	margin: 0;
-}
+}*/
 
 .delete {
 	display: inline-block;

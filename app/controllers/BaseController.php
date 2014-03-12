@@ -16,4 +16,21 @@ class BaseController extends Controller {
 		}
 	}
 
+	/**
+	* Crée un message d'erreur pour sur la prochaine vue si besoin
+	*
+	* @return void
+	*/
+	protected function sendErrors($validator)
+	{
+		$errors = $validator->errors()->all();
+		$message = '';
+		foreach ($errors as $k => $e) {
+			if($k > 0) $message.='<br/>';
+			$message.= $e;
+		}
+		Session::flash('message', $message);
+		Session::flash('alert', 'danger');
+	}
+
 }

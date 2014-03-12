@@ -2,10 +2,6 @@
 
 class FormationController extends BaseController {
 
-	public function __construct()
-	{
-	}
-
 	protected $layout = 'layouts.master';
 
 	/**
@@ -16,12 +12,6 @@ class FormationController extends BaseController {
 	 */
 	public function index()
 	{
-		if (Session::get('role') == 5) {
-
-		} else if (Session::get('role')) {
-
-		}
-
 		// Récupération des données en fonction du role
 		switch (Session::get('role')) {
 			case 5:
@@ -31,13 +21,12 @@ class FormationController extends BaseController {
 				$formations = Formation::where('id_user',Auth::user()->id)->get();
 				break;
 			default:
-				// Fallback si la route n'est pas déjà sécurisée
+				// Fallback si la route n'est pas bloquée
 				Session::flash('message', 'Permissions insuffisantes');
 				Session::flash('alert', 'warning');
 				return Redirect::to('/');
 				break;
 		}
-
 
 		$this->layout->content = View::make('layouts.table')->with(
 			array(
@@ -76,14 +65,20 @@ class FormationController extends BaseController {
 	 */
 	public function create()
 	{
+		// Récupération de tous les secrétaires pédagogiques
 		$users = User::where('id_role', 4)->get();
 
+		$diplomes = Diplome::all();
+
 		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'formations' => array(
+			array(
+				'name' => 'Formations',
+				'route' => 'formations',
+				'items' => array(
 					array('libelle', 'Libellé', 'text'),
 					array('conditions', 'Conditions', 'text'),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users)
+					array('id_user', 'Secrétaire pédagogique', 'select', $users),
+					array('id_diplome', 'Diplome', 'select', $diplomes)
 				)
 			)
 		);
@@ -100,22 +95,23 @@ class FormationController extends BaseController {
 		$rules = array(
 			'libelle'=> 'required',
 			'conditions' => 'required',
-			'id_user' => 'required'
+			'id_user' => 'required|integer',
+			'id_diplome' => 'required|integer'
 		);
 		$validator = Validator::make(Input::all(), $rules);
-
 		if ($validator->fails()) {
-			return Redirect::to('formations/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+
+			return Redirect::to('formations/create')->withInput();
 		} else {
 			$formation = new Formation;
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
 			$formation->id_user = Input::get('id_user');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->save();
 
-			Session::flash('message', 'Successfully created');
+			Session::flash('message', 'Création réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('formations');
 		}
@@ -134,15 +130,18 @@ class FormationController extends BaseController {
 
 		$users = User::where('id_role', 4)->get();
 
+		$diplomes = Diplome::all();
+
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+				'name' => 'Formations',
+				'route' => 'formations',
 				'item' => $formation,
 				'items' => array(
-					'formations' => array(
-						array('libelle', 'Libellé', 'text'),
-						array('conditions', 'Conditions', 'text'),
-						array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user)
-					)
+					array('libelle', 'Libellé', 'text'),
+					array('conditions', 'Conditions', 'text'),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
 				)
 			)
 		);
@@ -160,21 +159,24 @@ class FormationController extends BaseController {
 		$rules = array(
 			'libelle'=> 'required',
 			'conditions' => 'required',
-			'id_user' => 'required|integer'
+			'id_user' => 'required|integer',
+			'id_diplome' => 'required|integer'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('formations/' . $id . '/edit')
-				->withErrors($validator);
+			$this->sendErrors($validator);
+
+			return Redirect::to('formations/' . $id . '/edit')->withInput();
 		} else {
 			$formation = Formation::find($id);
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
 			$formation->id_user = Input::get('id_user');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->save();
 
-			Session::flash('message', 'Successfully updated');
+			Session::flash('message', 'Mise à jour réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('formations');
 		}
@@ -192,7 +194,7 @@ class FormationController extends BaseController {
 		$formation = Formation::find($id);
 		$formation->delete();
 
-		Session::flash('message', 'Successfully deleted');
+		Session::flash('message', 'Suppression réussie');
 		Session::flash('alert', 'success');
 		return Redirect::to('formations');
 	}
