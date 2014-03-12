@@ -85,10 +85,10 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'telephone'	=> '',
-			'id_role'	=> 'required',
+			'telephone'	=> 'numeric|min:10|max:13',
+			'id_role'	=> 'required|integer',
 			'mail'	=> 'required|email|unique:users',
-			'password'	=> ''
+			'password'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -106,7 +106,7 @@ class UserController extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-			Session::flash('message', 'Successfully created');
+			Session::flash('message', 'Création réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
@@ -153,8 +153,8 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'id_role'	=> 'required',
-			'telephone'	=> '',
+			'id_role'	=> 'required|integer',
+			'telephone'	=> 'numeric|min:10|max:13',
 			'mail'	=> 'required|email',
 			'password'	=> ''
 		);
@@ -174,7 +174,7 @@ class UserController extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-			Session::flash('message', 'Successfully updated');
+			Session::flash('message', 'Mise à jour réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
@@ -192,7 +192,7 @@ class UserController extends BaseController {
 		$user = User::find($id);
 		$user->delete();
 
-		Session::flash('message', 'Successfully deleted');
+		Session::flash('message', 'Suppression réussie');
 		Session::flash('alert', 'success');
 		return Redirect::to('users');
 	}
@@ -203,7 +203,7 @@ class UserController extends BaseController {
 
 		$rules = array(
 			'mail' => 'required|email',
-			'password' => 'required|min:1'
+			'password' => 'required'
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -222,13 +222,13 @@ class UserController extends BaseController {
 
 			if (Auth::attempt($user)) {
 				// Utilisateur identifié
-				Session::flash('message', 'Successfully logged in');
+				Session::flash('message', 'Connexion réussie');
 				Session::flash('alert', 'success');
 				return Redirect::to('/');
 			}
 
 			// Les champs sont valides mais l'identification échoue
-			$message.= 'Incorrect username/password combination';
+			$message.= 'L\'e-mail ou le mot de passe saisi est incorrect.';
 		}
 
 		Session::flash('message', $message);

@@ -25,14 +25,24 @@ App::before(function($request)
 
 	$method = Request::method();
 
-	// Tout sauf administrateurs
+	// Restriction des accès
 	if ($role < 5) {
 		switch (true) {
-			case Request::isMethod('put'): $access = false; break; // Modifier
-			case Request::isMethod('post') && Request::is('users'): $access = false; break; // Enregistrer sauf login
-			case Request::isMethod('delete'): $access = false; break; // Supprimer
-			case Request::is('*/create'): $access = false; break; // Formulaire d'ajout
-			case Request::is('*/edit'): $access = false; break; // Formulaire de modification
+			// Modifier
+			case Request::isMethod('put'):
+				$access = false; break;
+			// Enregistrer sauf login
+			case Request::isMethod('post') && !Request::is('login'):
+				$access = false; break;
+			// Supprimer
+			case Request::isMethod('delete'):
+				$access = false; break;
+			// Formulaire d'ajout
+			case Request::is('*/create'):
+				$access = false; break;
+			// Formulaire de modification
+			case Request::is('*/edit'):
+				$access = false; break;
 			default: break;
 		}
 	}
