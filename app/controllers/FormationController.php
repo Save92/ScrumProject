@@ -52,7 +52,6 @@ class FormationController extends BaseController {
 			'items', array(
 				'formations' => array(
 					array('libelle', 'Libellé', 'text'),
-					array('annee', 'Année', 'text'),
 					array('conditions', 'Conditions', 'text'),
 					array('id_user', 'Secrétaire pédagogique', 'select', $users)
 				)
@@ -70,7 +69,6 @@ class FormationController extends BaseController {
 	{
 		$rules = array(
 			'libelle'=> 'required',
-			'annee'	=> 'required',
 			'conditions' => 'required',
 			'id_user' => 'required'
 		);
@@ -83,7 +81,6 @@ class FormationController extends BaseController {
 		} else {
 			$formation = new Formation;
 			$formation->libelle = Input::get('libelle');
-			$formation->annee = Input::get('annee');
 			$formation->conditions = Input::get('conditions');
 			$formation->id_user = Input::get('id_user');
 			$formation->save();
@@ -114,7 +111,6 @@ class FormationController extends BaseController {
 				'items' => array(
 					'formations' => array(
 						array('libelle', 'Libellé', 'text'),
-						array('annee', 'Année', 'text'),
 						array('conditions', 'Conditions', 'text'),
 						array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user)
 					)
@@ -134,7 +130,6 @@ class FormationController extends BaseController {
 	{
 		$rules = array(
 			'libelle'=> 'required',
-			'annee'	=> 'required',
 			'conditions' => 'required',
 			'id_user' => 'required'
 		);
@@ -146,7 +141,6 @@ class FormationController extends BaseController {
 		} else {
 			$formation = Formation::find($id);
 			$formation->libelle = Input::get('libelle');
-			$formation->annee = Input::get('annee');
 			$formation->conditions = Input::get('conditions');
 			$formation->id_user = Input::get('id_user');
 			$formation->save();
