@@ -90,10 +90,10 @@ class DiplomeTableSeeder extends Seeder {
 	{
 		DB::table('diplomes')->delete();
 		Diplome::create(array(
-			'libelle' => 'A'
+			'libelle' => 'Licence math infos'
 		));
 		Diplome::create(array(
-			'libelle' => 'B'
+			'libelle' => 'Licence Biologie'
 		));
 	}
 
@@ -153,13 +153,16 @@ class ThematiqueTableSeeder extends Seeder {
 	{
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
-			'libelle' => 'Math'
+			'libelle' => 'Culture générale'
 		));		
 		Thematique::create(array(
-			'libelle' => 'Anglais'
+			'libelle' => 'Technologie appliqué'
 		));
 		Thematique::create(array(
-			'libelle' => 'Info'
+			'libelle' => 'Science exacte'
+		));
+		Thematique::create(array(
+			'libelle' => 'Science de la vie'
 		));
 	}
 
@@ -171,9 +174,66 @@ class MatiereTableSeeder extends Seeder {
 	{
 		DB::table('matieres')->delete();
 		Matiere::create(array(
-			'libelle' => 'matière 1',
+			'libelle' => 'Anglais',
 			'id_thematique' => 1
 		));
+		Matiere::create(array(
+			'libelle' => 'Vie en entreprise',
+			'id_thematique' => 1
+		));
+		Matiere::create(array(
+			'libelle' => 'Français',
+			'id_thematique' => 1
+		));
+		Matiere::create(array(
+			'libelle' => 'Informatique',
+			'id_thematique' => 2
+		));
+		Matiere::create(array(
+			'libelle' => 'Electronique',
+			'id_thematique' => 2
+		));
+		Matiere::create(array(
+			'libelle' => 'Mathématiques',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Physique',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Astronomie',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Géologie',
+			'id_thematique' => 3
+		));
+		Matiere::create(array(
+			'libelle' => 'Biologie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Physiologie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Génétique',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Bio-Informatique',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'Chimie',
+			'id_thematique' => 4
+		));
+		Matiere::create(array(
+			'libelle' => 'BioChimie',
+			'id_thematique' => 2
+		));
+
 	}
 
 }

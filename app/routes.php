@@ -73,6 +73,7 @@ Route::get('db', function()
 	Schema::dropIfExists('compositions');
 	Schema::dropIfExists('notes');
 	Schema::dropIfExists('cours');
+	Schema::dropIfExists('prof_matieres');
 	Schema::dropIfExists('matieres');
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
@@ -165,6 +166,18 @@ Route::get('db', function()
 		$table->foreign('id_thematique')->references('id')->on('thematiques');
 		$table->timestamps();
 	});
+
+	// Profs et leur matières
+	Schema::create('prof_matieres', function($table)
+	{
+		$table->primary(array('id_user', 'id_matiere'));
+		$table->integer('id_user')->unsigned();
+		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_matiere')->unsigned();
+		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->timestamps();
+	});
+
 
 	// Cours
 	Schema::create('cours', function($table)
