@@ -18,21 +18,22 @@ class UserController extends BaseController {
 	public function index()
 	{
 		$users = User::all();
+		//$this->layout->content = View::make('user.index')->with('users', $users);
 
-		$this->layout->content = View::make('user.index')->with('users', $users);
-
-		/*$this->layout->content = View::make('layouts.index')->with(
-			'items', array(
-				$users,
-				array(
-					array('prenom', 'Prénom'),
-					array('nom', 'Nom'),
-					array('mail', 'Adresse mail'),
-					array('telephone', 'Téléphone'),
-					array('id_role', 'Role')
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $users,
+				'name' => 'Utilisateurs',
+				'route' => 'users',
+				'fields' => array(
+					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
+					'Nom' => 'getName',
+					'Adresse mail' => 'getMail',
+					'Téléphone' => 'getPhone',
+					'Role' => 'getRole'
 				)
 			)
-		);*/
+		);
 
 	}
 
@@ -85,7 +86,7 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'telephone'	=> 'numeric|min:10|max:13',
+			'telephone'	=> 'numeric',
 			'id_role'	=> 'required|integer',
 			'mail'	=> 'required|email|unique:users',
 			'password'	=> 'required'
@@ -154,7 +155,7 @@ class UserController extends BaseController {
 			'prenom'=> 'required',
 			'nom'	=> 'required',
 			'id_role'	=> 'required|integer',
-			'telephone'	=> 'numeric|min:10|max:13',
+			'telephone'	=> 'numeric',
 			'mail'	=> 'required|email',
 			'password'	=> ''
 		);
@@ -228,7 +229,7 @@ class UserController extends BaseController {
 			}
 
 			// Les champs sont valides mais l'identification échoue
-			$message.= 'L\'e-mail ou le mot de passe saisi est incorrect.';
+			$message.= 'Le mail ou le mot de passe saisi est incorrect.';
 		}
 
 		Session::flash('message', $message);

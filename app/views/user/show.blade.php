@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
 
+@include('includes.title', array('name' => 'Utilisateurs', 'route' => 'users'))
+
 	<?php $table = 'users' ?>
 
 	<h3>{{ $user->getName() }}</h3>

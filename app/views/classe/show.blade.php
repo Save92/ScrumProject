@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
 
+@include('includes.title', array('name' => 'Classes', 'route' => 'classes'))
+
 	<h1>{{ $classe->libelle }}</h1>
 	<h4>Formation: {{ $formation }}</h4>
 	<p>

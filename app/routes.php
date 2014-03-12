@@ -78,7 +78,7 @@ Route::get('db', function()
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
-	Schema::dropIfExists('classes');
+	//Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('diplomes');
 	Schema::dropIfExists('users');

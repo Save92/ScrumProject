@@ -18,7 +18,19 @@ class FormationController extends BaseController {
 	{
 		$formations = Formation::all();
 
-		$this->layout->content = View::make('formation.index')->with('formations', $formations);
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $formations,
+				'name' => 'Formations',
+				'route' => 'formations',
+				'fields' => array(
+					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
+					'Nom' => 'getName',
+					'Responsable' => 'getName',
+					'Conditions' => 'getTerms'
+				)
+			)
+		);
 	}
 
 	/**

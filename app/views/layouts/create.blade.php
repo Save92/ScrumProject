@@ -1,7 +1,10 @@
 @extends('layouts.master')
 @section('content')
 
-	{{ HTML::ul($errors->all()) }}
+@include('includes.title', array('name' => $name, 'route' => $route))
+
+{{ HTML::ul($errors->all()) }}
+
 	@foreach($items as $key => $value)
 		<form method="POST" action="{{ URL::to($key) }}" role="form" class="form-horizontal">
 		@foreach($value as $input)

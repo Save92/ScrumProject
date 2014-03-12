@@ -9,6 +9,16 @@ class Formation extends Eloquent {
 	protected $guarded = array('id');
 
 	/**
+	 * Retourne le nom de la formation
+	 *
+	 */
+
+	public function getName()
+	{
+		return $this->libelle;
+	}
+
+	/**
 	 * Retourne le nom du responsable de la formation
 	 *
 	 */
@@ -19,8 +29,14 @@ class Formation extends Eloquent {
 		return $user->getName();
 	}
 
+	/**
+	 * Retourne les conditions
+	 *
+	 */
 
-
-
+	public function getTerms()
+	{
+		return $this->conditions;
+	}
 
 }

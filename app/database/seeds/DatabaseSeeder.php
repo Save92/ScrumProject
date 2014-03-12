@@ -206,32 +206,20 @@ class ClasseTableSeeder extends Seeder {
 		// Classes
 		Classe::create(array(
 			'libelle' => 'classe 1',
-<<<<<<< HEAD
-			'id_user' => 3,
-=======
 			'id_user' => 1,
 			'annee' => '2013/2014',
->>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 1
 		));
 		Classe::create(array(
 			'libelle' => 'classe 2',
-<<<<<<< HEAD
-			'id_user' => 3,
-=======
 			'id_user' => 2,
 			'annee' => '2013/2014',
->>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 2
 		));
 		Classe::create(array(
 			'libelle' => 'classe 3',
-<<<<<<< HEAD
-			'id_user' => 4,
-=======
 			'id_user' => 2,
 			'annee' => '2013/2014',
->>>>>>> 204348a1870dc0f7e24ded7929640d8508c67075
 			'id_formation' => 2
 		));
 	}
@@ -245,7 +233,7 @@ class ThematiqueTableSeeder extends Seeder {
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
 			'libelle' => 'Culture générale'
-		));		
+		));
 		Thematique::create(array(
 			'libelle' => 'Technologie appliqué'
 		));

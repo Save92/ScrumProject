@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-<a href="{{ URL::to('matieres') }}"><h2>Matieres</h2></a>
-<a href="{{ URL::to('matieres/create') }}" class="btn btn-small btn-primary">Nouveau</a>
+@include('includes.title', array('name' => 'Matières', 'route' => 'matieres'))
 
 <ul>
 	@foreach($matieres as $key => $value)
