@@ -1,1 +1,1 @@
-<div style="position: relative; top: 30px; border-top: 1px solid #c0c0c0; clear: both;">Created by <a href="http://www.larateam-dev.com/">LaraTeam</a></div>
+<p>Created by <a href="http://www.larateam-dev.com/">LaraTeam</a></p>

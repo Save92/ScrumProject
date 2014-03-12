@@ -23,5 +23,4 @@
 	@endforeach
 </ul>
 
-</div>
 @stop

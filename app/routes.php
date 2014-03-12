@@ -102,15 +102,24 @@ Route::get('db', function()
 		$table->timestamps();
 	});
 
+	// Diplomes
+	Schema::create('diplomes', function($table)
+	{
+		$table->increments('id');
+		$table->string('libelle', 32);
+		$table->timestamps();
+	});
+
 	// Formations
 	Schema::create('formations', function($table)
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
-		$table->integer('annee');
 		$table->text('conditions');
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
+		$table->integer('id_diplome')->unsigned();
+		$table->foreign('id_diplome')->references('id')->on('diplomes');
 		$table->timestamps();
 	});
 
@@ -119,6 +128,7 @@ Route::get('db', function()
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
+		$table->string('annee'; 32);
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
 		$table->integer('id_formation')->unsigned();
