@@ -43,6 +43,11 @@ class FormationController extends BaseController {
 	 */
 	public function create()
 	{
+		//$users = User::all()->where('id_role', '=',3);
+
+		$user = new User;
+		$users = $user->getByRole(2);
+
 		$this->layout->content = View::make('layouts.create')->with('items', array(
 			'formations' => array(
 				'libelle'	=> 'Libellé',
@@ -51,6 +56,17 @@ class FormationController extends BaseController {
 				'id_user'	=> 'Secrétaire pédagogique'
 			)
 		));
+
+				$this->layout->content = View::make('layouts.create')->with(
+			'items', array(
+				'formations' => array(
+					array('libelle', 'Libellé', 'text'),
+					array('annee', 'Année', 'text'),
+					array('conditions', 'Conditions', 'text'),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users)
+				)
+			)
+		);
 	}
 
 	/**

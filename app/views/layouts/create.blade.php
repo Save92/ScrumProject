@@ -11,7 +11,7 @@
 					@if($input[2] == 'select' && isset($input[3]))
 						<select name="{{ $input[0] }}" id="{{ $input[0] }}" class="form-control">
 						@foreach($input[3] as $i)
-							<option value="{{ $i->id }}">{{ $i->libelle }}</option>
+							<option value="{{ $i->id }}">{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
 						@endforeach
 						</select>
 					@else
