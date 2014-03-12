@@ -243,6 +243,8 @@ HTML::macro('menu_li', function($route, $text) {
 	return '<li ' . $active . '>' . link_to($route, $text) . '</li>';
 });
 
+// includes?
+// séparation boutons/bt data/bt, view table auto ??
 HTML::macro('show_user', function($user, $options) {
 	$el = '<a href="' . URL::to('users/' . $user->id) . '"><h3>' . $user->getName() . '</h3></a><p>' . $user->getRole() . '<br/>' . $user->mail . '<br/>' . $user->telephone . '</p>';
 	if (true === $options) {

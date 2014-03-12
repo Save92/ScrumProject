@@ -44,15 +44,20 @@ class UserController extends BaseController {
 	 */
 	public function create()
 	{
-		$this->layout->content = View::make('layouts.create')->with('items', array(
-			'users' => array(
-				'prenom'	=> 'Prénom',
-				'nom'		=> 'Nom',
-				'mail'		=> 'Adresse mail',
-				'telephone'	=> 'Téléphone',
-				'id_role'	=> 'Role'
+		$roles = Role::all();
+
+		$this->layout->content = View::make('layouts.create')->with(
+			'items', array(
+				'users' => array(
+					array('prenom', 'Prénom', 'text'),
+					array('nom', 'Nom', 'text'),
+					array('mail', 'Adresse mail', 'text'),
+					array('telephone', 'Téléphone', 'text'),
+					array('id_role', 'Role', 'select', $roles),
+					array('password', 'Mot de passe', 'password')
+				)
 			)
-		));
+		);
 	}
 
 	/**
@@ -68,7 +73,8 @@ class UserController extends BaseController {
 			'nom'	=> 'required',
 			'mail'	=> 'required|email',
 			'telephone'	=> 'required',
-			'id_role'	=> 'required'
+			'id_role'	=> 'required',
+			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -83,6 +89,7 @@ class UserController extends BaseController {
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
 			$user->id_role = Input::get('id_role');
+			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
 			Session::flash('message', 'Successfully created');
@@ -101,17 +108,19 @@ class UserController extends BaseController {
 	public function edit($id)
 	{
 		$user = User::find($id);
+		$roles = Role::all();
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
 				'item' => $user,
 				'items' => array(
 					'users' => array(
-						'prenom'	=> 'Prénom',
-						'nom'		=> 'Nom',
-						'mail'		=> 'Adresse mail',
-						'telephone'	=> 'Téléphone',
-						'id_role'	=> 'Role'
+						array('prenom', 'Prénom', 'text'),
+						array('nom', 'Nom', 'text'),
+						array('mail', 'Adresse mail', 'text'),
+						array('telephone', 'Téléphone', 'text'),
+						array('id_role', 'Role', 'select', $roles, $user->id_role),
+						array('password', 'Mot de passe', 'password')
 					)
 				)
 			)
@@ -132,7 +141,8 @@ class UserController extends BaseController {
 			'nom'	=> 'required',
 			'mail'	=> 'required|email',
 			'telephone'	=> 'required',
-			'id_role'	=> 'required'
+			'id_role'	=> 'required',
+			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -147,6 +157,7 @@ class UserController extends BaseController {
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
 			$user->id_role = Input::get('id_role');
+			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
 			Session::flash('message', 'Successfully updated');

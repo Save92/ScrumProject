@@ -1,16 +1,25 @@
 @extends('layouts.master')
 @section('content')
-
 	{{ HTML::ul($errors->all()) }}
 	@foreach($items as $key => $value)
-		{{ Form::open(array('url' => $key, 'class' => 'form-horizontal', 'role' => 'form')) }}
-		@foreach($value as $input => $label)
+		<form method="POST" action="{{ URL::to($key) }}" role="form" class="form-horizontal">
+		@foreach($value as $input)
+
 			<div class="form-group">
-				{{ Form::label($input, $label, array('class' => 'col-sm-2 control-label')) }}
+				<label for="{{ $input[0] }}" class="col-sm-2 control-label">{{ $input[1] }}</label>
 				<div class="col-sm-10">
-					{{ Form::text($input, null, array('class' => 'form-control')) }}
+					@if($input[2] == 'select' && isset($input[3]))
+						<select name="{{ $input[0] }}" id="{{ $input[0] }}" class="form-control">
+						@foreach($input[3] as $i)
+							<option value="{{ $i->id }}">{{ $i->libelle }}</option>
+						@endforeach
+						</select>
+					@else
+						<input type="{{ $input[2] }}" name="{{ $input[0] }}" id="{{ $input[0] }}" class="form-control">
+					@endif
 				</div>
 			</div>
+
 		@endforeach
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
@@ -19,10 +28,10 @@
 					<span class="glyphicon glyphicon-chevron-left"></span>
 					</button>
 				</a>
-				{{ Form::submit('Ajouter', array('class' => 'btn btn-primary')); }}
+				<input type="submit" class="btn btn-primary" value="Ajouter">
 			</div>
 		</div>
-		{{ Form::close() }}
+		</form>
 	@endforeach
 
 @stop
