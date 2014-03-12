@@ -3,7 +3,7 @@
 
 	{{ HTML::ul($errors->all()) }}
 	@foreach($items as $key => $value)
-		<form method="POST" action="{{ URL::to($key) . $item->id }}" role="form" class="form-horizontal">
+		<form method="POST" action="{{ URL::to($key) . '/' . $item->id }}" role="form" class="form-horizontal">
 			<input name="_method" type="hidden" value="PUT">
 		@foreach($value as $input)
 
