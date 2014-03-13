@@ -9,11 +9,27 @@
 
 		{{-- MENU --}}
 		@if(Session::get('role') > 2)
-			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
-			{{ HTML::menu_li("formations", 'Formations' ) }}
-			{{ HTML::menu_li("matieres", 'Matieres' ) }}
+			<li {{ ( Request::is('users') || Request::is('users/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('users') }}">
+					Utilisateurs
+				</a>
+			</li>
+			<li {{ ( Request::is('formations') || Request::is('formations/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('formations') }}">
+					Formations
+				</a>
+			</li>
+			<li {{ ( Request::is('matieres') || Request::is('matieres/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('matieres') }}">
+					Matières
+				</a>
+			</li>
 		@endif
-			{{ HTML::menu_li("classes", 'Classes' ) }}
+			<li {{ ( Request::is('classes') || Request::is('classes/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('classes') }}">
+					Classes
+				</a>
+			</li>
 
 		</ul>
 		@endif
@@ -23,7 +39,7 @@
 				<a href="{{ URL::to('db') }}"><strong>DB</strong></a>
 			</li>
 		@if(Auth::check())
-			<li>
+			<li {{ ( Request::is('users/'.Auth::user()->id) ) ? 'class="active"' : '' }}>
 				<a href="{{ URL::to('users/'.Auth::user()->id) }}">
 					{{ Auth::user()->prenom }} {{ Auth::user()->nom }} ( {{ Auth::user()->getRole() }} )
 				</a>
@@ -34,7 +50,7 @@
 				</a>
 			</li>
 		@else
-			<li>
+			<li {{ ( Request::is('login') ) ? 'class="active"' : '' }}>
 				<a href="{{ URL::to('login') }}">
 					Connexion
 				</a>

@@ -31,7 +31,7 @@ array(
 				<div class="col-sm-10">
 					@if($value[2] == 'select' && isset($value[3]))
 						<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
-						@foreach($value[3] as $i)
+							@foreach($value[3] as $i)
 							<?php
 								if ($value[4] == $i->id) {
 									$selected = 'selected = "selected"';
@@ -40,7 +40,7 @@ array(
 								}
 							?>
 							<option value="{{ $i->id }}" {{ $selected }}>{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
-						@endforeach
+							@endforeach
 						</select>
 					@else
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">

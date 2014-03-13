@@ -208,13 +208,18 @@ class UserController extends BaseController {
 	public function destroy($id)
 	{
 		$user = User::find($id);
-		$user->delete();
 
-		Session::flash('message', 'Suppression réussie');
-		Session::flash('alert', 'success');
+		$this->tryDelete($user);
+
 		return Redirect::to('users');
 	}
 
+	/**
+	 * Authentification
+	 * POST /login
+	 *
+	 * @return Response
+	 */
 	public function login()
 	{
 		$message = '';

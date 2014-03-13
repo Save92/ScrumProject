@@ -18,6 +18,14 @@ Route::get('/', array('as' => 'home', function()
 
 Route::group(array('before' => 'auth'), function()
 {
+	Route::resource('users', 'UserController');
+
+	Route::resource('formations', 'FormationController');
+
+	Route::resource('classes', 'ClasseController');
+
+	Route::resource('matieres', 'MatiereController');
+
 	Route::get('logout', array('as' => 'logout', function()
 	{
 		Auth::logout();
@@ -37,40 +45,12 @@ Route::group(array('before' => 'gest'), function()
 	}));
 });
 
-/*
-Route::resource('resources', 'ResourceController');
-
-GET			/resource					index	resource.index
-GET			/resource/create			create	resource.create
-POST		/resource					store	resource.store
-GET			/resource/{resource}		show	resource.show
-GET			/resource/{resource}/edit	edit	resource.edit
-PUT/PATCH	/resource/{resource}		update	resource.update
-DELETE		/resource/{resource}		destroy	resource.destroy
-*/
-
-Route::resource('users', 'UserController');
-
-Route::resource('formations', 'FormationController');
-
-Route::resource('classes', 'ClasseController');
-
-Route::resource('matieres', 'MatiereController');
-
-
-
-
-
-
-
-
-
 
 
 /*
-* Init / mise à jour BDD
-*
-*
+| Init / mise à jour BDD
+|
+|
 */
 Route::get('db', function()
 {
@@ -282,7 +262,7 @@ Route::get('db', function()
 
 
 HTML::macro('menu_li', function($route, $text) {
-	if( Request::path() == $route ) {
+	if( Request::is($route) || Request::is($route.'/*') ) {
 		$active = "class = 'active'";
 	} else {
 		$active = '';

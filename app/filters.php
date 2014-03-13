@@ -13,53 +13,7 @@
 
 App::before(function($request)
 {
-	// Gestion des accès aux routes
-	$access = true;
-
-	// Récupération du role
-	if (Auth::guest()) {
-		$role = 0;
-	} else {
-		$role = Auth::user()->id_role;
-	}
-
-	$method = Request::method();
-
-	// Restriction des accès
-	if ($role < 5) {
-		switch (true) {
-			// Modifier
-			case Request::isMethod('put'):
-				$access = false; break;
-			// Enregistrer sauf login
-			case Request::isMethod('post') && !Request::is('login'):
-				$access = false; break;
-			// Supprimer
-			case Request::isMethod('delete'):
-				$access = false; break;
-			// Formulaire d'ajout
-			case Request::is('*/create'):
-				$access = false; break;
-			// Formulaire de modification
-			case Request::is('*/edit'):
-				$access = false; break;
-			default: break;
-		}
-	}
-
-	// Emission du role de l'utilisateur
-	Session::flash('role', $role);
-
-	// Redirection si role insuffisant
-	if (!$access) {
-		Session::flash('message', 'Permissions insuffisantes');
-		Session::flash('alert', 'warning');
-		if (Auth::guest()) {
-			return Redirect::to('login');
-		} else {
-			return Redirect::to('/');
-		}
-	}
+	//
 });
 
 
@@ -82,11 +36,54 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (Auth::guest()) {
-		Session::flash('message', 'Vous devez être connecté pour voir cette page');
+		Session::flash('message', 'Veuillez vous connecter');
 		Session::flash('alert', 'warning');
+
 		return Redirect::guest('login');
 	} else {
-		//var_dump(Auth::user()->id_role);
+		// Gestion des accès aux routes
+		$access = true;
+
+		// Récupération du role
+		$role = Auth::user()->id_role;
+
+		$method = Request::method();
+
+		// Restriction des accès
+		if ($role < 5) {
+			switch (true) {
+				// Modifier
+				case Request::isMethod('put'):
+					$access = false; break;
+				// Enregistrer sauf login
+				case Request::isMethod('post') && !Request::is('login'):
+					$access = false; break;
+				// Supprimer
+				case Request::isMethod('delete'):
+					$access = false; break;
+				// Formulaire d'ajout
+				case Request::is('*/create'):
+					$access = false; break;
+				// Formulaire de modification
+				case Request::is('*/edit'):
+					$access = false; break;
+				default: break;
+			}
+		}
+
+		// Emission du role de l'utilisateur
+		Session::flash('role', $role);
+
+		// Redirection si role insuffisant
+		if (!$access) {
+			Session::flash('message', 'Permissions insuffisantes');
+			Session::flash('alert', 'warning');
+			if (Auth::guest()) {
+				return Redirect::to('login');
+			} else {
+				return Redirect::to('/');
+			}
+		}
 	}
 });
 

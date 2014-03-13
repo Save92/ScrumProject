@@ -44,4 +44,20 @@ class BaseController extends Controller {
 		return Redirect::to('/');
 	}
 
+	/**
+	* Permissions insuffisantes
+	*
+	* @return void
+	*/
+	protected function tryDelete($item) {
+		try {
+			$item->delete();
+			Session::flash('message', 'Suppression réussie');
+			Session::flash('alert', 'success');
+		} catch (\Exception $e) {
+			Session::flash('message', 'L\'entrée ne peut pas être supprimée');
+			Session::flash('alert', 'danger');
+		}
+	}
+
 }

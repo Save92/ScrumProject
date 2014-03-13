@@ -195,10 +195,9 @@ class FormationController extends BaseController {
 	public function destroy($id)
 	{
 		$formation = Formation::find($id);
-		$formation->delete();
 
-		Session::flash('message', 'Suppression réussie');
-		Session::flash('alert', 'success');
+		$this->tryDelete($formation);
+
 		return Redirect::to('formations');
 	}
 

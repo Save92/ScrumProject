@@ -31,12 +31,14 @@ array(
 				</td>
 				@endforeach
 				<td>
+					<div class="pull-right">
 					{{-- create --}}
 					@if($actions[0] == true)
 						<a href="{{ URL::to($route.'/create') }}" class="btn btn-small btn-primary">
 							<span class="glyphicon glyphicon-plus"></span>
 						</a>
 					@endif
+					</div>
 				</td>
 			</tr>
 		</thead>
