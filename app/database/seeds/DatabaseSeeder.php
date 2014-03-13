@@ -91,6 +91,7 @@ class UserTableSeeder extends Seeder {
 			'telephone' => '0123456789'
 		));
 
+		// Etudiants
 		User::create(array(
 			'prenom' => 'Charlotte',
 			'nom' => 'Alarmée',
@@ -114,18 +115,19 @@ class UserTableSeeder extends Seeder {
 			'password' => Hash::make('e'),
 			'id_role' => 2,
 			'telephone' => '0123456789'
-		));	
+		));
+		// Candidats
 		User::create(array(
-			'prenom' => 'Manon',
-			'nom' => 'Anthouard',
+			'prenom' => 'Manon2',
+			'nom' => 'Anthouard2',
 			'mail' => 'e@e.e',
 			'password' => Hash::make('e'),
 			'id_role' => 1,
 			'telephone' => '0123456789'
 		));	
 		User::create(array(
-			'prenom' => 'Yann',
-			'nom' => 'Bescond',
+			'prenom' => 'Yann2',
+			'nom' => 'Bescond2',
 			'mail' => 'e@e.e',
 			'password' => Hash::make('e'),
 			'id_role' => 1,
@@ -203,31 +205,31 @@ class FormationTableSeeder extends Seeder {
 		Formation::create(array(
 			'libelle' => 'A',
 			'conditions' => 'aa',
-			'id_user' => 3,
+			'id_user' => 10,
 			'id_diplome' => 1
 		));
 		Formation::create(array(
 			'libelle' => 'B',
 			'conditions' => 'bb',
-			'id_user' => 3,
+			'id_user' => 11,
 			'id_diplome' => 2
 		));
 		Formation::create(array(
 			'libelle' => 'Formation test 3',
 			'conditions' => '19ans et toujours puceau',
-			'id_user' => 4,
+			'id_user' => 11,
 			'id_diplome' => 3
 		));
 		Formation::create(array(
 			'libelle' => 'Formation test 4',
 			'conditions' => '20ans et Italien',
-			'id_user' => 4,
+			'id_user' => 12,
 			'id_diplome' => 3
 		));
 		Formation::create(array(
 			'libelle' => 'Formation test 5',
 			'conditions' => 'G33K',
-			'id_user' => 4,
+			'id_user' => 12,
 			'id_diplome' => 3
 		));
 	}
@@ -239,7 +241,7 @@ class ClasseTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('classes')->delete();
-		// Classes
+		// élèves
 		Classe::create(array(
 			'libelle' => 'classe 1',
 			'id_user' => 1,
@@ -247,41 +249,21 @@ class ClasseTableSeeder extends Seeder {
 			'id_formation' => 1
 		));
 		Classe::create(array(
-			'libelle' => 'classe 2',
-			'id_user' => 2,
+			'libelle' => 'classe 1',
+			'id_user' => 4,
 			'annee' => '2013/2014',
 			'id_formation' => 1
 		));
-		Classe::create(array(
-			'libelle' => 'classe 3',
-			'id_user' => 2,
-			'annee' => '2013/2014',
-			'id_formation' => 2
-		));
 
-		// élèves
 		Classe::create(array(
-			'libelle' => 'classe 1',
+			'libelle' => 'classe 2',
 			'id_user' => 5,
 			'annee' => '2013/2014',
 			'id_formation' => 1
 		));
 		Classe::create(array(
-			'libelle' => 'classe 1',
+			'libelle' => 'classe 3',
 			'id_user' => 6,
-			'annee' => '2013/2014',
-			'id_formation' => 1
-		));
-
-		Classe::create(array(
-			'libelle' => 'classe 2',
-			'id_user' => 7,
-			'annee' => '2013/2014',
-			'id_formation' => 1
-		));
-		Classe::create(array(
-			'libelle' => 'classe 2',
-			'id_user' => 8,
 			'annee' => '2013/2014',
 			'id_formation' => 1
 		));
