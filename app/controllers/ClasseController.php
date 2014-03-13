@@ -216,7 +216,6 @@ class ClasseController extends BaseController {
 		);
 
 		// var_dump(Session::get('role')); die();
-
 		switch (Session::get('role')) {
 			case 5:
 				$items = array(

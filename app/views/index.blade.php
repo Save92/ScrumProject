@@ -34,7 +34,7 @@
 	<br/>
 	Navigation <code>app/views/includes/header.blade.php</code>
 	<br />
-	Mettre à jour la table <code>users</code> : passer <code>id_role</code> à 2
+	Mettre à jour la table <code>users</code> lors de l'ajout d'un candidat : passer <code>id_role</code> à 2
 </p>
 
 @stop
