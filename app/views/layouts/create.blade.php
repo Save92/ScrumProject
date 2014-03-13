@@ -19,7 +19,6 @@ array(
 	</div>
 
 	<div class="panel-body">
-	{{ HTML::ul($errors->all()) }}
 
 		<form method="POST" action="{{ URL::to($route) }}" role="form" class="form-horizontal">
 

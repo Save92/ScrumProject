@@ -87,6 +87,60 @@ class UserController extends BaseController {
 		);
 	}
 
+/**
+	 * Show the form for creating a new resource.
+	 * GET /resource/create
+	 *
+	 * @return Response
+	 */
+	public function createprof()
+	{
+		$matieres = Matiere::all();
+		$idProf = Session::get('prof');
+		$prof = User::find($idProf);
+		$this->layout->content = View::make('layouts.create')->with(
+			array(
+				'prof' => $prof,
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'items' => array(
+					array('id_user', 'Professeur', 'text')
+					array('matieres', 'Matières', 'select', $matieres),
+					)
+			)
+		);
+	}
+
+/**
+	 * Store a newly created resource in storage.
+	 * POST /resource
+	 *
+	 * @return Response
+	 */
+	public function storeprof()
+	{
+		$rules = array(
+			'id_user'=> 'required',
+			'id_matiere' => 'required'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$this->sendErrors($validator);
+			return Redirect::to('users/create')->withInput();
+		} else {
+			$prof = new User;
+			$prof->id_user = Input::get('id_user');
+			$prof->id_user = Input::get('id_matiere');
+			$prof->save();
+
+			Session::flash('message', 'Création réussie');
+			Session::flash('alert', 'success');
+
+			return Redirect::to('users');
+		}
+	}
+
 	/**
 	 * Store a newly created resource in storage.
 	 * POST /resource
@@ -120,6 +174,14 @@ class UserController extends BaseController {
 
 			Session::flash('message', 'Création réussie');
 			Session::flash('alert', 'success');
+			
+			if($user->id_role == 3) {
+				Session::flash('prof', $user->id);
+
+				return Redirect::route('createprof');
+			}
+
+
 			return Redirect::to('users');
 		}
 	}
