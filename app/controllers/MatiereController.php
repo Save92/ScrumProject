@@ -65,7 +65,7 @@ class MatiereController extends BaseController {
 						'name' => 'Matières',
 						'route' => 'matieres',
 						'fields' => array(
-							'Libelé' => 'getName',
+							'Libellé' => 'getName',
 							'Coefficient' => 'getCoef',
 							'Thématique' => 'getThematique'
 						)
@@ -81,10 +81,10 @@ class MatiereController extends BaseController {
 	 */
 	public function create()
 	{
-
-
 		$formations = Formation::all();
+
 		$thematiques = Thematique::all();
+
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
 				'name' => 'Matières',
@@ -177,7 +177,7 @@ class MatiereController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			
+
 			$this->sendErrors($validator);
 
 			return Redirect::to('matieres/' . $id . '/edit')->withInput();

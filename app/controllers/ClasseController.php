@@ -2,6 +2,8 @@
 
 class ClasseController extends BaseController {
 
+	private $classes;
+
 	public function __construct()
 	{
 	}
@@ -16,9 +18,41 @@ class ClasseController extends BaseController {
 	 */
 	public function index()
 	{
-		$classes = Classe::all();
+		// Récupération des classes
+		$classes =array();
+		$actions = array(0,0,0,0);
+		// (créer, afficher, modifier, supprimer)
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				$classes = Classe::all()->groupBy('libelle');
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				$classes = Classe::all()->groupBy('libelle');
+				//$formations = Formation::where('id_user', Auth::user()->id)->get();
+				break;
+			default:
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
+				break;
+		}
 
-		$this->layout->content = View::make('classe.index')->with('classes', $classes);
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $classes,
+				'name' => 'Classes',
+				'route' => 'classes',
+				'actions' => $actions,
+				'fields' => array(
+					'Nom' => 'getName',
+					'Responsable' => 'getResponsable',
+					'Année' => 'getYear'
+				)
+			)
+		);
 	}
 
 	/**
@@ -30,20 +64,57 @@ class ClasseController extends BaseController {
 	public function create()
 	{
 
-		$user = new User;
-		$users = $user->getByRole(4);
+		$annees = array(
+			'2014/2015' => '2014 - 2015',
+			'2015/2016' => '2015 - 2016',
+			'2016/2017' => '2016 - 2017',
+			'2017/2018' => '2017 - 2018'
+		);
+
+		$users = User::where('id_role',1)->get();
 
 		$formations = Formation::all();
-		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'classes' => array(
+
+		switch (Session::get('role')) {
+			case 5:
+				$items = array(
 					array('libelle', 'Libellé', 'text'),
+					array('id_user', 'Nouvel élève', 'select', $users),
 					array('id_formation', 'Formation', 'select', $formations),
-					// array( annee ),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users)
-				)
+					array('annee', 'Année', 'select', $annees)
+				);
+				break;
+			case 4:
+				$items = array(
+					array('libelle', 'Libellé', 'text'),
+					array('id_user', 'Nouvel élève', 'select', $users),
+					array('id_formation', 'Formation', 'select', $formations),
+					array('annee', 'Année', 'select', $annees)
+				);
+				break;
+			default:
+				$this->deny();
+				return Redirect::to('/');
+				break;
+		}
+
+		$this->layout->content = View::make('layouts.create')->with(
+			array(
+				'name' => 'Classes',
+				'route' => 'classes',
+				'items' => $items
 			)
 		);
+	}
+
+	/**
+	 * Show the form for assign a new user (role 2) to the class.
+	 * GET /resource/create
+	 *
+	 * @return Response
+	 */
+	public function add($value='') {
+		
 	}
 
 	/**
@@ -55,14 +126,15 @@ class ClasseController extends BaseController {
 	public function store()
 	{
 		$rules = array(
-			'libelle'=> 'required'
+			'libelle'=> 'required',
+			'id_user' => 'required',
+			'annee' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('classes/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('classes/create')->withInput();
 		} else {
 			$classe = new Classe;
 			$classe->libelle = Input::get('libelle');
@@ -86,25 +158,38 @@ class ClasseController extends BaseController {
 	 */
 	public function show($id)
 	{
+		$students = Classe::all();
+
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				break;
+			default:
+
+		$classe = array();
+		$actions = array(0,0,0,0);
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
+				break;
+		}
+
 		$classe = Classe::find($id);
-		$formation = Formation::where('id',$classe->id_formation)->pluck('libelle');
-		$students = User::where('id_role',2)->get(array('prenom','nom'));
 
-		// SELECT x,x,x,x,users.name
-		// FROM classes
-		// JOIN users ON classes.id_user = users.id
-		// WHERE classes.id = $id
-
-		// AND users.id_role = 2
-
-
-
-		//var_dump($students);
 		$this->layout->content = View::make('classe.show')->with(
 			array(
 				'classe' => $classe,
-				'formation' => $formation,
-				'students' => $students
+				'items' => $students,
+				'name' => 'Etudiants',
+				'route' => 'users',
+				'actions' => $actions,
+				'fields' => array(
+					'Nom' => 'getUsername'
+				)
 			)
 		);
 	}
@@ -123,6 +208,9 @@ class ClasseController extends BaseController {
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+
+
+
 				'item' => $classe,
 				'items' => array(
 					'classes' => array(
@@ -149,8 +237,8 @@ class ClasseController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('classes/' . $id . '/edit')
-				->withErrors($validator);
+			$this->sendErrors($validator);
+			return Redirect::to('classes/' . $id . '/edit')->withInput();
 		} else {
 			$classe = Classe::find($id);
 			$classe->libelle = Input::get('libelle');
@@ -173,7 +261,8 @@ class ClasseController extends BaseController {
 	public function destroy($id)
 	{
 		$classe = Classe::find($id);
-		$classe->delete();
+
+		$classe->tryDelete($user);
 
 		Session::flash('message', 'Successfully deleted');
 		Session::flash('alert', 'success');

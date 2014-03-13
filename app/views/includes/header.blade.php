@@ -11,36 +11,40 @@
 
 		{{-- MENU LEFT --}}
 
-			@if(Session::get('role') > 4)
+			@if(Session::get('role') == 5)
 
-			<li {{ ( Request::is('users') || Request::is('users/*') ) ? 'class="active"' : '' }}>
-				<a href="{{ URL::to('users') }}">
-					Utilisateurs
-				</a>
-			</li>
+				<li {{ ( Request::is('users') || Request::is('users/*') ) ? 'class="active"' : '' }}>
+					<a href="{{ URL::to('users') }}">
+						Utilisateurs
+					</a>
+				</li>
+
+			@endif
+
+			@if(Session::get('role') >= 4)
+
+				<li {{ ( Request::is('classes') || Request::is('classes/*') ) ? 'class="active"' : '' }}>
+					<a href="{{ URL::to('classes') }}">
+						Classes
+					</a>
+				</li>
+				<li {{ ( Request::is('formations') || Request::is('formations/*') ) ? 'class="active"' : '' }}>
+					<a href="{{ URL::to('formations') }}">
+						Formations
+					</a>
+				</li>
 
 			@endif
 
 			@if(Session::get('role') > 2)
 
-			<li {{ ( Request::is('formations') || Request::is('formations/*') ) ? 'class="active"' : '' }}>
-				<a href="{{ URL::to('formations') }}">
-					Formations
-				</a>
-			</li>
-			<li {{ ( Request::is('matieres') || Request::is('matieres/*') ) ? 'class="active"' : '' }}>
-				<a href="{{ URL::to('matieres') }}">
-					Matières
-				</a>
-			</li>
+				<li {{ ( Request::is('matieres') || Request::is('matieres/*') ) ? 'class="active"' : '' }}>
+					<a href="{{ URL::to('matieres') }}">
+						Matières
+					</a>
+				</li>
 
 			@endif
-
-			<li {{ ( Request::is('classes') || Request::is('classes/*') ) ? 'class="active"' : '' }}>
-				<a href="{{ URL::to('classes') }}">
-					Classes
-				</a>
-			</li>
 
 		</ul>
 		@endif

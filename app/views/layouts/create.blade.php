@@ -28,15 +28,23 @@ array(
 				<label for="{{ $value[0] }}" class="col-sm-2 control-label">{{ $value[1] }}</label>
 				<div class="col-sm-10">
 					@if($value[2] == 'select' && isset($value[3]))
-						@if(count($value[3]) == 0)
-							Aucune entrée
-						@else
+						@if(is_array($value[3]))
 							<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
-							@foreach($value[3] as $i)
-								<option value="{{ $i->id }}">{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
-							@endforeach
+								@foreach($value[3] as $k => $v)
+									<option value="{{ $k }}">{{ $v }}</option>
+								@endforeach
+							</select>
+						@else
+							@if(count($value[3]) == 0)
+								Aucune entrée
+							@else
+								<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
+								@foreach($value[3] as $i)
+									<option value="{{ $i->id }}">{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
+								@endforeach
+								</select>
+							@endif
 						@endif
-						</select>
 					@else
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
 					@endif

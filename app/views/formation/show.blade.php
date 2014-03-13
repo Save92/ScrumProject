@@ -5,12 +5,10 @@
 
 	<h1>{{ $formation->libelle }} {{ $formation->annee }}</h1>
 	<p>
-		{{ $formation->conditions }}<br/>
-		{{ $formation->getUser() }}
+		Conditions : {{ $formation->conditions }}<br/>
+		Secrétaire pédagogique : {{ $formation->getUser() }}
 	</p>
 
-	
 	@include('includes.table',array('items' => $items, 'name' => $name, 'route' => $route, 'actions' => $actions, 'fields' => $fields))
 
 @stop
-

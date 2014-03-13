@@ -45,6 +45,19 @@ array(
 		<tbody>
 
 		@foreach($items as $key => $value)
+			@if(is_array($value))
+				<tr>
+					@foreach($fields as $k => $v)
+					<td>
+						{{ $value[0]->$v() }}
+					</td>
+					@endforeach
+					<td>
+						{{-- (c)rud --}}
+						@include('includes.actions', array('url' => $route.'/'.$value[0]->id, 'crud' => $actions))
+					</td>
+				<tr>
+			@else
 			<tr>
 				@foreach($fields as $k => $v)
 				<td>
@@ -56,6 +69,7 @@ array(
 					@include('includes.actions', array('url' => $route.'/'.$value->id, 'crud' => $actions))
 				</td>
 			</tr>
+			@endif
 		@endforeach
 		</tbody>
 	</table>
