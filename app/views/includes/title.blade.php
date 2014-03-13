@@ -1,0 +1,1 @@
+<a href="{{ URL::to($route) }}"><h2>{{ $name }}</h2></a>

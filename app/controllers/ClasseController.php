@@ -29,13 +29,21 @@ class ClasseController extends BaseController {
 	 */
 	public function create()
 	{
-		//$formations = Formation::all();
-		$this->layout->content = View::make('layouts.create')->with('items', array(
-			'classes' => array(
-				array('libelle', 'Libellé', 'text'),
-				array('annee', 'Année', 'text')
+
+		$user = new User;
+		$users = $user->getByRole(4);
+
+		$formations = Formation::all();
+		$this->layout->content = View::make('layouts.create')->with(
+			'items', array(
+				'classes' => array(
+					array('libelle', 'Libellé', 'text'),
+					array('id_formation', 'Formation', 'select', $formations),
+					// array( annee ),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users)
+				)
 			)
-		));
+		);
 	}
 
 	/**
@@ -58,8 +66,9 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = new Classe;
 			$classe->libelle = Input::get('libelle');
+			$classe->id_user = Input::get('id_user');
+			$classe->id_formation = Input::get('id_formation');
 			$classe->annee = Input::get('annee');
-			$classe->id_formation = Input::get('id_diplome');
 			$classe->save();
 
 			Session::flash('message', 'Successfully created');
@@ -78,8 +87,26 @@ class ClasseController extends BaseController {
 	public function show($id)
 	{
 		$classe = Classe::find($id);
+		$formation = Formation::where('id',$classe->id_formation)->pluck('libelle');
+		$students = User::where('id_role',2)->get(array('prenom','nom'));
 
-		$this->layout->content = View::make('classe.show')->with('classe', $classe);
+		// SELECT x,x,x,x,users.name
+		// FROM classes
+		// JOIN users ON classes.id_user = users.id
+		// WHERE classes.id = $id
+
+		// AND users.id_role = 2
+
+
+
+		//var_dump($students);
+		$this->layout->content = View::make('classe.show')->with(
+			array(
+				'classe' => $classe,
+				'formation' => $formation,
+				'students' => $students
+			)
+		);
 	}
 
 	/**

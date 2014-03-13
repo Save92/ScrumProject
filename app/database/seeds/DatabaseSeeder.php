@@ -63,6 +63,7 @@ class UserTableSeeder extends Seeder {
 
 	public function run()
 	{
+		// admins
 		DB::table('users')->delete();
 		User::create(array(
 			'prenom' => 'Foo',
@@ -80,6 +81,7 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 5,
 			'telephone' => '0123456789'
 		));
+
 		User::create(array(
 			'prenom' => 'Ad',
 			'nom' => 'Min',
@@ -123,7 +125,24 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 3,
 			'telephone' => '0123456789'
 		));		
-
+		
+		// secretaires
+		User::create(array(
+			'prenom' => 'Lorem',
+			'nom' => 'Ipsum',
+			'mail' => 'lo@re.m',
+			'password' => Hash::make('azerty'),
+			'id_role' => 4,
+			'telephone' => '0123456789'
+		));
+		User::create(array(
+			'prenom' => 'Tic',
+			'nom' => 'Tac',
+			'mail' => 'tic@tac.com',
+			'password' => Hash::make('qwerty'),
+			'id_role' => 4,
+			'telephone' => '0123456789'
+		));
 	}
 
 }
@@ -169,6 +188,7 @@ class ClasseTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('classes')->delete();
+		// Classes
 		Classe::create(array(
 			'libelle' => 'classe 1',
 			'id_user' => 1,
@@ -192,7 +212,7 @@ class ThematiqueTableSeeder extends Seeder {
 		DB::table('thematiques')->delete();
 		Thematique::create(array(
 			'libelle' => 'Culture générale'
-		));		
+		));
 		Thematique::create(array(
 			'libelle' => 'Technologie appliqué'
 		));

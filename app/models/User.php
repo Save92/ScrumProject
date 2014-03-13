@@ -38,6 +38,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $role;
 	}
 
+	public function getMail()
+	{
+		return $this->mail;
+	}
+
+	public function getPhone()
+	{
+		return $this->telephone;
+	}
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

@@ -4,25 +4,55 @@
 			<a class="navbar-brand" href="{{ URL::route('home') }}">Intranet</a>
 		</div>
 
+		{{-- MENU --}}
+
 		@if(Auth::check())
 		<ul class="nav navbar-nav">
 
-			@if(Session::get('role') > 2)
-			{{ HTML::menu_li("users", 'Utilisateurs' ) }}
-			{{ HTML::menu_li("formations", 'Formations' ) }}
-			{{ HTML::menu_li("matieres", 'Matieres' ) }}
+		{{-- MENU LEFT --}}
+
+			@if(Session::get('role') > 4)
+
+			<li {{ ( Request::is('users') || Request::is('users/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('users') }}">
+					Utilisateurs
+				</a>
+			</li>
+
 			@endif
-			{{ HTML::menu_li("classes", 'Classes' ) }}
+
+			@if(Session::get('role') > 2)
+
+			<li {{ ( Request::is('formations') || Request::is('formations/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('formations') }}">
+					Formations
+				</a>
+			</li>
+			<li {{ ( Request::is('matieres') || Request::is('matieres/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('matieres') }}">
+					Matières
+				</a>
+			</li>
+
+			@endif
+
+			<li {{ ( Request::is('classes') || Request::is('classes/*') ) ? 'class="active"' : '' }}>
+				<a href="{{ URL::to('classes') }}">
+					Classes
+				</a>
+			</li>
 
 		</ul>
 		@endif
 
+		{{-- MENU RIGHT --}}
+
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a href="{{ URL::to('db') }}">[seed DB]</a>
+				<a href="{{ URL::to('db') }}"><strong>DB</strong></a>
 			</li>
 		@if(Auth::check())
-			<li>
+			<li {{ ( Request::is('users/'.Auth::user()->id) ) ? 'class="active"' : '' }}>
 				<a href="{{ URL::to('users/'.Auth::user()->id) }}">
 					{{ Auth::user()->prenom }} {{ Auth::user()->nom }} ( {{ Auth::user()->getRole() }} )
 				</a>
@@ -33,7 +63,7 @@
 				</a>
 			</li>
 		@else
-			<li>
+			<li {{ ( Request::is('login') ) ? 'class="active"' : '' }}>
 				<a href="{{ URL::to('login') }}">
 					Connexion
 				</a>
@@ -44,8 +74,8 @@
 </nav>
 
 @if (Session::has('message'))
-	<div class="alert alert-dismissable alert-{{ Session::has('alert') ? Session::get('alert') : 'info' }}">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		{{ Session::get('message') }}
-	</div>
+<div class="alert alert-dismissable alert-{{ Session::has('alert') ? Session::get('alert') : 'info' }}">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{ Session::get('message') }}
+</div>
 @endif

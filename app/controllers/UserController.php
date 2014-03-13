@@ -2,10 +2,10 @@
 
 class UserController extends BaseController {
 
-	public function __construct()
+	/*public function __construct()
 	{
-		//$this->beforeFilter('auth', array('except' => 'login'));
-	}
+		$this->beforeFilter('auth', array('except' => 'login'));
+	}*/
 
 	protected $layout = 'layouts.master';
 
@@ -19,21 +19,36 @@ class UserController extends BaseController {
 	{
 		$users = User::all();
 
-		$this->layout->content = View::make('user.index')->with('users', $users);
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				break;
+			default:
+				//$actions = array(0,1,0,0);
+				// Fallback si la route n'est pas bloquée
+				$this->deny();
+				break;
+		}
 
-		/*$this->layout->content = View::make('layouts.index')->with(
-			'items', array(
-				$users,
-				array(
-					array('prenom', 'Prénom'),
-					array('nom', 'Nom'),
-					array('mail', 'Adresse mail'),
-					array('telephone', 'Téléphone'),
-					array('id_role', 'Role')
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $users,
+				'name' => 'Utilisateurs',
+				'route' => 'users',
+				'actions' => $actions, // (créer, afficher, modifier, supprimer)
+				'fields' => array(
+					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
+					'Nom' => 'getName',
+					'Adresse mail' => 'getMail',
+					'Téléphone' => 'getPhone',
+					'Role' => 'getRole'
 				)
 			)
-		);*/
-
+		);
 	}
 
 	/**
@@ -61,13 +76,15 @@ class UserController extends BaseController {
 		$roles = Role::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'users' => array(
+			array(
+				'name' => 'Utilisateurs',
+				'route' => 'users',
+				'items' => array(
 					array('prenom', 'Prénom', 'text'),
 					array('nom', 'Nom', 'text'),
-					array('mail', 'Adresse mail', 'text'),
-					array('telephone', 'Téléphone', 'text'),
 					array('id_role', 'Role', 'select', $roles),
+					array('telephone', 'Téléphone', 'text'),
+					array('mail', 'Adresse mail', 'text'),
 					array('password', 'Mot de passe', 'password')
 				)
 			)
@@ -85,17 +102,16 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
-			'mail'	=> 'required|email',
-			'telephone'	=> 'required',
-			'id_role'	=> 'required',
-			'password'	=> ''
+			'telephone'	=> 'numeric',
+			'id_role'	=> 'required|integer',
+			'mail'	=> 'required|email|unique:users',
+			'password'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('users/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('users/create')->withInput(Input::except('password'));
 		} else {
 			$user = new User;
 			$user->prenom = Input::get('prenom');
@@ -106,7 +122,7 @@ class UserController extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-			Session::flash('message', 'Successfully created');
+			Session::flash('message', 'Création réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
@@ -126,16 +142,16 @@ class UserController extends BaseController {
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+				'name' => 'Utilisateurs',
+				'route' => 'users',
 				'item' => $user,
 				'items' => array(
-					'users' => array(
-						array('prenom', 'Prénom', 'text'),
-						array('nom', 'Nom', 'text'),
-						array('mail', 'Adresse mail', 'text'),
-						array('telephone', 'Téléphone', 'text'),
-						array('id_role', 'Role', 'select', $roles, $user->id_role),
-						array('password', 'Mot de passe', 'password')
-					)
+					array('prenom', 'Prénom', 'text'),
+					array('nom', 'Nom', 'text'),
+					array('id_role', 'Role', 'select', $roles, $user->id_role),
+					array('telephone', 'Téléphone', 'text'),
+					array('mail', 'Adresse mail', 'text'),
+					array('password', 'Mot de passe', 'password')
 				)
 			)
 		);
@@ -153,17 +169,16 @@ class UserController extends BaseController {
 		$rules = array(
 			'prenom'=> 'required',
 			'nom'	=> 'required',
+			'id_role'	=> 'required|integer',
+			'telephone'	=> 'numeric',
 			'mail'	=> 'required|email',
-			'telephone'	=> 'required',
-			'id_role'	=> 'required',
 			'password'	=> ''
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('users/' . $id . '/edit')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('users/' . $id . '/edit')->withInput(Input::except('password'));
 		} else {
 			$user = User::find($id);
 			$user->prenom = Input::get('prenom');
@@ -171,10 +186,13 @@ class UserController extends BaseController {
 			$user->mail = Input::get('mail');
 			$user->telephone = Input::get('telephone');
 			$user->id_role = Input::get('id_role');
-			$user->password = Hash::make(Input::get('password'));
+			$pw = Input::get('password');
+			if (!empty($pw)) {
+				$user->password = Hash::make(Input::get('password'));
+			}
 			$user->save();
 
-			Session::flash('message', 'Successfully updated');
+			Session::flash('message', 'Mise à jour réussie');
 			Session::flash('alert', 'success');
 			return Redirect::to('users');
 		}
@@ -190,23 +208,35 @@ class UserController extends BaseController {
 	public function destroy($id)
 	{
 		$user = User::find($id);
-		$user->delete();
 
-		Session::flash('message', 'Successfully deleted');
-		Session::flash('alert', 'success');
+		$this->tryDelete($user);
+
 		return Redirect::to('users');
 	}
 
+	/**
+	 * Authentification
+	 * POST /login
+	 *
+	 * @return Response
+	 */
 	public function login()
 	{
+		$message = '';
+
 		$rules = array(
 			'mail' => 'required|email',
 			'password' => 'required'
 		);
+
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('login')->withErrors($validator);
+			$errors = $validator->errors()->all();
+			foreach ($errors as $k => $e) {
+				if($k > 0) $message.='<br/>';
+				$message.= $e;
+			}
 		} else {
 			$user = array(
 				'mail' => Input::get('mail'),
@@ -214,15 +244,19 @@ class UserController extends BaseController {
 			);
 
 			if (Auth::attempt($user)) {
-				Session::flash('message', 'Successfully logged in');
+				// Utilisateur identifié
+				Session::flash('message', 'Connexion réussie');
 				Session::flash('alert', 'success');
 				return Redirect::to('/');
 			}
 
-			Session::flash('message', 'Incorrect username/password combination');
-			Session::flash('alert', 'error');
-			return Redirect::to('login');
+			// Les champs sont valides mais l'identification échoue
+			$message.= 'Le mail ou le mot de passe saisi est incorrect.';
 		}
+
+		Session::flash('message', $message);
+		Session::flash('alert', 'danger');
+		return Redirect::to('login')->withInput();
 	}
 
 }

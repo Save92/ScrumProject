@@ -13,19 +13,20 @@
 
 App::before(function($request)
 {
-	if (Auth::guest()) {
-		Session::flash('role', 0);
-	} else {
-		Session::flash('role', Auth::user()->id_role);
-	}
+	//
 });
 
 
 App::after(function($request, $response)
 {
-	//
+	if (!Auth::guest()) {
+		$role = Auth::user()->id_role;
+	} else {
+		$role = 0;
+	}
+	// Emission du role de l'utilisateur
+	Session::flash('role', $role);
 });
-
 
 /*
 |--------------------------------------------------------------------------
@@ -41,10 +42,51 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (Auth::guest()) {
-		Session::flash('message', 'You must be logged in to view this page');
+		Session::flash('message', 'Veuillez vous connecter');
+		Session::flash('alert', 'warning');
+
 		return Redirect::guest('login');
 	} else {
-		//var_dump(Auth::user()->id_role);
+		// Gestion des accès aux routes
+		$access = true;
+
+		// Récupération du role
+		$role = Auth::user()->id_role;
+
+		$method = Request::method();
+
+		// Restriction des accès
+		if ($role < 5) {
+			switch (true) {
+				// Modifier
+				case Request::isMethod('put'):
+					$access = false; break;
+				// Enregistrer sauf login
+				case Request::isMethod('post') && !Request::is('login'):
+					$access = false; break;
+				// Supprimer
+				case Request::isMethod('delete'):
+					$access = false; break;
+				// Formulaire d'ajout
+				case Request::is('*/create'):
+					$access = false; break;
+				// Formulaire de modification
+				case Request::is('*/edit'):
+					$access = false; break;
+				default: break;
+			}
+		}
+
+		// Redirection si role insuffisant
+		if (!$access) {
+			Session::flash('message', 'Permissions insuffisantes');
+			Session::flash('alert', 'warning');
+			if (Auth::guest()) {
+				return Redirect::to('login');
+			} else {
+				return Redirect::to('/');
+			}
+		}
 	}
 });
 
@@ -68,7 +110,8 @@ Route::filter('auth.basic', function()
 Route::filter('guest', function()
 {
 	if (Auth::check()) {
-		Session::flash('message', 'Already logged in');
+		Session::flash('message', 'Vous êtes déjà connecté');
+		Session::flash('alert', 'warning');
 		return Redirect::to('/');
 	}
 });

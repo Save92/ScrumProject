@@ -18,11 +18,18 @@ Route::get('/', array('as' => 'home', function()
 
 Route::group(array('before' => 'auth'), function()
 {
+	// Routes CRUD
+	Route::resource('users', 'UserController');
+	Route::resource('formations', 'FormationController');
+	Route::resource('classes', 'ClasseController');
+	Route::resource('matieres', 'MatiereController');
+
+	// Déconnexion et redirection
 	Route::get('logout', array('as' => 'logout', function()
 	{
 		Auth::logout();
 
-		Session::flash('message', 'Successfully logged out');
+		Session::flash('message', 'Déconnexion réussie');
 		Session::flash('alert', 'success');
 		return Redirect::to('/');
 	}));
@@ -30,43 +37,29 @@ Route::group(array('before' => 'auth'), function()
 
 Route::group(array('before' => 'gest'), function()
 {
+	// Réception du formulaire de login
 	Route::post('login', array('uses' => 'UserController@login'));
 
+	// Requête de la vue login
 	Route::get('login', array('as' => 'login', function() {
 		return View::make('login');
 	}));
 });
 
-/*
-Route::resource('resources', 'ResourceController');
 
-GET			/resource					index	resource.index
-GET			/resource/create			create	resource.create
-POST		/resource					store	resource.store
-GET			/resource/{resource}		show	resource.show
-GET			/resource/{resource}/edit	edit	resource.edit
-PUT/PATCH	/resource/{resource}		update	resource.update
-DELETE		/resource/{resource}		destroy	resource.destroy
-*/
-
-Route::resource('users', 'UserController');
-
-Route::resource('formations', 'FormationController');
-
-Route::resource('classes', 'ClasseController');
-
-Route::resource('matieres', 'MatiereController');
 
 /*
-* Init / mise à jour BDD
+| Init / mise à jour BDD
+|
+|
 */
 Route::get('db', function()
 {
 	// Initialisation des tables (http://docs.laravel.fr/4.1/schema)
-	
+
 
 	Schema::dropIfExists('cantines');
-	
+
 	Schema::dropIfExists('classes');
 	Schema::dropIfExists('utilisations');
 	Schema::dropIfExists('reservations');
@@ -78,7 +71,7 @@ Route::get('db', function()
 	Schema::dropIfExists('thematiques');
 	Schema::dropIfExists('salles');
 	Schema::dropIfExists('materiels');
-	Schema::dropIfExists('classes');
+	//Schema::dropIfExists('classes');
 	Schema::dropIfExists('formations');
 	Schema::dropIfExists('diplomes');
 	Schema::dropIfExists('users');
@@ -260,46 +253,21 @@ Route::get('db', function()
 	return Redirect::to('/');
 });
 
+
+
+
+
+
+
+
+
+
 HTML::macro('menu_li', function($route, $text) {
-	if( Request::path() == $route ) {
+	if( Request::is($route) || Request::is($route.'/*') ) {
 		$active = "class = 'active'";
 	} else {
 		$active = '';
 	}
 
 	return '<li ' . $active . '>' . link_to($route, $text) . '</li>';
-});
-
-// includes?
-// séparation boutons/bt data/bt, view table auto ??
-HTML::macro('show_user', function($user, $options) {
-	$el = '<a href="' . URL::to('users/' . $user->id) . '"><h3>' . $user->getName() . '</h3></a><p>' . $user->getRole() . '<br/>' . $user->mail . '<br/>' . $user->telephone . '</p>';
-	if (true === $options) {
-		$el.= '<a class="btn btn-small btn-success" href="' . URL::to('users/' . $user->id) . '">Afficher</a>' . ' ' .
-		'<a class="btn btn-small btn-info" href="' . URL::to('users/' . $user->id . '/edit') . '">Modifier</a>' . ' ' .
-		Form::open(array('url' => 'users/' . $user->id, 'class' => 'delete')) .
-		Form::hidden('_method', 'DELETE') .
-		Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
-		Form::close();
-	}
-
-	return $el;
-});
-
-HTML::macro('crud', function($url, $rights) {
-	$el = '';
-	if ($rights[0] == true) {
-		$el.= '<a class="btn btn-small btn-success" href="' . URL::to($url) . '">Afficher</a>' . ' ';
-	}
-	if ($rights[1] == true) {
-		$el.= '<a class="btn btn-small btn-info" href="' . URL::to($url . '/edit') . '">Modifier</a>' . ' ';
-	}
-	if ($rights[2] == true) {
-		$el.= Form::open(array('url' => $url, 'class' => 'delete')) .
-			Form::hidden('_method', 'DELETE') .
-			Form::submit('Supprimer', array('class' => 'btn btn-danger')) .
-			Form::close();
-	}
-
-	return $el;
 });

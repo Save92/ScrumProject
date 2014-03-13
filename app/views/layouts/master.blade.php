@@ -7,13 +7,12 @@
 		{{ HTML::style('css/main.css') }}
 	</head>
 	<body>
-		{{ Session::get('role') }}
 		<header>
 			@include('includes.header')
 		</header>
-		<div>
+		<section class="container-fluid panel panel-default">
 			@yield('content')
-		</div>
+		</section>
 		<footer>
 			@include('includes.footer')
 		</footer>

@@ -99,21 +99,31 @@ body {
 	margin: 1% auto;
 }
 
+a, a:hover {
+	text-decoration: none;
+}
+
+section {
+	padding-top: 1%;
+}
+
+h2 {
+	margin: 0;
+}
+
 ul {
 	list-style-type: none;
 	padding: 0;
 }
 
-.blocks li {
-	float: left;
-	padding: 20px;
-	margin-top: 10px;
-	margin-right: 10px;
-	border: 1px solid #ddd;
+thead {
+	font-size: 1.2em;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
-.blocks h3 {
-	margin: 0;
+td {
+	vertical-align: middle !important;
 }
 
 .delete {
