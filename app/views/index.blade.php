@@ -28,7 +28,7 @@
 <p class="well">
 	Gestion des permissions :
 	<br/>
-	Switch case sur les routes <code>app/filter.php</code>
+	Switch case sur les routes <code>app/filters.php</code>
 	<br/>
 	Switch case dans les controllers : Create Read Update Delete <code>$actions = array(1,1,1,1)</code>
 	<br/>
