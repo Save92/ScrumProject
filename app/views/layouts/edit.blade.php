@@ -32,13 +32,13 @@ array(
 					@if($value[2] == 'select' && isset($value[3]))
 						<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
 							@foreach($value[3] as $i)
-							<?php
-								if ($value[4] == $i->id) {
-									$selected = 'selected = "selected"';
-								} else {
-									$selected = '';
-								}
-							?>
+								<?php
+									if ($value[4] == $i->id) {
+										$selected = 'selected = "selected"';
+									} else {
+										$selected = '';
+									}
+								?>
 							<option value="{{ $i->id }}" {{ $selected }}>{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
 							@endforeach
 						</select>

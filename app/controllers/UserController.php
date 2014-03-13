@@ -19,6 +19,7 @@ class UserController extends BaseController {
 	{
 		$users = User::all();
 
+		$actions = array(0,0,0,0);
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:

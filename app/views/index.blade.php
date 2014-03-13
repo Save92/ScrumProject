@@ -33,6 +33,8 @@
 	Switch case dans les controllers : Create Read Update Delete <code>$actions = array(1,1,1,1)</code>
 	<br/>
 	Navigation <code>app/views/includes/header.blade.php</code>
+	<br />
+	Mettre à jour la table <code>users</code> : passer <code>id_role</code> à 2
 </p>
 
 @stop
