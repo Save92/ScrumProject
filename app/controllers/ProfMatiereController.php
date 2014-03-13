@@ -81,20 +81,17 @@ class ProfMatiereController extends BaseController {
 	public function create()
 	{
 		$profId=Session::get('prof');
-		var_dump($profId);
-		die();
-		$formations = Formation::all();
-
-		$thematiques = Thematique::all();
+		$prof = User::find($profId);
+		var_dump($prof);
+		$matieres = Matiere::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
 				'name' => 'Matières',
 				'route' => 'matieres',
 				'items' => array(
-					array('libelle', 'Libellé', 'text'),
-					array('id_formation', 'Formation', 'select', $formations),
-					array('id_thematique', 'Thématique', 'select', $thematiques)
+					array('prof', 'Professeur', 'select', $prof),
+					array('matieres', 'Matières', 'select', $matieres)
 				)
 			)
 		);
