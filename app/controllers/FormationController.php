@@ -12,6 +12,7 @@ class FormationController extends BaseController {
 	 */
 	public function index()
 	{
+		// (créer, afficher, modifier, supprimer)
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
@@ -80,8 +81,8 @@ class FormationController extends BaseController {
 				'items' => array(
 					array('libelle', 'Libellé', 'text'),
 					array('conditions', 'Conditions', 'text'),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users),
-					array('id_diplome', 'Diplome', 'select', $diplomes)
+					array('id_diplome', 'Diplome', 'select', $diplomes),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users)
 				)
 			)
 		);
@@ -110,6 +111,7 @@ class FormationController extends BaseController {
 			$formation = new Formation;
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->id_user = Input::get('id_user');
 			$formation->id_diplome = Input::get('id_diplome');
 			$formation->save();
@@ -135,17 +137,38 @@ class FormationController extends BaseController {
 
 		$diplomes = Diplome::all();
 
+		switch (Session::get('role')) {
+			case 5:
+				$items = array(
+					array('libelle', 'Libellé', 'text'),
+					array('conditions', 'Conditions', 'text'),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
+				);
+				break;
+			case 4:
+				$items = array(
+					array('libelle', 'Libellé', 'text', false),
+					array('conditions', 'Conditions', 'text'),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
+				);
+			default:
+				/*$items = array(
+					array('libelle', 'Libellé', 'text', false),
+					array('conditions', 'Conditions', 'text', false),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
+				);*/
+				break;
+		}
+
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
 				'name' => 'Formations',
 				'route' => 'formations',
 				'item' => $formation,
-				'items' => array(
-					array('libelle', 'Libellé', 'text'),
-					array('conditions', 'Conditions', 'text'),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
-					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
-				)
+				'items' => $items
 			)
 		);
 	}
@@ -165,6 +188,7 @@ class FormationController extends BaseController {
 			'id_user' => 'required|integer',
 			'id_diplome' => 'required|integer'
 		);
+
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
@@ -175,6 +199,7 @@ class FormationController extends BaseController {
 			$formation = Formation::find($id);
 			$formation->libelle = Input::get('libelle');
 			$formation->conditions = Input::get('conditions');
+			$formation->id_diplome = Input::get('id_diplome');
 			$formation->id_user = Input::get('id_user');
 			$formation->id_diplome = Input::get('id_diplome');
 			$formation->save();

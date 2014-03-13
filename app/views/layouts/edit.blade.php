@@ -42,8 +42,10 @@ array(
 							<option value="{{ $i->id }}" {{ $selected }}>{{ $i->libelle ? $i->libelle : $i->getName() }}</option>
 							@endforeach
 						</select>
-					@else
+					@elseif(isset($value[2] == 'text' && isset($value[3]) && $value[3] == true)
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">
+					@else
+						{{ $value[0] == 'password' ? '' : $item->$value[0] }}
 					@endif
 				</div>
 			</div>
