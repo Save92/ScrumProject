@@ -57,7 +57,6 @@ class MatiereController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$matiere = Matiere::find($id);
 
 		$this->layout->content = View::make('matiere.show')->with(
 				array(
@@ -65,7 +64,7 @@ class MatiereController extends BaseController {
 						'name' => 'Matières',
 						'route' => 'matieres',
 						'fields' => array(
-							'Libelé' => 'getName',
+							'Libellé' => 'getName',
 							'Coefficient' => 'getCoef',
 							'Thématique' => 'getThematique'
 						)
