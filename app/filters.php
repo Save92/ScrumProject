@@ -13,7 +13,13 @@
 
 App::before(function($request)
 {
-	//
+	if (!Auth::guest()) {
+		$role = Auth::user()->id_role;
+	} else {
+		$role = 0;
+	}
+	// Emission du role de l'utilisateur
+	Session::flash('role', $role);
 });
 
 
