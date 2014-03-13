@@ -74,8 +74,10 @@ class MatiereController extends BaseController {
 
 		$thematiques = Thematique::all();
 		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'matieres' => array(
+			array(
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'items' => array(
 					array('libelle', 'Libellé', 'text'),
 					array('id_thematique', 'Thématique', 'select', $thematiques)
 				)

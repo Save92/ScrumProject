@@ -70,7 +70,7 @@ class UserTableSeeder extends Seeder {
 			'nom' => 'Bar',
 			'mail' => 'foo@bar.com',
 			'password' => Hash::make('com'),
-			'id_role' => 5,
+			'id_role' => 2,
 			'telephone' => '0123456789'
 		));
 		User::create(array(
@@ -81,6 +81,67 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 5,
 			'telephone' => '0123456789'
 		));
+
+		User::create(array(
+			'prenom' => 'Ad',
+			'nom' => 'Min',
+			'mail' => 'a@a.a',
+			'password' => Hash::make('a'),
+			'id_role' => 5,
+			'telephone' => '0123456789'
+		));
+
+		User::create(array(
+			'prenom' => 'Charlotte',
+			'nom' => 'Alarmée',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Manon',
+			'nom' => 'Anthouard',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Yann',
+			'nom' => 'Bescond',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 2,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Manon',
+			'nom' => 'Anthouard',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 1,
+			'telephone' => '0123456789'
+		));	
+		User::create(array(
+			'prenom' => 'Yann',
+			'nom' => 'Bescond',
+			'mail' => 'e@e.e',
+			'password' => Hash::make('e'),
+			'id_role' => 1,
+			'telephone' => '0123456789'
+		));	
+		
+		//Professeurs
+		User::create(array(
+			'prenom' => 'Claire',
+			'nom' => 'Pedurand',
+			'mail' => 'p@p.p',
+			'password' => Hash::make('p'),
+			'id_role' => 3,
+			'telephone' => '0123456789'
+		));		
+		
 		// secretaires
 		User::create(array(
 			'prenom' => 'Lorem',
@@ -98,66 +159,6 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 4,
 			'telephone' => '0123456789'
 		));
-
-		// etudiants
-		User::create(array(
-			'prenom' => 'etudiant1',
-			'nom' => 'etudiant1',
-			'mail' => 'etu1@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 2,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'etudiant2',
-			'nom' => 'etudiant2',
-			'mail' => 'etu2@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 2,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'etudiant3',
-			'nom' => 'etudiant3',
-			'mail' => 'etu3@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 2,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'etudiant4',
-			'nom' => 'etudiant4',
-			'mail' => 'etu4@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 2,
-			'telephone' => '0123456789'
-		));
-
-		// candidats
-		User::create(array(
-			'prenom' => 'candidat1',
-			'nom' => 'candidat1',
-			'mail' => 'cand1@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 1,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'candidat2',
-			'nom' => 'candidat2',
-			'mail' => 'cand2@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 1,
-			'telephone' => '0123456789'
-		));
-		User::create(array(
-			'prenom' => 'candidat3',
-			'nom' => 'candidat3',
-			'mail' => 'cand3@re.m',
-			'password' => Hash::make('azerty'),
-			'id_role' => 1,
-			'telephone' => '0123456789'
-		));
 	}
 
 }
@@ -173,6 +174,15 @@ class DiplomeTableSeeder extends Seeder {
 		Diplome::create(array(
 			'libelle' => 'Licence Biologie'
 		));
+		Diplome::create(array(
+			'libelle' => 'Licence PDW'
+		));
+		Diplome::create(array(
+			'libelle' => 'Master league'
+		));
+		Diplome::create(array(
+			'libelle' => 'Licence Technologie'
+		));
 	}
 
 }
@@ -185,14 +195,32 @@ class FormationTableSeeder extends Seeder {
 		Formation::create(array(
 			'libelle' => 'A',
 			'conditions' => 'aa',
-			'id_user' => 1,
+			'id_user' => 3,
 			'id_diplome' => 1
 		));
 		Formation::create(array(
 			'libelle' => 'B',
 			'conditions' => 'bb',
-			'id_user' => 1,
+			'id_user' => 3,
 			'id_diplome' => 2
+		));
+		Formation::create(array(
+			'libelle' => 'Formation test 3',
+			'conditions' => '19ans et toujours puceau',
+			'id_user' => 4,
+			'id_diplome' => 3
+		));
+		Formation::create(array(
+			'libelle' => 'Formation test 4',
+			'conditions' => '20ans et Italien',
+			'id_user' => 4,
+			'id_diplome' => 3
+		));
+		Formation::create(array(
+			'libelle' => 'Formation test 5',
+			'conditions' => 'G33K',
+			'id_user' => 4,
+			'id_diplome' => 3
 		));
 	}
 
@@ -281,62 +309,77 @@ class MatiereTableSeeder extends Seeder {
 		DB::table('matieres')->delete();
 		Matiere::create(array(
 			'libelle' => 'Anglais',
+			'id_formation' => 1,
 			'id_thematique' => 1
 		));
 		Matiere::create(array(
 			'libelle' => 'Vie en entreprise',
+			'id_formation' => 1,
 			'id_thematique' => 1
 		));
 		Matiere::create(array(
 			'libelle' => 'Français',
+			'id_formation' => 1,
 			'id_thematique' => 1
 		));
 		Matiere::create(array(
 			'libelle' => 'Informatique',
+			'id_formation' => 2,
 			'id_thematique' => 2
 		));
 		Matiere::create(array(
 			'libelle' => 'Electronique',
+			'id_formation' => 2,
 			'id_thematique' => 2
 		));
 		Matiere::create(array(
 			'libelle' => 'Mathématiques',
+			'id_formation' => 2,
 			'id_thematique' => 3
 		));
 		Matiere::create(array(
 			'libelle' => 'Physique',
+			'id_formation' => 3,
 			'id_thematique' => 3
 		));
 		Matiere::create(array(
 			'libelle' => 'Astronomie',
+			'id_formation' => 3,
 			'id_thematique' => 3
 		));
 		Matiere::create(array(
 			'libelle' => 'Géologie',
+			'id_formation' => 4,
 			'id_thematique' => 3
 		));
 		Matiere::create(array(
 			'libelle' => 'Biologie',
+			'id_formation' => 4,
 			'id_thematique' => 4
 		));
 		Matiere::create(array(
 			'libelle' => 'Physiologie',
+			'id_formation' => 4,
 			'id_thematique' => 4
 		));
 		Matiere::create(array(
 			'libelle' => 'Génétique',
+			'id_formation' => 5,
 			'id_thematique' => 4
 		));
 		Matiere::create(array(
 			'libelle' => 'Bio-Informatique',
+			'id_formation' => 5,
 			'id_thematique' => 4
 		));
 		Matiere::create(array(
 			'libelle' => 'Chimie',
+			'id_formation' => 5,
 			'id_thematique' => 4
 		));
 		Matiere::create(array(
 			'libelle' => 'BioChimie',
+			'id_formation' => 5,
 			'id_thematique' => 2
 		));
 
