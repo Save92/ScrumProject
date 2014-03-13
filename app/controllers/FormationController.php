@@ -58,7 +58,7 @@ class FormationController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$matieres = Matiere::all();
+		$matieres = Matiere::where('id_formation', $id)->get();
 
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
@@ -69,7 +69,7 @@ class FormationController extends BaseController {
 				$actions = array(1,1,1,0);
 				break;
 			default:
-			
+
 
 		$formation =array();
 		$actions = array(0,0,0,0);

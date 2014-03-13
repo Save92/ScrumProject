@@ -9,9 +9,9 @@
 				FR
 			</a>
 			|
-			<a href="http://www.larateam-dev.com/">
-				LaraTeam
+			<a href="http://www.lardteam-dev.com/">
+				LardTeam
 			</a>
 		</div>
 	</div>
-</div>
+</div>Ò
