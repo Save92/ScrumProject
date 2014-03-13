@@ -82,19 +82,17 @@ class ProfMatiereController extends BaseController {
 	{
 		$profId=Session::get('prof');
 		var_dump($profId);
-		die();
-		$formations = Formation::all();
-
-		$thematiques = Thematique::all();
+		$prof = User::find($profId);
+		var_dump($prof);
+		$matieres = Matiere::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
 				'name' => 'Matières',
 				'route' => 'matieres',
 				'items' => array(
-					array('libelle', 'Libellé', 'text'),
-					array('id_formation', 'Formation', 'select', $formations),
-					array('id_thematique', 'Thématique', 'select', $thematiques)
+					array('prof', 'Professeur', 'select', $prof),
+					array('matieres', 'Matières', 'select', $matieres)
 				)
 			)
 		);
@@ -111,22 +109,20 @@ class ProfMatiereController extends BaseController {
 	public function store()
 	{
 		$rules = array(
-			'libelle'=> 'required',
-			'id_formation' => 'required',
-			'id_thematique'	=> 'required'
+			'id_user' => 'required',
+			'id_matiere'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
 						$this->sendErrors($validator);
 
-			return Redirect::to('matieres/create')->withInput();
+			return Redirect::to('prof/create')->withInput();
 		} else {
-			$matiere = new Matiere;
-			$matiere->libelle = Input::get('libelle');
-			$matiere->id_formation = Input::get('id_formation');
-			$matiere->id_thematique=Input::get('id_thematique');
-			$matiere->save();
+			$profmatiere = new Profmatiere;
+			$profmatiere->id_user = Input::get('id_user');
+			$profmatiere->id_matiere=Input::get('id_matiere');
+			$profmatiere->save();
 
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
