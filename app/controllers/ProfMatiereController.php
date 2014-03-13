@@ -91,7 +91,7 @@ class ProfMatiereController extends BaseController {
 				'route' => 'profs',
 				'items' => array(
 					array('id_user', 'Professeur', 'readonly', $user),
-					array('matieres', 'Matières', 'checkbox', $matieres)
+					array('id_matieres', 'Matières', 'checkbox', $matieres)
 				)
 			)
 		);
@@ -107,12 +107,9 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function store()
 	{
-
-		var_dump(Input::all());
-		die();
 		$rules = array(
 			'id_user' => 'required',
-			'id_matiere'	=> 'required'
+			'id_matieres'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -121,10 +118,15 @@ class ProfMatiereController extends BaseController {
 
 			return Redirect::to('profs/create')->withInput();
 		} else {
-			$profmatiere = new Profmatiere;
-			$profmatiere->id_user = Input::get('id_user');
-			$profmatiere->id_matiere= Input::get('id_matiere');
-			$profmatiere->save();
+			foreach ($profmatiere->id_matieres) {
+				$profmatiere = new Profmatiere;
+				$profmatiere->id_user = Input::get('id_user');
+			
+				$profmatiere->id_matiere= Input::get('id_matiere');
+				$profmatiere->save();
+			}
+			
+			
 
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
