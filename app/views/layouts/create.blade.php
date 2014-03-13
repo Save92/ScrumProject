@@ -45,8 +45,10 @@ array(
 								</select>
 							@endif
 						@endif
-					@else
+					@elseif(!isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
+					@else
+						{{ $value[0] == 'password' ? '' : $item->$value[0] }}
 					@endif
 				</div>
 			</div>
