@@ -4,8 +4,10 @@
 @include('includes.title', array('name' => 'Matières', 'route' => 'matieres'))
 
 	<p>
-		{{ $matiere->libelle }}<br/>
-		{{ $matiere->id_thematique }}
+		Nom : {{ $matiere->libelle }}<br/>
+		Coefficient : {{ $matiere->coef }} <br/>
+		Formation : {{ $matiere->id_formation }} <br/>
+		Thématique : {{ $matiere->id_thematique }}
 	</p>
 
 @stop

@@ -24,7 +24,7 @@ class MatiereController extends BaseController {
 				$actions = array(1,1,1,1);
 				break;
 			case 4:
-				$actions = array(1,1,1,0);
+				$actions = array(0,1,0,0);
 				break;
 			default:
 				//$actions = array(0,1,0,0);
@@ -41,7 +41,7 @@ class MatiereController extends BaseController {
 				'actions' => $actions,
 				'fields' => array(
 					'Libellé' => 'getName',
-					'Coefficient' => 'getCoef', // ??
+					'Coefficient' => 'getCoef',
 					'Thématique' => 'getThematique'
 				)
 			)
@@ -57,9 +57,19 @@ class MatiereController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$matiere = Matiere::find($id);
 
-		$this->layout->content = View::make('matiere.show')->with('matiere', $matiere);
+		$this->layout->content = View::make('matiere.show')->with(
+				array(
+						'matiere' => $matiere,
+						'name' => 'Matières',
+						'route' => 'matieres',
+						'fields' => array(
+							'Libellé' => 'getName',
+							'Coefficient' => 'getCoef',
+							'Thématique' => 'getThematique'
+						)
+					)
+				);
 	}
 
 	/**
@@ -72,6 +82,7 @@ class MatiereController extends BaseController {
 	{
 
 
+		$formations = Formation::all();
 		$thematiques = Thematique::all();
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
@@ -79,6 +90,7 @@ class MatiereController extends BaseController {
 				'route' => 'matieres',
 				'items' => array(
 					array('libelle', 'Libellé', 'text'),
+					array('id_formation', 'Formation', 'select', $formations),
 					array('id_thematique', 'Thématique', 'select', $thematiques)
 				)
 			)
@@ -97,17 +109,20 @@ class MatiereController extends BaseController {
 	{
 		$rules = array(
 			'libelle'=> 'required',
+			'id_formation' => 'required',
 			'id_thematique'	=> 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('matieres/create')
-				->withErrors($validator);
+						$this->sendErrors($validator);
+
+			return Redirect::to('matieres/create')->withInput();
 		} else {
 			$matiere = new Matiere;
 			$matiere->libelle = Input::get('libelle');
-			$matiere->id_thematique=1;
+			$matiere->id_formation = Input::get('id_formation');
+			$matiere->id_thematique=Input::get('id_thematique');
 			$matiere->save();
 
 			Session::flash('message', 'Successfully created');
@@ -128,16 +143,18 @@ class MatiereController extends BaseController {
 	public function edit($id)
 	{
 		$matiere = Matiere::find($id);
+		$formations = Formation::all();
 		$thematiques = Thematique::all();
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+				'name' => 'Matières',
+				'route' => 'matieres',
 				'item' => $matiere,
 				'items' => array(
-					'matieres' => array(
-						array('libelle', 'Libellé', 'text'),
-						array('id_thematique', 'Thématique', 'select', $thematiques, $matiere->id_thematique)
-					)
+					array('libelle', 'Libellé', 'text'),
+					array('id_formation', 'Formations', 'select', $formations, $matiere->id_formation),
+					array('id_thematique', 'Thématique', 'select', $thematiques, $matiere->id_thematique)
 				)
 			)
 		);
@@ -159,8 +176,10 @@ class MatiereController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('matieres/' . $id . '/edit')
-				->withErrors($validator);
+			
+			$this->sendErrors($validator);
+
+			return Redirect::to('matieres/' . $id . '/edit')->withInput();
 		} else {
 			$matiere = Matiere::find($id);
 			$matiere->libelle = Input::get('libelle');
@@ -182,7 +201,7 @@ class MatiereController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$matiere = Formation::find($id);
+		$matiere = Matiere::find($id);
 
 		$this->tryDelete($matiere);
 

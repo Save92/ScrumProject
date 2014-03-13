@@ -58,8 +58,8 @@ class FormationController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$matieres = Matiere::all();
-
+		$matieres = Matiere::where('id_formation', $id)->get();
+		$actions = array(0,0,0,0);
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
@@ -69,11 +69,6 @@ class FormationController extends BaseController {
 				$actions = array(1,1,1,0);
 				break;
 			default:
-			
-
-		$formation =array();
-		$actions = array(0,0,0,0);
-				//$actions = array(0,1,0,0);
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
 				break;
@@ -169,7 +164,14 @@ class FormationController extends BaseController {
 	{
 		$formation = Formation::find($id);
 
-		$users = User::where('id_role', 4)->get();
+		// $users = DB::table('users')
+  //       ->leftJoin('compositions', 'compositions.id_formation', '=', 'users.id')
+  //       ->get();
+		$users = User::where('id_role', 4)
+		//->Join('formations', 'formations.id_user' ,'<>', 'users.id')
+		->get();
+
+		//var_dump($users);
 
 		$diplomes = Diplome::all();
 
