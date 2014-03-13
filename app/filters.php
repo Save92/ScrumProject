@@ -19,7 +19,13 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	//
+	if (!Auth::guest()) {
+		$role = Auth::user()->id_role;
+	} else {
+		$role = 0;
+	}
+	// Emission du role de l'utilisateur
+	Session::flash('role', $role);
 });
 
 /*
@@ -70,9 +76,6 @@ Route::filter('auth', function()
 				default: break;
 			}
 		}
-
-		// Emission du role de l'utilisateur
-		Session::flash('role', $role);
 
 		// Redirection si role insuffisant
 		if (!$access) {
