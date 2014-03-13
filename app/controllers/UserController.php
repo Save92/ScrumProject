@@ -175,10 +175,9 @@ class UserController extends BaseController {
 
 			Session::flash('message', 'Création réussie');
 			Session::flash('alert', 'success');
-			
+
 			if($user->id_role == 3) {
 				Session::flash('prof', $user->id);
-
 				return Redirect::to('profs/create');
 			}
 

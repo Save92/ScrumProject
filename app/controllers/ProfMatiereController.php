@@ -81,9 +81,8 @@ class ProfMatiereController extends BaseController {
 	public function create()
 	{
 		$profId=Session::get('prof');
-		var_dump($profId);
-		$prof = User::find($profId);
-		var_dump($prof);
+		$user = User::find($profId);
+
 		$matieres = Matiere::all();
 
 		$this->layout->content = View::make('layouts.create')->with(
@@ -91,8 +90,8 @@ class ProfMatiereController extends BaseController {
 				'name' => 'Matières',
 				'route' => 'matieres',
 				'items' => array(
-					array('prof', 'Professeur', 'select', $prof),
-					array('matieres', 'Matières', 'select', $matieres)
+					array('prof', 'Professeur', 'readonly', $user->getName()),
+					array('matieres', 'Matières', 'checkbox', $matieres)
 				)
 			)
 		);
