@@ -52,8 +52,6 @@ array(
 					@elseif($value[2] == 'checkbox' && isset($value[3]))
 						@foreach($value[3] as $k => $v)
 							<div class="form-control">
-							{{ $v[0] }}
-							{{ $v[2] }}
 								<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" value="{{ $v->id }}"> {{ $v->getName() }}
 							</div>
 						@endforeach
@@ -62,7 +60,7 @@ array(
 					{{-- input valeur par défaut --}}
 					@elseif($value[2] = 'readonly' && isset($value[3]))
 						{{ $value[3]->getName() }}
-						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[3]->id }}" readonly="readonly">
+						<input type="hidden" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[3]->id }}">
 					{{-- input readonly --}}
 					@elseif($value[2] = 'text' && isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[3] }}">

@@ -107,6 +107,7 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function store()
 	{
+		var_dump(Input::all());die();
 		$rules = array(
 			'id_user' => 'required',
 			'id_matiere'	=> 'required'
