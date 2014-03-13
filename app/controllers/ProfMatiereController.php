@@ -90,7 +90,7 @@ class ProfMatiereController extends BaseController {
 				'name' => 'Matières',
 				'route' => 'profs',
 				'items' => array(
-					array('prof', 'Professeur', 'readonly', $user->getName()),
+					array('prof', 'Professeur', 'readonly', $user),
 					array('matieres', 'Matières', 'checkbox', $matieres)
 				)
 			)
