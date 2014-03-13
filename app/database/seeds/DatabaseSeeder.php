@@ -113,6 +113,7 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 2,
 			'telephone' => '0123456789'
 		));	
+		
 		//Professeurs
 		User::create(array(
 			'prenom' => 'Claire',
