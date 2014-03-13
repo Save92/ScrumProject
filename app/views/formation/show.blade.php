@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-@include('includes.title', array('name' => $name, 'route' => $route))
+@include('includes.title', array('name' => 'Formations', 'route' => 'formations'))
 
 	<h1>{{ $formation->libelle }} {{ $formation->annee }}</h1>
 	<p>

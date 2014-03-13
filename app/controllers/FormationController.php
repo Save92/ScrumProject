@@ -58,7 +58,10 @@ class FormationController extends BaseController {
 	 */
 	public function show($id)
 	{
+		$formation = Formation::find($id);
+
 		$matieres = Matiere::where('id_formation', $id)->get();
+
 		$actions = array(0,0,0,0);
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
@@ -73,8 +76,6 @@ class FormationController extends BaseController {
 				$this->deny();
 				break;
 		}
-
-		$formation = Formation::find($id);
 
 		$this->layout->content = View::make('formation.show')->with(
 			array(
