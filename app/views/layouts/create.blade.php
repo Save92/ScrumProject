@@ -51,7 +51,7 @@ array(
 					{{-- checkbox --}}
 					@elseif($value[2] == 'checkbox' && isset($value[3]))
 						@foreach($value[3] as $k => $v)
-							<div class="form-control">
+							<div class="col-sm-2">
 								<input type="{{ $value[2] }}" name="{{ $value[0] }}[]" id="{{ $value[0] }}" value="{{ $v->id }}"> {{ $v->getName() }}
 							</div>
 						@endforeach
