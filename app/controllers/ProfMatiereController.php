@@ -88,7 +88,7 @@ class ProfMatiereController extends BaseController {
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
 				'name' => 'Matières',
-				'route' => 'matieres',
+				'route' => 'profs',
 				'items' => array(
 					array('prof', 'Professeur', 'readonly', $user->getName()),
 					array('matieres', 'Matières', 'checkbox', $matieres)
@@ -107,6 +107,8 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function store()
 	{
+		var_dump(Input::all());
+		die();
 		$rules = array(
 			'id_user' => 'required',
 			'id_matiere'	=> 'required'
