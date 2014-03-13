@@ -41,6 +41,7 @@ class MatiereController extends BaseController {
 				'actions' => $actions,
 				'fields' => array(
 					'Libellé' => 'getName',
+					'Coefficient' => 'getCoef', // ??
 					'Thématique' => 'getThematique'
 				)
 			)

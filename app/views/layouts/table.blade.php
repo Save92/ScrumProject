@@ -27,7 +27,7 @@ array(
 			<tr>
 				@foreach($fields as $k => $v)
 				<td>
-					<strong>{{ $k }}</strong>
+					{{ $k }}
 				</td>
 				@endforeach
 				<td>

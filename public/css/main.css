@@ -117,7 +117,9 @@ ul {
 }
 
 thead {
+	font-size: 1.2em;
 	text-transform: uppercase;
+	font-weight: bold;
 }
 
 td {

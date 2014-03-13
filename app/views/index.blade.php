@@ -15,7 +15,7 @@
 	<br/>
 	<span class="glyphicon glyphicon-ok"></span> Formations
 	<br/>
-	<span class="glyphicon glyphicon-remove"></span> Matières (sauf index())
+	<span class="glyphicon glyphicon-remove"></span> Matières
 	<br/>
 	<span class="glyphicon glyphicon-remove"></span> Classe
 	<br/>
@@ -23,6 +23,16 @@
 	<br/>
 	<span class="glyphicon glyphicon-question-sign"></span> ...
 
+</p>
+
+<p class="well">
+	Gestion des permissions :
+	<br/>
+	Switch case sur les routes <code>app/filter.php</code>
+	<br/>
+	Switch case dans les controllers : Create Read Update Delete <code>$actions = array(1,1,1,1)</code>
+	<br/>
+	Navigation <code>app/views/includes/header.blade.php</code>
 </p>
 
 @stop
