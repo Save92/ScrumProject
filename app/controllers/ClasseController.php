@@ -19,30 +19,40 @@ class ClasseController extends BaseController {
 	public function index()
 	{
 		// Récupération des classes
-		$users_sp = User::where('id_role',4)->get();
-						// ->join('formations','classes.id_user','=','formations.id_user')
-						// ->join('users','formations.id_user','=','users.id')
-		$formations = $classes_dist = array();
-		foreach ($users_sp as $key => $value) {
-			// var_dump($value->id);
-			$formations[$key] = Formation::where('id_user',$value->id)->get();
-
-			$classes = array();
-			foreach($formations[$key] as $key2 => $value2) {
-				$classes[$key2] = Classe::where('id_formation','=',$value2->id,'and')
-										->where('id_user',$value->id)
-										->get();
-				
-				foreach($classes[$key2] as $key3 => $value3) {
-					$classes_dist[] = $value3;
-				}
-			}
+		$classes =array();
+		$actions = array(0,0,0,0);
+		// (créer, afficher, modifier, supprimer)
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				$classes = Classe::all()->groupBy('libelle');
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				$classes = Classe::all()->groupBy('libelle');
+				//$formations = Formation::where('id_user', Auth::user()->id)->get();
+				break;
+			default:
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
+				break;
 		}
-		
-		$this->classes = $classes_dist;
-		// var_dump($classes_dist);
 
-		$this->layout->content = View::make('classe.index')->with('classes', $classes_dist);
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $classes,
+				'name' => 'Classes',
+				'route' => 'classes',
+				'actions' => $actions,
+				'fields' => array(
+					'Nom' => 'getName',
+					'Responsable' => 'getResponsable',
+					'Année' => 'getYear'
+				)
+			)
+		);
 	}
 
 	/**
@@ -54,18 +64,44 @@ class ClasseController extends BaseController {
 	public function create()
 	{
 
-		$user = new User;
-		$users = $user->getByRole(4);
+		$annees = array(
+			'2014/2015' => '2014 - 2015',
+			'2015/2016' => '2015 - 2016',
+			'2016/2017' => '2016 - 2017',
+			'2017/2018' => '2017 - 2018'
+		);
+
+		$users = User::where('id_role',1)->get();
 
 		$formations = Formation::all();
-		$this->layout->content = View::make('layouts.create')->with(
-			'items', array(
-				'classes' => array(
+
+		switch (Session::get('role')) {
+			case 5:
+				$items = array(
 					array('libelle', 'Libellé', 'text'),
+					array('id_user', 'Nouvel élève', 'select', $users),
 					array('id_formation', 'Formation', 'select', $formations),
-					// array( annee ),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users)
-				)
+					array('annee', 'Année', 'select', $annees)
+				);
+				break;
+			case 4:
+				$items = array(
+					array('libelle', 'Libellé', 'text'),
+					array('id_user', 'Nouvel élève', 'select', $users),
+					array('id_formation', 'Formation', 'select', $formations, false),
+					array('annee', 'Année', 'select', $annees)
+				);
+				break;
+			default:
+				$this->deny();
+				break;
+		}
+
+		$this->layout->content = View::make('layouts.create')->with(
+			array(
+				'name' => 'Classes',
+				'route' => 'classes',
+				'items' => $items
 			)
 		);
 	}
@@ -89,14 +125,15 @@ class ClasseController extends BaseController {
 	public function store()
 	{
 		$rules = array(
-			'libelle'=> 'required'
+			'libelle'=> 'required',
+			'id_user' => 'required',
+			'annee' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('classes/create')
-				->withErrors($validator)
-				->withInput(Input::except('password'));
+			$this->sendErrors($validator);
+			return Redirect::to('classes/create')->withInput();
 		} else {
 			$classe = new Classe;
 			$classe->libelle = Input::get('libelle');
@@ -120,46 +157,38 @@ class ClasseController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$classe = Classe::find($id);
-		$formation = Formation::where('id',$classe->id_formation)->pluck('libelle');
-		$students = User::where('id_role',2)
-						->join('classes','classes.id_user','=','users.id')
-						->get(array('prenom','nom'));
+		$students = Classe::all();
 
-		// SELECT x,x,x,x,users.name
-		// FROM classes
-		// JOIN users ON classes.id_user = users.id
-		// WHERE classes.id = $id
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				break;
+			default:
 
-		// AND users.id_role = 2
-
-		// $formations = $classes_dist = array();
-		// foreach ($users_sp as $key => $value) {
-		// 	// var_dump($value->id);
-		// 	$formations[$key] = Formation::where('id_user',$value->id)->get();
-
-		// 	$classes = array();
-		// 	foreach($formations[$key] as $key2 => $value2) {
-		// 		$classes[$key2] = Classe::where('id_formation','=',$value2->id,'and')
-		// 								->where('id_user',$value->id)
-		// 								->get();
-				
-		// 		foreach($classes[$key2] as $key3 => $value3) {
-		// 			$classes_dist[] = $value3;
-		// 		}
-		// 	}
-		// }
-
-		foreach($this->classes as $key => $value) {
-			var_dump($value);
+		$classe = array();
+		$actions = array(0,0,0,0);
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
+				break;
 		}
 
-		//var_dump($students);
+		$classe = Classe::find($id);
+
 		$this->layout->content = View::make('classe.show')->with(
 			array(
 				'classe' => $classe,
-				'formation' => $formation,
-				'students' => $students
+				'items' => $students,
+				'name' => 'Elèves',
+				'route' => 'classes',
+				'actions' => $actions,
+				'fields' => array(
+					'Nom' => 'getUsername'
+				)
 			)
 		);
 	}
@@ -178,6 +207,9 @@ class ClasseController extends BaseController {
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
+
+
+
 				'item' => $classe,
 				'items' => array(
 					'classes' => array(
@@ -204,8 +236,8 @@ class ClasseController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('classes/' . $id . '/edit')
-				->withErrors($validator);
+			$this->sendErrors($validator);
+			return Redirect::to('classes/' . $id . '/edit')->withInput();
 		} else {
 			$classe = Classe::find($id);
 			$classe->libelle = Input::get('libelle');
@@ -228,7 +260,8 @@ class ClasseController extends BaseController {
 	public function destroy($id)
 	{
 		$classe = Classe::find($id);
-		$classe->delete();
+
+		$classe->tryDelete($user);
 
 		Session::flash('message', 'Successfully deleted');
 		Session::flash('alert', 'success');
