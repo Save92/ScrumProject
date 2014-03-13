@@ -107,6 +107,8 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function store()
 	{
+		// var_dump(Input::all());
+		// die();
 		$rules = array(
 			'id_user' => 'required',
 			'id_matieres'	=> 'required'
@@ -118,19 +120,20 @@ class ProfMatiereController extends BaseController {
 
 			return Redirect::to('profs/create')->withInput();
 		} else {
-			foreach ($profmatiere->id_matieres) {
-				$profmatiere = new Profmatiere;
-				$profmatiere->id_user = Input::get('id_user');
-			
-				$profmatiere->id_matiere= Input::get('id_matiere');
-				$profmatiere->save();
-			}
-			
-			
 
+			$user = Input::get('id_user');
+			foreach (Input::get('id_matieres') as $key => $value) {
+			$profmatiere = new Profmatiere;
+			$profmatiere->id_user = $user;
+			$profmatiere->id_matiere = $value;
+			$profmatiere->save();
+
+
+			}
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
 			return Redirect::to('matieres');
+
 		}
 	}
 
