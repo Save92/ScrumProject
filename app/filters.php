@@ -56,7 +56,7 @@ Route::filter('auth', function()
 		$method = Request::method();
 
 		// Restriction des accès
-		if ($role < 5) {
+		if ($role < 2) {
 			switch (true) {
 				// Modifier
 				case Request::isMethod('put'):
