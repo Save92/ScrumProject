@@ -179,7 +179,7 @@ class UserController extends BaseController {
 			if($user->id_role == 3) {
 				Session::flash('prof', $user->id);
 
-				return Redirect::route('createprof');
+				return Redirect::to('profs/create');
 			}
 
 

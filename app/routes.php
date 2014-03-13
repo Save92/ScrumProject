@@ -23,7 +23,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::resource('formations', 'FormationController');
 	Route::resource('classes', 'ClasseController');
 	Route::resource('matieres', 'MatiereController');
-	Route::get('createprof', array('as' => 'createprof', 'uses' => 'UserController@createprof'));
+	Route::ressource('profs', 'ProfMatiereController');
+	//Route::get('createprof', array('as' => 'createprof', 'uses' => 'Prof@createprof'));
 	// Déconnexion et redirection
 	Route::get('logout', array('as' => 'logout', function()
 	{

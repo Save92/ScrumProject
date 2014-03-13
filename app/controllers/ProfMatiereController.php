@@ -80,6 +80,9 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function create()
 	{
+		$profId=Session::get('prof');
+		var_dump($profId);
+		die();
 		$formations = Formation::all();
 
 		$thematiques = Thematique::all();
