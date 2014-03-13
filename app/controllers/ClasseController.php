@@ -30,8 +30,8 @@ class ClasseController extends BaseController {
 				break;
 			case 4:
 				$actions = array(1,1,1,0);
+				$formations = Formation::where('id_user', Auth::user()->id)->get();
 				$classes = Classe::all()->groupBy('libelle');
-				//$formations = Formation::where('id_user', Auth::user()->id)->get();
 				break;
 			default:
 				//$actions = array(0,1,0,0);
@@ -87,7 +87,7 @@ class ClasseController extends BaseController {
 			case 4:
 				$items = array(
 					array('libelle', 'Libellé', 'text'),
-					array('id_user', 'Nouvel élève', 'select', $users),
+					array('id_user', 'Etudiant', 'select', $users),
 					array('id_formation', 'Formation', 'select', $formations),
 					array('annee', 'Année', 'select', $annees)
 				);
@@ -127,7 +127,8 @@ class ClasseController extends BaseController {
 	{
 		$rules = array(
 			'libelle'=> 'required',
-			'id_user' => 'required',
+			'id_user' => 'required|integer',
+			'id_formation' => 'required|integer',
 			'annee' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
@@ -158,7 +159,10 @@ class ClasseController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$students = Classe::all();
+
+		$classe = Classe::find($id);
+
+		$classes = Classe::where('libelle', $classe->libelle)->get();
 
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
@@ -170,7 +174,6 @@ class ClasseController extends BaseController {
 				break;
 			default:
 
-		$classe = array();
 		$actions = array(0,0,0,0);
 				//$actions = array(0,1,0,0);
 				// Redirection si la route n'est pas censée être accessible
@@ -178,12 +181,11 @@ class ClasseController extends BaseController {
 				break;
 		}
 
-		$classe = Classe::find($id);
 
 		$this->layout->content = View::make('classe.show')->with(
 			array(
 				'classe' => $classe,
-				'items' => $students,
+				'items' => $classes,
 				'name' => 'Etudiants',
 				'route' => 'users',
 				'actions' => $actions,
@@ -204,20 +206,43 @@ class ClasseController extends BaseController {
 	public function edit($id)
 	{
 		$classe = Classe::find($id);
-		//var_dump($classe);
+		$formations = Formation::all();
+
+		$annees = array(
+			'2014/2015' => '2014 - 2015',
+			'2015/2016' => '2015 - 2016',
+			'2016/2017' => '2016 - 2017',
+			'2017/2018' => '2017 - 2018'
+		);
+
+		// var_dump(Session::get('role')); die();
+
+		switch (Session::get('role')) {
+			case 5:
+				$items = array(
+					array('libelle', 'Libellé', 'text')
+				);
+				break;
+			case 4:
+				$items = array(
+					array('libelle', 'Libellé', 'text')
+				);
+			default:
+				/*$items = array(
+					array('libelle', 'Libellé', 'text', false),
+					array('conditions', 'Conditions', 'text', false),
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
+				);*/
+				break;
+		}
 
 		$this->layout->content = View::make('layouts.edit')->with(
 			array(
-
-
-
+				'name' => 'Classes',
+				'route' => 'classes',
 				'item' => $classe,
-				'items' => array(
-					'classes' => array(
-						array('libelle', 'Libellé', 'text'),
-						array('annee', 'Année', 'text')
-					)
-				)
+				'items' => $items
 			)
 		);
 	}

@@ -159,6 +159,14 @@ class UserTableSeeder extends Seeder {
 			'id_role' => 4,
 			'telephone' => '0123456789'
 		));
+		User::create(array(
+			'prenom' => 's',
+			'nom' => 's',
+			'mail' => 's@s.s',
+			'password' => Hash::make('s'),
+			'id_role' => 4,
+			'telephone' => '0123456789'
+		));
 	}
 
 }
