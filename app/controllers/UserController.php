@@ -24,11 +24,7 @@ class UserController extends BaseController {
 			case 5:
 				$actions = array(1,1,1,1);
 				break;
-			case 4:
-				$actions = array(1,1,1,0);
-				break;
 			default:
-				//$actions = array(0,1,0,0);
 				// Fallback si la route n'est pas bloquée
 				$this->deny();
 				break;

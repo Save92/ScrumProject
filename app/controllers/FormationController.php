@@ -69,11 +69,6 @@ class FormationController extends BaseController {
 				$actions = array(1,1,1,0);
 				break;
 			default:
-
-
-		$formation =array();
-		$actions = array(0,0,0,0);
-				//$actions = array(0,1,0,0);
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
 				break;
