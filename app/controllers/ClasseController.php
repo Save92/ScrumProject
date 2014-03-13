@@ -88,12 +88,13 @@ class ClasseController extends BaseController {
 				$items = array(
 					array('libelle', 'Libellé', 'text'),
 					array('id_user', 'Nouvel élève', 'select', $users),
-					array('id_formation', 'Formation', 'select', $formations, false),
+					array('id_formation', 'Formation', 'select', $formations),
 					array('annee', 'Année', 'select', $annees)
 				);
 				break;
 			default:
 				$this->deny();
+				return Redirect::to('/');
 				break;
 		}
 
@@ -183,8 +184,8 @@ class ClasseController extends BaseController {
 			array(
 				'classe' => $classe,
 				'items' => $students,
-				'name' => 'Elèves',
-				'route' => 'classes',
+				'name' => 'Etudiants',
+				'route' => 'users',
 				'actions' => $actions,
 				'fields' => array(
 					'Nom' => 'getUsername'
