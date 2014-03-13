@@ -12,6 +12,8 @@ class FormationController extends BaseController {
 	 */
 	public function index()
 	{
+		$formations =array();
+		$actions = array(0,0,0,0);
 		// (créer, afficher, modifier, supprimer)
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
@@ -56,7 +58,6 @@ class FormationController extends BaseController {
 	 */
 	public function show($id)
 	{
-
 		$matieres = Matiere::all();
 
 		// Gestion en fonction du role
@@ -68,6 +69,10 @@ class FormationController extends BaseController {
 				$actions = array(1,1,1,0);
 				break;
 			default:
+			
+
+		$formation =array();
+		$actions = array(0,0,0,0);
 				//$actions = array(0,1,0,0);
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
