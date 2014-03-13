@@ -55,9 +55,40 @@ class FormationController extends BaseController {
 	 */
 	public function show($id)
 	{
+
+		$matieres = Matiere::all();
+
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				break;
+			case 4:
+				$actions = array(1,1,1,0);
+				break;
+			default:
+				//$actions = array(0,1,0,0);
+				// Redirection si la route n'est pas censée être accessible
+				$this->deny();
+				break;
+		}
+
 		$formation = Formation::find($id);
 
-		$this->layout->content = View::make('formation.show')->with('formation', $formation);
+		$this->layout->content = View::make('formation.show')->with(
+			array(
+				'formation' => $formation,
+				'items' => $matieres,
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'actions' => $actions,
+				'fields' => array(
+					'Libellé' => 'getName',
+					'Coefficient' => 'getCoef',
+					'Thématique' => 'getThematique'
+				)
+			)
+		);
 	}
 
 	/**

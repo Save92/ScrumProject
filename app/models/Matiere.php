@@ -2,7 +2,7 @@
 
 class Matiere extends Eloquent {
 
-	protected $fillable = array('libelle', 'id_thematique', 'coefficient'); // composition ??
+	protected $fillable = array('libelle', 'id_thematique', 'coef'); // composition ??
 
 	protected $guarded = array('id');
 
@@ -20,7 +20,7 @@ class Matiere extends Eloquent {
 
 	public function getCoef()
 	{
-		return $this->coefficient;
+		return $this->coef;
 	}
 
 }
