@@ -26,6 +26,7 @@ array(
 			<div class="form-group">
 				<label for="{{ $value[0] }}" class="col-sm-2 control-label">{{ $value[1] }}</label>
 				<div class="col-sm-10">
+					{{-- select --}}
 					@if($value[2] == 'select' && isset($value[3]))
 						@if(is_array($value[3]))
 							<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
@@ -44,10 +45,22 @@ array(
 								</select>
 							@endif
 						@endif
+					{{-- checkbox --}}
+					@if($value[2] == 'checkbox' && is_array($value[3]))
+						@foreach($value[3] as $k => $v)
+							<input type="{{ $v[2] }}" name="{{ $v[0] }}" id="{{ $v[0] }}" class="form-control" value="{{ $v[3] }}" readonly="readonly">
+						@endforeach
+
+					{{-- input vide --}}
 					@elseif(!isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
-					@elseif($value[2] = 'text' && isset($value[3]))
+
+					{{-- input valeur par défaut --}}
+					@elseif($value[2] = 'readonly' && isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[3] }}" readonly="readonly">
+					{{-- input readonly --}}
+					@elseif($value[2] = 'text' && isset($value[3]))
+						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[3] }}">
 					@else
 						{{ $value[0] == 'password' ? '' : $item->$value[0] }}
 					@endif
