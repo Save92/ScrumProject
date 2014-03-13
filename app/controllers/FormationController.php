@@ -20,7 +20,7 @@ class FormationController extends BaseController {
 				break;
 			case 4:
 				$actions = array(1,1,1,0);
-				$formations = Formation::where('id_user',Auth::user()->id)->get();
+				$formations = Formation::where('id_user', Auth::user()->id)->get();
 				break;
 			default:
 				//$actions = array(0,1,0,0);

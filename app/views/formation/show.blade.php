@@ -9,4 +9,6 @@
 		{{ $formation->getUser() }}
 	</p>
 
+	@include('includes.table',array('items' => $items, 'name' => $name, 'route' => $route, 'actions' => $actions, 'fields' => $fields))
+
 @stop
