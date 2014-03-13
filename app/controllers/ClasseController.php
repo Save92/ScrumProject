@@ -2,6 +2,8 @@
 
 class ClasseController extends BaseController {
 
+	private $classes;
+
 	public function __construct()
 	{
 	}
@@ -16,9 +18,31 @@ class ClasseController extends BaseController {
 	 */
 	public function index()
 	{
-		$classes = Classe::all();
+		// Récupération des classes
+		$users_sp = User::where('id_role',4)->get();
+						// ->join('formations','classes.id_user','=','formations.id_user')
+						// ->join('users','formations.id_user','=','users.id')
+		$formations = $classes_dist = array();
+		foreach ($users_sp as $key => $value) {
+			// var_dump($value->id);
+			$formations[$key] = Formation::where('id_user',$value->id)->get();
 
-		$this->layout->content = View::make('classe.index')->with('classes', $classes);
+			$classes = array();
+			foreach($formations[$key] as $key2 => $value2) {
+				$classes[$key2] = Classe::where('id_formation','=',$value2->id,'and')
+										->where('id_user',$value->id)
+										->get();
+				
+				foreach($classes[$key2] as $key3 => $value3) {
+					$classes_dist[] = $value3;
+				}
+			}
+		}
+		
+		$this->classes = $classes_dist;
+		// var_dump($classes_dist);
+
+		$this->layout->content = View::make('classe.index')->with('classes', $classes_dist);
 	}
 
 	/**
@@ -44,6 +68,16 @@ class ClasseController extends BaseController {
 				)
 			)
 		);
+	}
+
+	/**
+	 * Show the form for assign a new user (role 2) to the class.
+	 * GET /resource/create
+	 *
+	 * @return Response
+	 */
+	public function add($value='') {
+		
 	}
 
 	/**
@@ -88,7 +122,9 @@ class ClasseController extends BaseController {
 	{
 		$classe = Classe::find($id);
 		$formation = Formation::where('id',$classe->id_formation)->pluck('libelle');
-		$students = User::where('id_role',2)->get(array('prenom','nom'));
+		$students = User::where('id_role',2)
+						->join('classes','classes.id_user','=','users.id')
+						->get(array('prenom','nom'));
 
 		// SELECT x,x,x,x,users.name
 		// FROM classes
@@ -97,7 +133,26 @@ class ClasseController extends BaseController {
 
 		// AND users.id_role = 2
 
+		// $formations = $classes_dist = array();
+		// foreach ($users_sp as $key => $value) {
+		// 	// var_dump($value->id);
+		// 	$formations[$key] = Formation::where('id_user',$value->id)->get();
 
+		// 	$classes = array();
+		// 	foreach($formations[$key] as $key2 => $value2) {
+		// 		$classes[$key2] = Classe::where('id_formation','=',$value2->id,'and')
+		// 								->where('id_user',$value->id)
+		// 								->get();
+				
+		// 		foreach($classes[$key2] as $key3 => $value3) {
+		// 			$classes_dist[] = $value3;
+		// 		}
+		// 	}
+		// }
+
+		foreach($this->classes as $key => $value) {
+			var_dump($value);
+		}
 
 		//var_dump($students);
 		$this->layout->content = View::make('classe.show')->with(

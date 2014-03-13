@@ -214,13 +214,40 @@ class ClasseTableSeeder extends Seeder {
 			'libelle' => 'classe 2',
 			'id_user' => 2,
 			'annee' => '2013/2014',
-			'id_formation' => 2
+			'id_formation' => 1
 		));
 		Classe::create(array(
 			'libelle' => 'classe 3',
 			'id_user' => 2,
 			'annee' => '2013/2014',
 			'id_formation' => 2
+		));
+
+		// élèves
+		Classe::create(array(
+			'libelle' => 'classe 1',
+			'id_user' => 5,
+			'annee' => '2013/2014',
+			'id_formation' => 1
+		));
+		Classe::create(array(
+			'libelle' => 'classe 1',
+			'id_user' => 6,
+			'annee' => '2013/2014',
+			'id_formation' => 1
+		));
+
+		Classe::create(array(
+			'libelle' => 'classe 2',
+			'id_user' => 7,
+			'annee' => '2013/2014',
+			'id_formation' => 1
+		));
+		Classe::create(array(
+			'libelle' => 'classe 2',
+			'id_user' => 8,
+			'annee' => '2013/2014',
+			'id_formation' => 1
 		));
 	}
 
