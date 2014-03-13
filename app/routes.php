@@ -18,19 +18,18 @@ Route::get('/', array('as' => 'home', function()
 
 Route::group(array('before' => 'auth'), function()
 {
+	// Routes CRUD
 	Route::resource('users', 'UserController');
-
 	Route::resource('formations', 'FormationController');
-
 	Route::resource('classes', 'ClasseController');
-
 	Route::resource('matieres', 'MatiereController');
 
+	// Déconnexion et redirection
 	Route::get('logout', array('as' => 'logout', function()
 	{
 		Auth::logout();
 
-		Session::flash('message', 'Successfully logged out');
+		Session::flash('message', 'Déconnexion réussie');
 		Session::flash('alert', 'success');
 		return Redirect::to('/');
 	}));
@@ -38,8 +37,10 @@ Route::group(array('before' => 'auth'), function()
 
 Route::group(array('before' => 'gest'), function()
 {
+	// Réception du formulaire de login
 	Route::post('login', array('uses' => 'UserController@login'));
 
+	// Requête de la vue login
 	Route::get('login', array('as' => 'login', function() {
 		return View::make('login');
 	}));
