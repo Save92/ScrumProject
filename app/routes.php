@@ -155,6 +155,9 @@ Route::get('db', function()
 	{
 		$table->increments('id');
 		$table->string('libelle', 32);
+		$table->float('coef');
+		$table->integer('id_formation')->unsigned();
+		$table->foreign('id_formation')->references('id')->on('formations');
 		$table->integer('id_thematique')->unsigned();
 		$table->foreign('id_thematique')->references('id')->on('thematiques');
 		$table->timestamps();
