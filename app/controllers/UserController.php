@@ -99,13 +99,13 @@ class UserController extends BaseController {
 		$matieres = Matiere::all();
 		$idProf = Session::get('prof');
 		$prof = User::find($idProf);
+
 		$this->layout->content = View::make('layouts.create')->with(
 			array(
-				'prof' => $prof,
 				'name' => 'Matières',
-				'route' => 'matieres',
+				'route' => 'storeprof',
 				'items' => array(
-					array('id_user', 'Professeur', 'text')
+					array('id_user', 'Professeur', 'text', $prof->getName()),
 					array('matieres', 'Matières', 'select', $matieres),
 					)
 			)
@@ -130,7 +130,7 @@ class UserController extends BaseController {
 			$this->sendErrors($validator);
 			return Redirect::to('users/create')->withInput();
 		} else {
-			$prof = new User;
+			$prof = new ProfMatiere;
 			$prof->id_user = Input::get('id_user');
 			$prof->id_user = Input::get('id_matiere');
 			$prof->save();

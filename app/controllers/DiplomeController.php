@@ -14,9 +14,31 @@ class DiplomeController extends BaseController {
 	 */
 	public function index()
 	{
-		$diplomes = Diplome::all();
 
-		$this->layout->content = View::make('diplome.index')->with('diplomes', $diplomes);
+
+		// Gestion en fonction du role
+		switch (Session::get('role')) {
+			case 5:
+				$actions = array(1,1,1,1);
+				$diplomes = Diplome::all();
+				break;
+			default:
+				$this->deny();
+				break;
+		}
+
+		$this->layout->content = View::make('layouts.table')->with(
+			array(
+				'items' => $diplomes,
+				'name' => 'Diplomes',
+				'route' => 'diplomes',
+				'actions' => $actions,
+				'fields' => array(
+					// Contient le nom du champ et le nom de la fonction (models) qui renvoie la valeur
+					'Nom' => 'getName'
+				)
+			)
+		);
 	}
 
 	/**
