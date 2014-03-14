@@ -20,7 +20,6 @@ array(
 	</div>
 
 	<div class="panel-body">
-	{{ HTML::ul($errors->all()) }}
 
 		<form method="POST" action="{{ URL::to($route) . '/' . $item->id }}" role="form" class="form-horizontal">
 			<input name="_method" type="hidden" value="PUT">
@@ -29,7 +28,7 @@ array(
 			<div class="form-group">
 				<label for="{{ $value[0] }}" class="col-sm-2 control-label">{{ $value[1] }}</label>
 				<div class="col-sm-10">
-					@if($value[2] == 'select' && isset($value[3]) && !isset($value[4]))
+					@if($value[2] == 'select' && isset($value[3]) && $value[4] !== false)
 						<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
 							@foreach($value[3] as $i)
 								<?php

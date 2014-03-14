@@ -80,7 +80,7 @@ class ClasseController extends BaseController {
 			case 5:
 				$items = array(
 					array('libelle', 'Libellé', 'text'),
-					array('id_user', 'Nouvel élève', 'select', $users),
+					array('id_user', 'Etudiant', 'select', $users),
 					array('id_formation', 'Formation', 'select', $formations),
 					array('annee', 'Année', 'select', $annees)
 				);
@@ -287,7 +287,7 @@ class ClasseController extends BaseController {
 	{
 		$classe = Classe::find($id);
 
-		$classe->tryDelete($user);
+		$this->tryDelete($classe);
 
 		Session::flash('message', 'Successfully deleted');
 		Session::flash('alert', 'success');
