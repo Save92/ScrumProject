@@ -58,7 +58,7 @@ class UserController extends BaseController {
 	public function show($id)
 	{
 		$user = User::find($id);
-
+		$items = array();
 		// Si prof
 		if ($user->id_role == 3) {
 
@@ -76,7 +76,7 @@ class UserController extends BaseController {
 		$this->layout->content = View::make('user.show')->with(
 			array(
 				'item' => $user,
-				'items' => $matieres,
+				'items' => $items,
 				'name' => 'Matières',
 				'route' => 'matieres',
 				'actions' => $actions,
