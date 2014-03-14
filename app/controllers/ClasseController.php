@@ -160,7 +160,7 @@ class ClasseController extends BaseController {
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
-				$actions = array(0,0,0,1);
+				$actions = array(0,0,0,0);
 				break;
 			case 4:
 				$actions = array(0,0,0,0);
