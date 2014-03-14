@@ -313,7 +313,7 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 
-		$this->tryDelete($user);
+		$this->tryDelete($user);	
 
 		return Redirect::to('users');
 	}
