@@ -29,6 +29,7 @@ class FormationController extends BaseController {
 				//$actions = array(0,1,0,0);
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
+				return Redirect::to('/');
 				break;
 		}
 
@@ -74,6 +75,7 @@ class FormationController extends BaseController {
 			default:
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
+				return Redirect::to('/');
 				break;
 		}
 

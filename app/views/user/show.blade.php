@@ -9,8 +9,9 @@
 
 	<div class="panel-body">
 
-		<div class="col-sm-2">
+		<div class="col-sm-6">
 			<h3>{{ $item->getName() }}</h3>
+			<hr>
 			<h4>{{ $item->getRole() }}</h4>
 			<p>
 				{{ $item->mail }}<br/>
@@ -19,7 +20,7 @@
 		</div>
 
 		@if($items !== false)
-		<div class="well col-sm-10">
+		<div class="col-sm-6">
 			<h4>{{ $name }}</h4>
 			<ul class="nav nav-pills">
 				@foreach($items as $i)

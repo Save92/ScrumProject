@@ -24,7 +24,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		$name = $this->prenom . ' ' . $this->nom;
 
-		return $name;
+		return '<a href="' . URL::to('users') . '/' . $this->id . '">' . $name . '</a>';
 	}
 
 	/**

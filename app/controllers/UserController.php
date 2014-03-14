@@ -58,7 +58,11 @@ class UserController extends BaseController {
 	public function show($id)
 	{
 		$user = User::find($id);
+
 		$items = false;
+		$name = false;
+		$route = false;
+
 		// Secrétaire
 		if ($user->id_role == 4) {
 
@@ -66,7 +70,13 @@ class UserController extends BaseController {
 			$route = 'classes';
 
 			$items = array();
-			// classes ?
+			$formation = Formation::where('id_user', $user->id)->get();
+			foreach ($formation as $f) {
+
+				$classes = Classe::where('id_formation', $f->id)->get();
+				array_push($items, $classes);
+
+			}
 		// Prof
 		} else if ($user->id_role == 3) {
 
@@ -80,10 +90,7 @@ class UserController extends BaseController {
 				array_push($items, Matiere::where('id', $pm->id_matiere)->get());
 
 			}
-
 		}
-
-		$actions = array(0,0,0,0);
 
 		$this->layout->content = View::make('user.show')->with(
 			array(
@@ -91,7 +98,7 @@ class UserController extends BaseController {
 				'items' => $items,
 				'name' => $name,
 				'route' => $route,
-				'actions' => $actions,
+				//'actions' => $actions,
 				'fields' => array(
 					'Libellé' => 'getName',
 					'Coefficient' => 'getCoef',

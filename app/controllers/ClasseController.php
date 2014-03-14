@@ -109,16 +109,6 @@ class ClasseController extends BaseController {
 	}
 
 	/**
-	 * Show the form for assign a new user (role 2) to the class.
-	 * GET /resource/create
-	 *
-	 * @return Response
-	 */
-	public function add($value='') {
-
-	}
-
-	/**
 	 * Store a newly created resource in storage.
 	 * POST /resource
 	 *
@@ -165,13 +155,15 @@ class ClasseController extends BaseController {
 
 		$classes = Classe::where('libelle', $classe->libelle)->get();
 
+		$candidats = User::where('id_role',1)->get();
+
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
-				$actions = array(1,1,1,1);
+				$actions = array(0,0,0,1);
 				break;
 			case 4:
-				$actions = array(1,1,1,0);
+				$actions = array(0,0,0,0);
 				break;
 			default:
 
@@ -182,13 +174,33 @@ class ClasseController extends BaseController {
 				break;
 		}
 
+		// Assignation d'un étudiant dans la classe
+		// ----------------------------
+		if(isset($_GET['cid'])) {
+			$rules = array(
+				'id_user'=> 'required'
+			);
+			$validator = Validator::make(Input::all(), $rules);
+
+			if ($validator->fails()) {
+				$this->sendErrors($validator);
+				return Redirect::to('classes/' . $id)->withInput();
+			} else {
+
+				Session::flash('message', 'Successfully updated');
+				Session::flash('alert', 'success');
+				return Redirect::to('classes');
+			}
+		}
+
 
 		$this->layout->content = View::make('classe.show')->with(
 			array(
 				'classe' => $classe,
+				'candidats' => $candidats,
 				'items' => $classes,
 				'name' => 'Etudiants',
-				'route' => 'users',
+				'route' => 'classes',
 				'actions' => $actions,
 				'fields' => array(
 					'Nom' => 'getUsername'
