@@ -135,6 +135,10 @@ class ClasseController extends BaseController {
 			$classe->annee = Input::get('annee');
 			$classe->save();
 
+			$user = User::find(Input::get('id_user'));
+			$user->id_role = 2;
+			$user->save();
+
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
 			return Redirect::to('classes');
@@ -202,6 +206,8 @@ class ClasseController extends BaseController {
 		$classe = Classe::find($id);
 		$formations = Formation::all();
 
+		$formation = Formation::find($classe->id_formation);
+
 		$annees = array(
 			'2014/2015' => '2014 - 2015',
 			'2015/2016' => '2015 - 2016',
@@ -213,12 +219,16 @@ class ClasseController extends BaseController {
 		switch (Session::get('role')) {
 			case 5:
 				$items = array(
-					array('libelle', 'Libellé', 'text')
+					array('libelle', 'Libellé', 'text'),
+					array('id_formation', 'Formation', 'select', $formations, $classe->id_formation),
+					// array('annee', 'Année', 'select', $annees)
 				);
 				break;
 			case 4:
 				$items = array(
-					array('libelle', 'Libellé', 'text')
+					array('libelle', 'Libellé', 'text'),
+					array('id_formation', 'Formation', 'select', $formation->getName(), $classe->id_formation, false),
+					//array('annee', 'Année', 'text', $annees)
 				);
 			default:
 				/*$items = array(
@@ -250,7 +260,8 @@ class ClasseController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'libelle'=> 'required'
+			'libelle'=> 'required',
+			'id_formation'=> 'required|integer'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -260,7 +271,7 @@ class ClasseController extends BaseController {
 		} else {
 			$classe = Classe::find($id);
 			$classe->libelle = Input::get('libelle');
-			$classe->annee = Input::get('annee');
+			$classe->id_formation = Input::get('id_formation');
 			$classe->save();
 
 			Session::flash('message', 'Successfully updated');
