@@ -9,20 +9,28 @@
 
 	<div class="panel-body">
 
-		<h3>{{ $item->getName() }}</h3>
-		<p>
-			{{ $item->getRole() }}<br/>
-			{{ $item->mail }}<br/>
-			{{ $item->telephone }}
-		</p>
+		<div class="col-sm-2">
+			<h3>{{ $item->getName() }}</h3>
+			<h4>{{ $item->getRole() }}</h4>
+			<p>
+				{{ $item->mail }}<br/>
+				{{ $item->telephone }}
+			</p>
+		</div>
 
 		@if($items !== false)
+		<div class="well col-sm-10">
 			<h4>{{ $name }}</h4>
-			@foreach($items as $i)
-				@foreach($i as $j)
-					{{ $j->getName() }}
+			<ul class="nav nav-pills">
+				@foreach($items as $i)
+					@foreach($i as $j)
+						<li>
+							<a href="{{ URL::to($route).'/'.$j->id }}">{{ $j->getName() }}</a>
+						</li>
+					@endforeach
 				@endforeach
-			@endforeach
+			</ul>
+		</div>
 		@endif
 
 	</div>

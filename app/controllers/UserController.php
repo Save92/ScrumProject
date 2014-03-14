@@ -59,16 +59,28 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 		$items = false;
-		// Si prof
-		if ($user->id_role == 3) {
+		// Secrétaire
+		if ($user->id_role == 4) {
 
-			$matieres = array();
+			$name = 'Classes';
+			$route = 'classes';
+
+			$items = array();
+			// classes ?
+		// Prof
+		} else if ($user->id_role == 3) {
+
+			$name = 'Matières';
+			$route = 'matieres';
+
+			$items = array();
 			$profmatieres = ProfMatiere::where('id_user', $user->id)->get();
 			foreach ($profmatieres as $pm) {
 
-				array_push($matieres, Matiere::where('id', $pm->id_matiere)->get());
+				array_push($items, Matiere::where('id', $pm->id_matiere)->get());
 
 			}
+
 		}
 
 		$actions = array(0,0,0,0);
@@ -77,8 +89,8 @@ class UserController extends BaseController {
 			array(
 				'item' => $user,
 				'items' => $items,
-				'name' => 'Matières',
-				'route' => 'matieres',
+				'name' => $name,
+				'route' => $route,
 				'actions' => $actions,
 				'fields' => array(
 					'Libellé' => 'getName',
