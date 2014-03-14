@@ -44,15 +44,17 @@ array(
 					@elseif(!isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">
 
-					@elseif(isset($value[5]) && false == $value[5])
+
+					@elseif(isset($value[5]) && 'readonly' == $value[2] && false == $value[5] )
 						<div class="form-control">
 
-							{{ $item->$value[0] ? $item->$value[0] : $value[3] }}
+							{{ $value[3]->find($value[4])->getName() ? $value[3]->find($value[4])->getName() : $value[4] }}
 							<input type="hidden" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[4] }}">
 						</div>
 
 					@else
 						<div class="form-control">
+							{{-- $value[0] == 'password' ? '' : $item->$value[0] --}}
 							{{ $value[0] == 'password' ? '' : $item->$value[0] }}
 							<input type="hidden" name="{{ $value[0] }}" id="{{ $value[0] }}" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">
 						</div>

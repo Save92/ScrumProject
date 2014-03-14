@@ -227,16 +227,12 @@ class ClasseController extends BaseController {
 			case 4:
 				$items = array(
 					array('libelle', 'Libellé', 'text'),
-					array('id_formation', 'Formation', 'select', $formation->getName(), $classe->id_formation, false),
+					array('id_formation', 'Formation', 'readonly', $formations, $classe->id_formation, false),
 					//array('annee', 'Année', 'text', $annees)
 				);
+				break;
 			default:
-				/*$items = array(
-					array('libelle', 'Libellé', 'text', false),
-					array('conditions', 'Conditions', 'text', false),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
-					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
-				);*/
+				$items = array();
 				break;
 		}
 
