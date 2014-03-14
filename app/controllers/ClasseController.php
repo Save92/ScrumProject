@@ -160,7 +160,7 @@ class ClasseController extends BaseController {
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
-				$actions = array(0,0,0,1);
+				$actions = array(0,0,0,0);
 				break;
 			case 4:
 				$actions = array(0,0,0,0);
@@ -172,25 +172,6 @@ class ClasseController extends BaseController {
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
 				break;
-		}
-
-		// Assignation d'un étudiant dans la classe
-		// ----------------------------
-		if(isset($_GET['cid'])) {
-			$rules = array(
-				'id_user'=> 'required'
-			);
-			$validator = Validator::make(Input::all(), $rules);
-
-			if ($validator->fails()) {
-				$this->sendErrors($validator);
-				return Redirect::to('classes/' . $id)->withInput();
-			} else {
-
-				Session::flash('message', 'Successfully updated');
-				Session::flash('alert', 'success');
-				return Redirect::to('classes');
-			}
 		}
 
 
@@ -304,6 +285,40 @@ class ClasseController extends BaseController {
 		Session::flash('message', 'Successfully deleted');
 		Session::flash('alert', 'success');
 		return Redirect::to('classes');
+	}
+
+
+	public function add($id)
+	{
+		$rules = array(
+			'id_user'=> 'required|integer'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$this->sendErrors($validator);
+			return Redirect::to('classes/' . $id)->withInput();
+		} else {
+			$c = Classe::find($id);
+
+			$classe = new Classe();
+			$classe->libelle = $c->libelle;
+			$classe->annee = $c->annee;
+			$classe->id_formation = $c->id_formation;
+
+			$classe->id_user = Input::get('id_user');
+
+			$classe->save();
+
+			$user = User::find(Input::get('id_user'));
+			$user->id_role = 2;
+			$user->save();
+
+			Session::flash('message', 'Successfully updated');
+			Session::flash('alert', 'success');
+			return Redirect::to('classes/' . $id);
+		}
+
 	}
 
 }
