@@ -80,7 +80,7 @@ class ProfMatiereController extends BaseController {
 	 */
 	public function create()
 	{
-		$profId=Session::get('prof');
+		$profId = Session::get('prof');
 		$user = User::find($profId);
 
 		$matieres = Matiere::all();
@@ -123,7 +123,7 @@ class ProfMatiereController extends BaseController {
 
 			$user = Input::get('id_user');
 			foreach (Input::get('id_matieres') as $key => $value) {
-			$profmatiere = new Profmatiere;
+			$profmatiere = new ProfMatiere();
 			$profmatiere->id_user = $user;
 			$profmatiere->id_matiere = $value;
 			$profmatiere->save();

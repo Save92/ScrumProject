@@ -33,11 +33,6 @@
 						Formations
 					</a>
 				</li>
-
-			@endif
-
-			@if(Session::get('role') > 2)
-
 				<li {{ ( Request::is('matieres') || Request::is('matieres/*') ) ? 'class="active"' : '' }}>
 					<a href="{{ URL::to('matieres') }}">
 						Matières
