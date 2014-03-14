@@ -91,6 +91,7 @@ class MatiereController extends BaseController {
 				'route' => 'matieres',
 				'items' => array(
 					array('libelle', 'Libellé', 'text'),
+					array('coef', 'Coefficient', 'text'),
 					array('id_formation', 'Formation', 'select', $formations),
 					array('id_thematique', 'Thématique', 'select', $thematiques)
 				)
@@ -110,6 +111,7 @@ class MatiereController extends BaseController {
 	{
 		$rules = array(
 			'libelle'=> 'required',
+			'coef' => 'required|numeric',
 			'id_formation' => 'required',
 			'id_thematique'	=> 'required'
 		);
@@ -122,6 +124,7 @@ class MatiereController extends BaseController {
 		} else {
 			$matiere = new Matiere;
 			$matiere->libelle = Input::get('libelle');
+			$matiere->coef = Input::get('coef');
 			$matiere->id_formation = Input::get('id_formation');
 			$matiere->id_thematique=Input::get('id_thematique');
 			$matiere->save();
@@ -154,6 +157,7 @@ class MatiereController extends BaseController {
 				'item' => $matiere,
 				'items' => array(
 					array('libelle', 'Libellé', 'text'),
+					array('coef', 'Coefficient', 'text'),
 					array('id_formation', 'Formations', 'select', $formations, $matiere->id_formation),
 					array('id_thematique', 'Thématique', 'select', $thematiques, $matiere->id_thematique)
 				)

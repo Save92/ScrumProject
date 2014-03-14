@@ -132,7 +132,7 @@ class ProfMatiereController extends BaseController {
 			}
 			Session::flash('message', 'Successfully created');
 			Session::flash('alert', 'success');
-			return Redirect::to('matieres');
+			return Redirect::to('users');
 
 		}
 	}

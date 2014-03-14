@@ -259,9 +259,7 @@ class FormationController extends BaseController {
 	public function destroy($id)
 	{
 		$formation = Formation::find($id);
-
 		$this->tryDelete($formation);
-
 		return Redirect::to('formations');
 	}
 
