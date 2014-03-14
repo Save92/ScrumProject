@@ -21,7 +21,7 @@ class FormationController extends BaseController {
 				$formations = Formation::all();
 				break;
 			case 4:
-				$actions = array(1,1,1,0);
+				$actions = array(0,1,1,0);
 				$formations = Formation::where('id_user', Auth::user()->id)->get();
 				break;
 			default:
@@ -62,7 +62,6 @@ class FormationController extends BaseController {
 
 		$matieres = Matiere::where('id_formation', $id)->get();
 
-		$actions = array(0,0,0,0);
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
@@ -72,6 +71,7 @@ class FormationController extends BaseController {
 				$actions = array(1,1,1,0);
 				break;
 			default:
+				$actions = array(0,0,0,0);
 				// Redirection si la route n'est pas censée être accessible
 				$this->deny();
 				return Redirect::to('/');

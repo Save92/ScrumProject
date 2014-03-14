@@ -19,15 +19,16 @@ class UserController extends BaseController {
 	{
 		$users = User::all();
 
-		$actions = array(0,0,0,0);
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
 				$actions = array(1,1,1,1);
 				break;
 			default:
+				$actions = array(0,0,0,0);
 				// Fallback si la route n'est pas bloquée
 				$this->deny();
+				return Redirect::to('/');
 				break;
 		}
 
@@ -313,7 +314,7 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 
-		$this->tryDelete($user);	
+		$this->tryDelete($user);
 
 		return Redirect::to('users');
 	}
