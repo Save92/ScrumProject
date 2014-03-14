@@ -118,7 +118,7 @@ Route::get('db', function()
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
 		$table->integer('id_diplome')->unsigned();
-		$table->foreign('id_diplome')->references('id')->on('diplomes');
+		$table->foreign('id_diplome')->references('id')->on('diplomes')->onDelete('cascade');
 		$table->timestamps();
 	});
 
@@ -131,7 +131,7 @@ Route::get('db', function()
 		$table->integer('id_user')->unsigned();
 		$table->foreign('id_user')->references('id')->on('users');
 		$table->integer('id_formation')->unsigned();
-		$table->foreign('id_formation')->references('id')->on('formations');
+		$table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
 		$table->timestamps();
 	});
 
@@ -158,9 +158,9 @@ Route::get('db', function()
 		$table->string('libelle', 32);
 		$table->float('coef');
 		$table->integer('id_formation')->unsigned();
-		$table->foreign('id_formation')->references('id')->on('formations');
+		$table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
 		$table->integer('id_thematique')->unsigned();
-		$table->foreign('id_thematique')->references('id')->on('thematiques');
+		$table->foreign('id_thematique')->references('id')->on('thematiques')->onDelete('cascade');;
 		$table->timestamps();
 	});
 
@@ -169,9 +169,9 @@ Route::get('db', function()
 	{
 		$table->primary(array('id_user', 'id_matiere'));
 		$table->integer('id_user')->unsigned();
-		$table->foreign('id_user')->references('id')->on('users');
+		$table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
 		$table->integer('id_matiere')->unsigned();
-		$table->foreign('id_matiere')->references('id')->on('matieres');
+		$table->foreign('id_matiere')->references('id')->on('matieres')->onDelete('cascade');
 		$table->timestamps();
 	});
 
