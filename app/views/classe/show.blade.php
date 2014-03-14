@@ -5,16 +5,18 @@
 
 	<h1>{{ $classe->libelle }}</h1>
 	<p>
-		Formation {{ $classe->getFormation() }} - {{ $classe->getResponsable() }}
+		{{ $classe->getFormation() }} - {{ $classe->getResponsable() }}
 	</p>
 
 
 		<form method="POST" action="{{ URL::to('add/'.$classe->id) }}" role="form" class="form-horizontal" style="margin-bottom: 20px;">
 
 			<select name="id_user" style="">
-				@foreach($candidats as $k => $v)
-					<option value="{{ $v['id'] }}">{{ $v['prenom'] }} {{ $v['nom'] }}</option>
-				@endforeach
+				@if(count($candidats) > 0) echo 'ok'
+					@foreach($candidats as $k => $v)
+						<option value="{{ $v['id'] }}">{{ $v['prenom'] }} {{ $v['nom'] }}</option>
+					@endforeach
+				@endif
 			</select>
 
 			<input type="hidden" value="{{ $classe->id }}">

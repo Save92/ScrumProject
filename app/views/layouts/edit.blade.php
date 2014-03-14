@@ -49,7 +49,6 @@ array(
 							{{ $value[3] }}
 							<input type="hidden" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[4] }}">
 						</div>
-
 					@else
 						<div class="form-control">
 							{{ $value[0] == 'password' ? '' : $item->$value[0] }}

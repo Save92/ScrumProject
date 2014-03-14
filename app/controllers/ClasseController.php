@@ -19,19 +19,32 @@ class ClasseController extends BaseController {
 	public function index()
 	{
 		// Récupération des classes
-		$classes =array();
+		$classes = array();
 		$actions = array(0,0,0,0);
 		// (créer, afficher, modifier, supprimer)
 		// Gestion en fonction du role
 		switch (Session::get('role')) {
 			case 5:
 				$actions = array(1,1,1,1);
+
 				$classes = Classe::all()->groupBy('libelle');
 				break;
 			case 4:
 				$actions = array(1,1,1,0);
-																	//	$formations = Formation::where('id_user', Auth::user()->id)->get();
+
 				$classes = Classe::all()->groupBy('libelle');
+				// $suid = Auth::user()->id;
+				// $classes = Formation::join('classes','id','=','classes.id_formation')
+				// 					->where('id_user', $suid)
+				// 				 	->groupBy('libelle');
+				// 				 var_dump($classes);
+				// $classes = Classe::where('id_formation', $user_formations)->groupBy('libelle')->get();
+				// var_dump($user_formations);
+
+				// -- TEST
+				// foreach ($user_formations as $k => $v) {
+				// 	var_dump($v->libelle);
+				// }
 				break;
 			default:
 				//$actions = array(0,1,0,0);
@@ -220,7 +233,7 @@ class ClasseController extends BaseController {
 			case 5:
 				$items = array(
 					array('libelle', 'Libellé', 'text'),
-					array('id_formation', 'Formation', 'select', $formations, $classe->id_formation),
+					array('id_formation', 'Formation', 'select', $formations, $classe->id_formation, true),
 					// array('annee', 'Année', 'select', $annees)
 				);
 				break;
