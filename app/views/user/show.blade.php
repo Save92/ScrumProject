@@ -16,12 +16,14 @@
 			{{ $item->telephone }}
 		</p>
 
-		<h4>{{ $name }}</h4>
-		@foreach($items as $i)
-			@foreach($i as $j)
-				{{ $j->getName() }}
+		@if($items !== false)
+			<h4>{{ $name }}</h4>
+			@foreach($items as $i)
+				@foreach($i as $j)
+					{{ $j->getName() }}
+				@endforeach
 			@endforeach
-		@endforeach
+		@endif
 
 	</div>
 

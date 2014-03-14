@@ -58,7 +58,7 @@ class UserController extends BaseController {
 	public function show($id)
 	{
 		$user = User::find($id);
-		$items = array();
+		$items = false;
 		// Si prof
 		if ($user->id_role == 3) {
 
