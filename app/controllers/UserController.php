@@ -59,7 +59,34 @@ class UserController extends BaseController {
 	{
 		$user = User::find($id);
 
-		$this->layout->content = View::make('user.show')->with('user', $user);
+		// Si prof
+		if ($user->id_role == 3) {
+
+			$matieres = array();
+			$profmatieres = ProfMatiere::where('id_user', $user->id)->get();
+			foreach ($profmatieres as $pm) {
+
+				array_push($matieres, Matiere::where('id', $pm->id_matiere)->get());
+
+			}
+		}
+
+		$actions = array(0,0,0,0);
+
+		$this->layout->content = View::make('user.show')->with(
+			array(
+				'item' => $user,
+				'items' => $matieres,
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'actions' => $actions,
+				'fields' => array(
+					'Libellé' => 'getName',
+					'Coefficient' => 'getCoef',
+					'Thématique' => 'getThematique'
+				)
+			)
+		);
 	}
 
 	/**

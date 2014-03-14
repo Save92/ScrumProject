@@ -59,17 +59,17 @@ class ProfMatiereController extends BaseController {
 		$matiere = Matiere::find($id);
 
 		$this->layout->content = View::make('matiere.show')->with(
-				array(
-						'matiere' => $matiere,
-						'name' => 'Matières',
-						'route' => 'matieres',
-						'fields' => array(
-							'Libellé' => 'getName',
-							'Coefficient' => 'getCoef',
-							'Thématique' => 'getThematique'
-						)
-					)
-				);
+			array(
+				'matiere' => $matiere,
+				'name' => 'Matières',
+				'route' => 'matieres',
+				'fields' => array(
+					'Libellé' => 'getName',
+					'Coefficient' => 'getCoef',
+					'Thématique' => 'getThematique'
+				)
+			)
+		);
 	}
 
 	/**

@@ -189,8 +189,8 @@ class FormationController extends BaseController {
 				$items = array(
 					array('libelle', 'Libellé', 'text', false),
 					array('conditions', 'Conditions', 'text'),
-					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user),
-					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome)
+					array('id_user', 'Secrétaire pédagogique', 'select', $users, $formation->id_user, 'readonly'),
+					array('id_diplome', 'Diplome', 'select', $diplomes, $formation->id_diplome, 'readonly')
 				);
 			default:
 				/*$items = array(

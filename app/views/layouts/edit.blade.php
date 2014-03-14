@@ -29,7 +29,7 @@ array(
 			<div class="form-group">
 				<label for="{{ $value[0] }}" class="col-sm-2 control-label">{{ $value[1] }}</label>
 				<div class="col-sm-10">
-					@if($value[2] == 'select' && isset($value[3]))
+					@if($value[2] == 'select' && isset($value[3]) && !isset($value[4]))
 						<select name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control">
 							@foreach($value[3] as $i)
 								<?php
@@ -45,7 +45,10 @@ array(
 					@elseif(!isset($value[3]))
 						<input type="{{ $value[2] }}" name="{{ $value[0] }}" id="{{ $value[0] }}" class="form-control" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">
 					@else
-						{{ $value[0] == 'password' ? '' : $item->$value[0] }}
+						<div class="form-control">
+							{{ $value[0] == 'password' ? '' : $item->$value[0] }}
+							<input type="hidden" name="{{ $value[0] }}" id="{{ $value[0] }}" value="{{ $value[0] == 'password' ? '' : $item->$value[0] }}">
+						</div>
 					@endif
 				</div>
 			</div>

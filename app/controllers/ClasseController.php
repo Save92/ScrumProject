@@ -30,7 +30,7 @@ class ClasseController extends BaseController {
 				break;
 			case 4:
 				$actions = array(1,1,1,0);
-				$formations = Formation::where('id_user', Auth::user()->id)->get();
+																	//	$formations = Formation::where('id_user', Auth::user()->id)->get();
 				$classes = Classe::all()->groupBy('libelle');
 				break;
 			default:
@@ -49,6 +49,7 @@ class ClasseController extends BaseController {
 				'fields' => array(
 					'Nom' => 'getName',
 					'Responsable' => 'getResponsable',
+					'Formation' => 'getFormation',
 					'Année' => 'getYear'
 				)
 			)
@@ -114,7 +115,7 @@ class ClasseController extends BaseController {
 	 * @return Response
 	 */
 	public function add($value='') {
-		
+
 	}
 
 	/**

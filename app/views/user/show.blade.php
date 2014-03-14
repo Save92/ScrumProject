@@ -9,12 +9,19 @@
 
 	<div class="panel-body">
 
-		<h3>{{ $user->getName() }}</h3>
+		<h3>{{ $item->getName() }}</h3>
 		<p>
-			{{ $user->getRole() }}<br/>
-			{{ $user->mail }}<br/>
-			{{ $user->telephone }}
+			{{ $item->getRole() }}<br/>
+			{{ $item->mail }}<br/>
+			{{ $item->telephone }}
 		</p>
+
+		<h4>{{ $name }}</h4>
+		@foreach($items as $i)
+			@foreach($i as $j)
+				{{ $j->getName() }}
+			@endforeach
+		@endforeach
 
 	</div>
 
