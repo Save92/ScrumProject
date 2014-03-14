@@ -18,13 +18,16 @@ Route::get('/', array('as' => 'home', function()
 
 Route::group(array('before' => 'auth'), function()
 {
+
+	Route::post('add/{id}', array('uses' => 'ClasseController@add'));
+
 	// Routes CRUD
 	Route::resource('users', 'UserController');
 	Route::resource('formations', 'FormationController');
 	Route::resource('classes', 'ClasseController');
 	Route::resource('matieres', 'MatiereController');
 	Route::resource('profs', 'ProfMatiereController');
-	//Route::get('createprof', array('as' => 'createprof', 'uses' => 'Prof@createprof'));
+
 	// Déconnexion et redirection
 	Route::get('logout', array('as' => 'logout', function()
 	{
